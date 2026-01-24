@@ -1,4 +1,3 @@
-cat <<EOF > _data/locales/ja.yml
 ja:
   ui:
     tabs:
@@ -12,4 +11,3 @@ ja:
       last_mod: "最終更新"
       next_post: "次の投稿"
       prev_post: "前の投稿"
-EOF
