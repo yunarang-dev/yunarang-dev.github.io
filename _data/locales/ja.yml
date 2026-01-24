@@ -1,20 +1,15 @@
-# Japanese translations
-ui:
-  common:
-    search: 検索
-    categories: カテゴリー
-    tags: タグ
-    last_mod: 最終更新
-    next_post: 次の投稿
-    prev_post: 前の投稿
-    share: シェア
-    copyright: 著作権
-  tabs:
-    home: ホーム
-    categories: カテゴリー
-    tags: タグ
-    archives: アーカイブ
-    about: 概要
-  search:
-    placeholder: 検索中...
-    no_results: 結果が見つかりません
+cat <<EOF > _data/locales/ja.yml
+ja:
+  ui:
+    tabs:
+      home: "ホーム"
+      categories: "カテゴリー"
+      tags: "タグ"
+      archives: "アーカイブ"
+      about: "概要"
+    common:
+      search: "検索"
+      last_mod: "最終更新"
+      next_post: "次の投稿"
+      prev_post: "前の投稿"
+EOF
