@@ -1,9 +1,10 @@
 ---
 # the default layout is 'page'
 layout: page
-title: About
+title: 自己紹介
 icon: fas fa-info-circle
 order: 4
+label: 自己紹介
 ---
 
 <!-- 
