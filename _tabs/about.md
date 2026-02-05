@@ -26,9 +26,10 @@ label: 自己紹介
 
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
-- **Main:** MacBook Pro M5 14' (24GB RAM / 1TB SSD) & iPad Air 4 with Apple Pencil 2
-- **Design:** Procreate & Blender
-- **Compose:** Logic Pro & Garage Band
+- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air 4 with Apple Pencil 2
+- **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
+- **Design:** Procreate / Blender
+- **Compose:** Logic Pro / Garage Band
 
 - [Email](mailto:yunarang97@gmail.com)
 - [X/Twitter](https://x.com/yunarang_dev)
@@ -52,7 +53,7 @@ label: 自己紹介
 
 [「アスデイ」について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/)
 
-## 🎌 日本語の学習ログ (JA)
+## 🇯🇵 日本語の学習ログ (JA)
 > 「いつか、あなたと繋がれるように。」
 
 JLPTなど日本語の勉強記録を入れます。
@@ -76,11 +77,25 @@ JLPTなど日本語の勉強記録を入れます。
 C#、C++、Pythonなど、より良いコードを組むためのアルゴリズムとプログラミング練習記録です。
 
 
+## ✈️ 交換学生日記 (KK)
+> 「もっと広い世界へ踏み出せ、未来の私！」
+
+将来、交換留学生として旅立つ時のためのカテゴリーです。今はまだ、準備中。
+
+
+
 ## 📝 雑記 (ET)
 > 「些細な記憶の破片。巨大な思い出の断片。」
 
 個人的な、雑多な記録です。 個人的な考えが込められています。
 
+
+## 🇰🇷 韓国語版 (KR)
+> 「思考の深淵。ありのままの形。」
+
+DevLogの韓国語版です。
+<br>
+DevLog의 한국어 버전입니다.
 
 ---
 
