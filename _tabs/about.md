@@ -14,7 +14,7 @@ label: 自己紹介
 
 > 一行のコードに宿るキャラクターの息遣いが、あなたの心に届き、ささやかな幸せになりますように。
 
-初めまして！私は韓国でIT融合専攻の大学生として、ゲーム開発者を目指しているゆならんと申します。
+初めまして！ 私は韓国の大学で電子工学・IT融合を専攻しており、ゲーム開発者を目指しているゆならんと申します。
 ここでは主に、Unityで感情を重視したストーリーゲームを制作する過程を記録しています。
 どうぞよろしくお願いします！
 
@@ -29,7 +29,9 @@ label: 自己紹介
 - **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air 4 with Apple Pencil 2
 - **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Design:** Procreate / Blender
-- **Compose:** Logic Pro / Garage Band
+- **Compose:** Logic Pro / GarageBand
+- **Scenario Writing:** Google Docs / Apple Pages
+- **Game Planning:** Google Docs / Google Spreadsheets
 
 - [Email](mailto:yunarang97@gmail.com)
 - [X/Twitter](https://x.com/yunarang_dev)
@@ -77,7 +79,7 @@ JLPTなど日本語の勉強記録を入れます。
 C#、C++、Pythonなど、より良いコードを組むためのアルゴリズムとプログラミング練習記録です。
 
 
-## ✈️ 交換学生日記 (KK)
+## ✈️ 交換留学日記 (KK)
 > 「もっと広い世界へ踏み出せ、未来の私！」
 
 将来、交換留学生として旅立つ時のためのカテゴリーです。今はまだ、準備中。
@@ -105,3 +107,11 @@ DevLog의 한국어 버전입니다.
 
 - **ハヨン:** フーディーのデザイン変更および髪のグラデーション適用予定
 - **ハル:** 焦げの演出および感情の視覚化作業予定
+
+
+---
+
+### 🧭 Life Plan
+
+更新する予定です。
+
