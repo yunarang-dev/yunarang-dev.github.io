@@ -22,7 +22,7 @@ label: 自己紹介
 - **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学校 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
 - **Focus:** Unity Game Development & C#
 - **Language:** 日本語 / 한국어 / English
-- **Main Project:** 「アスデイ： Astral Days!」
+- **Main Project:** 『アスデイ： Astral Days!』
 
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
@@ -51,9 +51,9 @@ label: 自己紹介
 ## 💫 アスデイ: Astral Days! (AD)
 > 「崩れた非日常の中、少女たちはやがて大人になることを選んだ。 この不慣れで残酷な『<ruby>日常<rt>New Normal</rt></ruby>』で生き残るために。」
 
-**「Astral Days!」**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
+**『Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
 
-[「アスデイ」について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/)
+[『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
 
 ## 🇯🇵 日本語の学習ログ (JA)
 > 「いつか、あなたと繋がれるように。」
@@ -104,55 +104,8 @@ DevLog의 한국어 버전입니다.
 # 🎮 『アスデイ：Astral Days!』 Project Plan & Status
 
 <br>
-> バージョンの表記方法：**x.y.z**
 
-<br>
-x = 0：開発中のバージョン
-<br>
-x = 1：開発完了
-<br>
-
-「y」は以下の内容を参照してください。
-<br>
-「z」はマイナーアップグレードのバージョン（0、1、2…）
-
-## **[大学１年生〜大学３年生＋軍隊２年＝５年]**
-
-| Version | Phase | Main Task | Status |
-|:---:|:---:|:---|:---:|
-| **0.0.z** | Test | Test | ✅ Done |
-| **0.1.z** | Foundation | 基本カメラ・キャラクター移動、テスト用UI、ダメージ計算などの基盤システム | 🔄 In Progress |
-| **0.2.z** | Character | ハヨンのモデリング完成、基本攻撃およびスキル実装、仮の敵（サンドバッグ）実装 | 📅 Planned  |
-| **0.3.z** | System | デバフ・バフなどの状態異常、リンクアクティング、ノックバックの実装 | 📅 Planned |
-| **0.4.z** | Foundation | Stage 1の一部実装、ハルのモデリング完成、敵AIの基礎実装 | 📅 Planned |
-| **0.5.z** | Character | ハルの基本攻撃およびスキル実装、全体的なFX調整、感情共鳴の仮実装 | 📅 Planned  |
-| **0.6.z** | Story | ゲーム内序盤ストーリー(Day 1~2)実装、アラ・ダソルのモデリング完成 | 📅 Planned |
-| **0.7.z** | Foundation | コアUIの整理、メインBGMの制作および適用、シェーディング・ライティング調整 | 📅 Planned |
-
-
-
-## **[大学4年生〜卒業後]**
-
-| Version | Phase | Main Task | Status |
-|:---:|:---:|:---|:---:|
-| **0.8.z** | Foundation&Character | アラの基本攻撃およびスキル実装、Stage 1 完成 | 📅 Planned |
-| **0.9.z** | Foundation&Character | ダソルの基本攻撃およびスキル実装、Stage 2 の一部実装 | 📅 Planned |
-| **0.10.z** | Character | ユナのモデリング完成、基本攻撃およびスキル実装 | 📅 Planned  |
-| **0.11.z** | Foundation | Stage 2 完成、その他UI・FXのブラッシュアップ | 📅 Planned |
-| **0.12.z** | Foundation | 主要NPCモデリング完成、すべての敵の実装完了 | 📅 Planned |
-| **0.13.z** | Foundation | Stage 3 完成 | 📅 Planned  |
-| **0.14.z** | System | スキルツリー（記憶の足跡）、思い出の欠片システム実装 | 📅 Planned |
-| **0.15.z** | Story | メインストーリー実装 (Part 2まで) | 📅 Planned |
-| **0.16.z** | System | ゲームモード実装 (タイムアタック、ビルドモードを除く) | 📅 Planned |
-| **0.17.z** | Foundation | 全体的な要素の調整 | 📅 Planned |
-| **0.18.z** | Test&Release | デモ版リリースおよびバグ修正 (Alpha Release) | 📅 Planned  |
-| **0.19.z** | Story | メインストーリー実装 (Chapter 1 全体) | 📅 Planned |
-| **0.20.z** | Story&System | サブストーリー、好感度システム実装 | 📅 Planned |
-| **0.21.z** | System | タイムアタックモード、ビルドモード実装 | 📅 Planned  |
-| **0.22.z** | System | 感情共鳴システムの最終完成 | 📅 Planned |
-| **0.23.z** | Test&Release | 最終ブラッシュアップ (Gold Master) | 📅 Planned |
-
-
+[詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイ-astral-daysの開発計画)
 
 更新する予定です。
 
