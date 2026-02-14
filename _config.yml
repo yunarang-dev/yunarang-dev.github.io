@@ -50,7 +50,7 @@ social:
 
 # Site Verification Settings
 webmaster_verifications:
-  google: # fill in your Google verification code
+  google: <meta name="google-site-verification" content="p-wPLyvibKnwE2KoHWi3pWIuCyL_K15ixw-5n9WJ9SI" />
   bing: # fill in your Bing verification code
   alexa: # fill in your Alexa verification code
   yandex: # fill in your Yandex verification code
