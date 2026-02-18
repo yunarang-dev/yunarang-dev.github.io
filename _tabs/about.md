@@ -19,6 +19,7 @@ label: 自己紹介
 どうぞよろしくお願いします！
 
 ### 👤 Developer: ゆならん (Yunarang)
+- **Name:** キム・ジホン（金志憲 / 김지헌）
 - **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学校 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
 - **Focus:** Unity Game Development & C#
 - **Language:** 日本語 / 한국어 / English
@@ -54,6 +55,8 @@ label: 自己紹介
 **『Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
+
+[カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
 
 ## 🇯🇵 日本語の学習ログ (JA)
 > 「いつか、あなたと繋がれるように。」
@@ -98,6 +101,9 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 DevLogの韓国語版です。
 <br>
 DevLog의 한국어 버전입니다.
+<br><br>
+[カテゴリーへ移動]({{ site.baseurl }}/categories/韓国語版/){:.btn .btn-outline-primary }
+
 
 ---
 
