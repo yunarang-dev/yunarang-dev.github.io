@@ -40,7 +40,7 @@ label: 自己紹介
 - [AtCoder](https://atcoder.jp/users/yunarang_dev)
 - [Baekjoon](https://www.acmicpc.net/user/yunarang_dev)
 
-[<i class="fab fa-github"></i> GitHub](https://github.com/yunarang-dev){: .btn .btn-outline-primary }
+[<i class="fab fa-github"></i> GitHub](https://github.com/yunarang-dev){:target="_blank" .btn .btn-outline-primary }
 
 ---
 
@@ -132,7 +132,7 @@ DevLog의 한국어 버전입니다.
  - **Baekjoon Silver**
 
 ### 🕑 2027年まで （大学 2年生）
- - **情報処理技術者（応用情報技術者）合格**
+ - **情報処理技者（応用情報技術者）合格**
  - **AtCoder Gray**
  - **Baekjoon Gold**
 
