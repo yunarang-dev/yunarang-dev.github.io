@@ -56,9 +56,8 @@ label: 自己紹介
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
 
-<!--
+
 [カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
--->
 
 ## 🇯🇵 日本語の学習ログ (JA)
 > 「いつか、あなたと繋がれるように。」
@@ -114,7 +113,7 @@ DevLog의 한국어 버전입니다.
 
 <br>
 
-[詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイ-astral-daysの開発計画)
+[詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
 
 更新する予定です。
 
