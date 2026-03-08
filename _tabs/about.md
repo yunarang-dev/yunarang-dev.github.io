@@ -30,7 +30,7 @@ label: 自己紹介
 - **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air 4 with Apple Pencil 2
 - **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Design:** Procreate / Blender
-- **Compose:** Logic Pro / GarageBand
+- **Compose:** Logic Pro
 - **Scenario Writing:** Google Docs / Apple Pages
 - **Game Planning:** Google Docs / Google Spreadsheets
 
@@ -39,6 +39,7 @@ label: 自己紹介
 - [Instagram](https://www.instagram.com/yunarang_dev/)
 - [AtCoder](https://atcoder.jp/users/yunarang_dev)
 - [Baekjoon](https://www.acmicpc.net/user/yunarang_dev)
+- [SoundCloud](https://soundcloud.com/yunarang)
 
 [<i class="fab fa-github"></i> GitHub](https://github.com/yunarang-dev){:target="_blank" .btn .btn-outline-primary }
 
