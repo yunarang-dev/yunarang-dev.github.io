@@ -14,7 +14,7 @@ label: 自己紹介
 
 > 一行のコードに宿るキャラクターの息遣いが、あなたの心に届き、ささやかな幸せになりますように。
 
-初めまして！ 私は韓国の大学で電子工学・IT融合を専攻しており、ゲーム開発者を目指しているゆならんと申します。
+初めまして！ 私は韓国の大学で電子情報工学・IT融合を専攻しており、ゲーム開発者を目指している「ゆならん」と申します。
 ここでは主に、Unityで感情を重視したストーリーゲームを制作する過程を記録しています。
 どうぞよろしくお願いします！
 
@@ -27,7 +27,7 @@ label: 自己紹介
 
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
-- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air 4 with Apple Pencil 2
+- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 with Apple Pencil Pro
 - **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Design:** Procreate / Blender
 - **Compose:** Logic Pro
@@ -40,6 +40,7 @@ label: 自己紹介
 - [AtCoder](https://atcoder.jp/users/yunarang_dev)
 - [Baekjoon](https://www.acmicpc.net/user/yunarang_dev)
 - [SoundCloud](https://soundcloud.com/yunarang)
+- [Discord](https://discordapp.com/users/yunarang_dev)
 
 [<i class="fab fa-github"></i> GitHub](https://github.com/yunarang-dev){:target="_blank" .btn .btn-outline-primary }
 
