@@ -58,6 +58,10 @@ label: 自己紹介
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
 
+[**#AstralDays**]({{ site.baseurl }}/tags/astraldays/) <br>
+[**#Development**]({{ site.baseurl }}/tags/development/) <br>
+[**#DevLog**]({{ site.baseurl }}/tags/devlog/) <br>
+[**#Game**]({{ site.baseurl }}/tags/game/) <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
 
@@ -75,7 +79,7 @@ JLPTなど日本語の勉強記録を入れます。
 ## 🌏 外部コンテスト参加記録 (CT)
 > 「小さな動きから、一歩ずつ、一歩ずつ。」
 
-より広い世界で、新しい挑戦を続けています。
+より広い世界で、新しい挑戦を続けます。
 
 ## 🔍 他のゲームの深層分析 (BS)
 > 「先輩の教え、あの始まりは足跡から。」
@@ -100,7 +104,11 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 > 「些細な記憶の破片。巨大な思い出の断片。」
 
 個人的な、雑多な記録です。 個人的な考えが込められています。
-<br><br>
+<br>
+
+[**#Japanese**]({{ site.baseurl }}/tags/japanese/) <br>
+[**#Korean**]({{ site.baseurl }}/tags/korean/) <br>
+
 [カテゴリーへ移動]({{ site.baseurl }}/categories/雑記/){:.btn .btn-outline-primary }
 
 ## 🇰🇷 韓国語版 (KR)
@@ -109,7 +117,11 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 DevLogの韓国語版です。
 <br>
 DevLog의 한국어 버전입니다.
-<br><br>
+<br>
+
+[**#Korean**]({{ site.baseurl }}/tags/korean/) <br>
+[**#DevLog**]({{ site.baseurl }}/tags/devlog/) <br>
+
 [カテゴリーへ移動]({{ site.baseurl }}/categories/韓国語版/){:.btn .btn-outline-primary }
 
 
