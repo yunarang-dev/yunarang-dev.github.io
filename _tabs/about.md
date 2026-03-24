@@ -27,7 +27,7 @@ label: 自己紹介
 
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
-- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 with Apple Pencil Pro
+- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 (12GB RAM / 256GB Storage) with Apple Pencil Pro
 - **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Design:** Procreate / Blender
 - **Compose:** Logic Pro
@@ -72,7 +72,7 @@ JLPTなど日本語の勉強記録を入れます。
 
 
 ## 🎮 サークル活動記録(ゲームマル/UNIDEV) (CI)
-> 「一人じゃなく、一つになろ。」
+> 「一人ではなく、一つになろ。」
 
 一人ではなく、共に想像を実現します。
 
