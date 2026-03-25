@@ -20,7 +20,8 @@ label: 自己紹介
 
 ### 👤 Developer: ゆならん (Yunarang)
 - **Name:** キム・ジホン（金志憲 / 김지헌）
-- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学校 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
+- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
+- **Affiliation:** <ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・全国大学生ゲーム開発連合会「UNIDEV」所属
 - **Focus:** Unity Game Development & C#
 - **Language:** 日本語 / 한국어 / English
 - **Main Project:** 『アスデイ： Astral Days!』
