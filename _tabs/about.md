@@ -21,7 +21,7 @@ label: 自己紹介
 ### 👤 Developer: ゆならん (Yunarang)
 - **Name:** キム・ジホン（金志憲 / 김지헌）
 - **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
-- **Affiliation:** <ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・全国大学生ゲーム開発連合会「UNIDEV」所属
+- **Affiliation:** <ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発連合会）
 - **Focus:** Unity Game Development & C#
 - **Language:** 日本語 / 한국어 / English
 - **Main Project:** 『アスデイ： Astral Days!』
@@ -30,8 +30,8 @@ label: 自己紹介
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
 - **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 (12GB RAM / 256GB Storage) with Apple Pencil Pro
 - **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
-- **Design:** Procreate / Blender
-- **Compose:** Logic Pro
+- **Designing:** Procreate / Blender
+- **Composing:** Logic Pro
 - **Scenario Writing:** Google Docs / Apple Pages
 - **Game Planning:** Google Docs / Google Spreadsheets
 
@@ -58,6 +58,8 @@ label: 自己紹介
 **『Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
+<br><br>
+[開発計画について、詳しくはこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
 
 [**#AstralDays**]({{ site.baseurl }}/tags/astraldays/) <br>
 [**#Development**]({{ site.baseurl }}/tags/development/) <br>
@@ -72,12 +74,12 @@ label: 自己紹介
 JLPTなど日本語の勉強記録を入れます。
 
 
-## 🎮 サークル活動記録(ゲームマル/UNIDEV) (CI)
+## 🌏 サークル内スタディ記録 (CI)
 > 「一人ではなく、一つになろ。」
 
-一人ではなく、共に想像を実現します。
+共に学びと試行錯誤の記録です。
 
-## 🌏 外部コンテスト参加記録 (CT)
+## 🎮 コンテスト・制作物 (CT)
 > 「小さな動きから、一歩ずつ、一歩ずつ。」
 
 より広い世界で、新しい挑戦を続けます。
@@ -125,19 +127,6 @@ DevLog의 한국어 버전입니다.
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/韓国語版/){:.btn .btn-outline-primary }
 
-
----
-
-# 💫 『アスデイ：Astral Days!』 Project Plan & Status
-
-<br>
-
-[詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
-
-更新する予定です。
-
-- **<ruby>ハヨン<rt>하연</rt></ruby>:** フーディーのデザイン変更および髪のグラデーション適用予定
-- **<ruby>ハル<rt>하루</rt></ruby>:** 焦げの演出および感情の視覚化作業予定
 
 
 ---
