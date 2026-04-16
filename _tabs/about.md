@@ -28,8 +28,9 @@ label: 自己紹介
 
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
-- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 (12GB RAM / 256GB Storage) with Apple Pencil Pro
-- **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
+- **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 11" (12GB RAM / 256GB Storage) with Apple Pencil Pro
+- **Sub1:** MacBook Neo 13" (8GB RAM / 256GB SSD)
+- **Sub2:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
 - **Scenario Writing:** Google Docs / Apple Pages
@@ -94,7 +95,12 @@ JLPTなど日本語の勉強記録を入れます。
 > 「想像を創造する。方法を学んでいく。」
 
 C#、C++、Pythonなど、より良いコードを組むためのアルゴリズムとプログラミング練習記録です。
+<br>
 
+[**#Development**]({{ site.baseurl }}/tags/development/) <br>
+[**#Programming**]({{ site.baseurl }}/tags/programming/) <br>
+
+[カテゴリーへ移動]({{ site.baseurl }}/categories/プログラミング練習/){:.btn .btn-outline-primary }
 
 ## ✈️ 交換留学日記 (KK)
 > 「もっと広い世界へ踏み出せ、未来の私！」
@@ -134,7 +140,7 @@ DevLog의 한국어 버전입니다.
 # 🧭 Life Plan （『アスデイ』を除く）
 
 ### 📆 常時
- - **月に2回以上DevLogを更新**
+ - **月に平均2回以上DevLogを更新**
 
 
 ### 🕛 2026年まで （大学 1年生）
