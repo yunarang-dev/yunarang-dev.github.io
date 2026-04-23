@@ -20,7 +20,7 @@ label: 自己紹介
 
 ### 👤 Developer: ゆならん (Yunarang)
 - **Name:** キム・ジホン（金志憲 / 김지헌）
-- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻 (2032年 2月 卒業予定)
+- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻（主専攻） (2032年 2月 卒業予定)
 - **Affiliation:** <ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発連合会）
 - **Focus:** Unity Game Development & C#
 - **Language:** 日本語 / 한국어 / English
@@ -40,7 +40,7 @@ label: 自己紹介
 - [X/Twitter](https://x.com/yunarang_dev)
 - [Instagram](https://www.instagram.com/yunarang_dev/)
 - [AtCoder](https://atcoder.jp/users/yunarang_dev)
-- [Baekjoon](https://www.acmicpc.net/user/yunarang_dev)
+- [Baekjoon😢](https://www.acmicpc.net/user/yunarang_dev)
 - [SoundCloud](https://soundcloud.com/yunarang)
 - [Discord](https://discordapp.com/users/yunarang_dev)
 
@@ -101,6 +101,14 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 [**#Programming**]({{ site.baseurl }}/tags/programming/) <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/プログラミング練習/){:.btn .btn-outline-primary }
+
+
+## 💯 大学数学・CS基礎　(SC)
+> 「大学での学び、そして先へ進む一歩。」
+
+大学で学んだ数学・CSの内容を基に、新しいアイデアを整理します。
+
+
 
 ## ✈️ 交換留学日記 (KK)
 > 「もっと広い世界へ踏み出せ、未来の私！」
