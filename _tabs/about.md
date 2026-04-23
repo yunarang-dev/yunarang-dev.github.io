@@ -33,7 +33,7 @@ label: 自己紹介
 - **Sub2:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
-- **Scenario Writing:** Google Docs / Apple Pages
+- **Scenario Writing:** Google Docs / Obsidian
 - **Game Planning:** Google Docs / Google Spreadsheets
 
 - [Email](mailto:yunarang97@gmail.com)
