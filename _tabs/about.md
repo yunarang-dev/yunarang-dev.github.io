@@ -29,8 +29,7 @@ label: 自己紹介
 ### 💻 Tech Stack & Equipment
 - **Engine & Programming Languages:** Unity (URP) / C / C++ / C# / Python
 - **Main:** MacBook Pro M5 14" (24GB RAM / 1TB SSD) & iPad Air M4 11" (12GB RAM / 256GB Storage) with Apple Pencil Pro
-- **Sub1:** MacBook Neo 13" (8GB RAM / 256GB SSD)
-- **Sub2:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
+- **Sub:** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
 - **Scenario Writing:** Google Docs / Obsidian
