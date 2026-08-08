@@ -103,7 +103,7 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 [**#Development**]({{ site.baseurl }}/tags/development/) <br>
 [**#Programming**]({{ site.baseurl }}/tags/programming/) <br>
 
-[カテゴリーへ移動]({{ site.baseurl }}/categories/プログラミング練習/){:.btn .btn-outline-primary }
+[カテゴリーへ移動]({{ site.baseurl }}/categories/CS・プログラミング練習/){:.btn .btn-outline-primary }
 
 
 ## 🇯🇵 日本語の学習ログ (JA)
