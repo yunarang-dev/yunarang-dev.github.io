@@ -82,7 +82,7 @@ label: 自己紹介
 | Contest | Project | Date | Main Role | Status | Blog Tag | Links |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
 | <ruby>ゲームマル<rt>GAMMARU</rt></ruby> ２０２６夏コンテスト | **ERROR CODE: H** | 2026.06.26 - 2026.08.15. | Programming & Art(UI) | 🔄 In Progress | [**#GAMMARU 2026 SUMMER CONTEST**]({{ site.baseurl }}/tags/gammaru-2026-summer-contest/) | [Link](https://example.com) |
-| test | test | test | test | test | [**#test**]({{ site.baseurl }}/tags/test/) | [Link](https://example.com) |
+
 
 
 
