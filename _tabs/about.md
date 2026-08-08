@@ -20,10 +20,10 @@ label: 自己紹介
 
 ### 👤 Developer: ゆならん (Yunarang)
 - **Name:** キム・ジホン（金志憲 / 김지헌）
-- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻（主専攻） (2032年 2月 卒業予定)
+- **University:** <ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻（主専攻）・日本語文学科（複数専攻） (2032年 2月 卒業予定)
 - **Affiliation:** <ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発連合会）
-- **Focus:** Unity Game Development & C#
-- **Language:** 日本語 / 한국어 / English
+- **Focus:** Narrative & Emotion-driven Game Development
+- **Language:** 日本語 / <ruby>韓国語<rt>한국어</rt></ruby> / English
 - **Main Project:** 『アスデイ： Astral Days!』
 
 ### 💻 Tech Stack & Equipment
@@ -33,7 +33,7 @@ label: 自己紹介
 - **Sub(Win):** Intel i5-9400f / Nvidia GTX 1660 6GB / DDR4 16GB RAM / 256GB + 1TB SSD
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
-- **Scenario Writing:** Google Docs / Obsidian
+- **Scenario Writing:** Obsidian / Google Docs
 - **Game Planning:** Google Docs / Google Spreadsheets
 
 - [Email](mailto:yunarang97@gmail.com)
@@ -54,44 +54,47 @@ label: 自己紹介
 
 
 ## 💫 アスデイ: Astral Days! (AD)
-> 「崩れた非日常の中、少女たちはやがて大人になることを選んだ。 この不慣れで残酷な『<ruby>日常<rt>New Normal</rt></ruby>』で生き残るために。」
+> 「<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。」
 
-**『Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
+**『アスデイ: Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
 <br><br>
 [開発計画について、詳しくはこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
 
 [**#AstralDays**]({{ site.baseurl }}/tags/astraldays/) <br>
-[**#Development**]({{ site.baseurl }}/tags/development/) <br>
+[**#アスデイ**]({{ site.baseurl }}/tags/アスデイ/) <br>
 [**#DevLog**]({{ site.baseurl }}/tags/devlog/) <br>
-[**#Game**]({{ site.baseurl }}/tags/game/) <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
 
-## 🇯🇵 日本語の学習ログ (JA)
-> 「いつか、あなたと繋がれるように。」
-
-JLPTなど日本語の勉強記録を入れます。
 
 
-## 🌏 サークル内スタディ記録 (CI)
-> 「一人ではなく、一つになろ。」
 
-共に学びと試行錯誤の記録です。
+
 
 ## 🎮 コンテスト・制作物 (CT)
 > 「小さな動きから、一歩ずつ、一歩ずつ。」
 
 より広い世界で、新しい挑戦を続けます。
+<br>
 
-## 🔍 他のゲームの深層分析 (BS)
+| Contest | Project | Date | Main Role | Status | Blog Tag | Links |
+|:---:|:---:|:---:|:---:|:---:|:---:|:---:|
+| <ruby>ゲームマル<rt>GAMMARU</rt></ruby> ２０２６夏コンテスト | **ERROR CODE: H** | 2026.06.26 - 2026.08.15. | Programming & Art(UI) | 🔄 In Progress | [**#GAMMARU 2026 SUMMER CONTEST**]({{ site.baseurl }}/tags/gammaru-2026-summer-contest/) | [Link](https://example.com) |
+| test | test | test | test | test | [**#test**]({{ site.baseurl }}/tags/test/) | [Link](https://example.com) |
+
+
+
+[カテゴリーへ移動]({{ site.baseurl }}/categories/コンテスト-制作物/){:.btn .btn-outline-primary }
+
+## 🔍 他の創作物の深層分析 (BS)
 > 「先輩の教え、あの始まりは足跡から。」
 
 お気に入りのゲームのシステムとストーリーを分析し、開発者としての視野を広げます。
 
 
-## 🧑🏻‍💻 プログラミング練習 (PR)
+## 🧑🏻‍💻 CS・プログラミング練習 (CS)
 > 「想像を創造する。方法を学んでいく。」
 
 C#、C++、Pythonなど、より良いコードを組むためのアルゴリズムとプログラミング練習記録です。
@@ -103,14 +106,26 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 [カテゴリーへ移動]({{ site.baseurl }}/categories/プログラミング練習/){:.btn .btn-outline-primary }
 
 
-## 💯 大学数学・CS基礎 (SC)
-> 「大学での学び、そして先へ進む一歩。」
+## 🇯🇵 日本語の学習ログ (JA)
+> 「いつか、あなたと繋がれるように。」
 
-大学で学んだ数学・CSの内容を基に、新しいアイデアを整理します。
+JLPTなど日本語の勉強記録を入れます。
+
+
+## 🌏 大学内外スタディ記録 (ST)
+> 「一人ではなく、一つになろ。」
+
+共に学びと試行錯誤の記録です。
+
+
+## 🎤 ゲーム業界イベント記録 (EV)
+> 「小さな一言、そこから夢が膨らむ。」
+
+各種ゲーム業界関連のイベントに参加した記録です。
 
 
 
-## ✈️ 交換留学日記 (KK)
+## ✈️ 交換留学日記 (EX)
 > 「もっと広い世界へ踏み出せ、未来の私！」
 
 将来、交換留学生として旅立つ時のためのカテゴリーです。今はまだ、準備中。
@@ -122,9 +137,6 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 
 個人的な、雑多な記録です。 個人的な考えが込められています。
 <br>
-
-[**#Japanese**]({{ site.baseurl }}/tags/japanese/) <br>
-[**#Korean**]({{ site.baseurl }}/tags/korean/) <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/雑記/){:.btn .btn-outline-primary }
 
@@ -152,29 +164,28 @@ DevLog의 한국어 버전입니다.
 
 
 ### 🕛 2026年まで （大学 1年生）
- - **JLPT N2合格**
+ - 🔄 **JLPT N2合格**
+ - ✅ **ゲームマル２０２６夏コンテスト参加**
 
 ### 🕑 2027年まで （大学 2年生）
- - **情報処理技者（応用情報技術者）合格**
- - **AtCoder Gray**
+ - 📅 **情報処理産業技者（韓国の資格証）合格**
+ - 📅 **AtCoder Gray**
+ - 📅 **UNICON（UNIDEVのコンテスト）参加**
 
 ### 🕓 2028年まで （軍隊）
- - **JLPT N1合格**
- - **AtCoder Brown**
+ - 📅 **JLPT N1合格**
+ - 📅 **AtCoder Brown**
 
 ### 🕕 2029年まで （軍隊）
- - **TOEIC 850点以上取得**
+ - 📅 **TOEIC 850点以上取得**
 
 ### 🕗 2030年まで （大学 3年生）
- - **日本の大学への交換留学**
- - **AtCoder Green**
+ - 📅 **日本の大学への交換留学**
+ - 📅 **AtCoder Green**
+ - 📅 **漢検２級合格**
 
 ### 🕙 2031年まで （大学 4年生）
 
 
 ### 🗓️ その後
-
-
-更新する予定です。
-
 
