@@ -70,6 +70,23 @@ label: 自己紹介
 
 
 
+## 🤖 Project VX (VX)
+> 「Virtual Development Transformationへの転換、その可能性を試してみる。」
+
+**『アスデイ: Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
+
+[『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
+<br><br>
+[開発計画について、詳しくはこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
+
+[**#AstralDays**]({{ site.baseurl }}/tags/astraldays/) <br>
+[**#アスデイ**]({{ site.baseurl }}/tags/アスデイ/) <br>
+[**#DevLog**]({{ site.baseurl }}/tags/devlog/) <br>
+
+[カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
+
+
+
 
 
 
@@ -81,7 +98,7 @@ label: 自己紹介
 
 | Contest | Project | Date | Main Role | Status | Blog Tag | Links |
 |:---:|:---:|:---:|:---:|:---:|:---:|:---:|
-| <ruby>ゲームマル<rt>GAMMARU</rt></ruby> ２０２６夏コンテスト | **ERROR CODE: H** | 2026.06.26 - 2026.08.15. | Programming & Art(UI) | 🔄 In Progress | [**#GAMMARU 2026 SUMMER CONTEST**]({{ site.baseurl }}/tags/gammaru-2026-summer-contest/) | [Link](https://example.com) |
+| <ruby>ゲームマル<rt>GAMMARU</rt></ruby> ２０２６夏コンテスト | **ERROR CODE: H** | 2026.06.26 - 2026.08.15. | Programming & Art(UI) | ✅ Done | [**#GAMMARU 2026 SUMMER CONTEST**]({{ site.baseurl }}/tags/gammaru-2026-summer-contest/) | [Link](https://example.com) |
 
 
 
@@ -106,12 +123,6 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 [カテゴリーへ移動]({{ site.baseurl }}/categories/cs-プログラミング練習/){:.btn .btn-outline-primary }
 
 
-## 🇯🇵 日本語の学習ログ (JA)
-> 「いつか、あなたと繋がれるように。」
-
-JLPTなど日本語の勉強記録を入れます。
-
-
 ## 🌏 大学内外スタディ記録 (ST)
 > 「一人ではなく、一つになろ。」
 
@@ -123,13 +134,18 @@ JLPTなど日本語の勉強記録を入れます。
 
 各種ゲーム業界関連のイベントに参加した記録です。
 
-
+[カテゴリーへ移動]({{ site.baseurl }}/categories/ゲーム業界イベント記録/){:.btn .btn-outline-primary }
 
 ## ✈️ 交換留学日記 (EX)
 > 「もっと広い世界へ踏み出せ、未来の私！」
 
 将来、交換留学生として旅立つ時のためのカテゴリーです。今はまだ、準備中。
 
+
+## 🇯🇵 日本語の学習ログ (JA)
+> 「いつか、あなたと繋がれるように。」
+
+JLPTなど日本語の勉強記録を入れます。
 
 
 ## 📝 雑記 (ET)
