@@ -71,26 +71,24 @@ label: 自己紹介
 
 
 ## 🤖 Project VX (VX)
-> 「Virtual Development Transformationへの転換、その可能性を試してみる。」
+> 「Virtual Developer Transformation、その可能性を試してみる。」
 
-**『アスデイ: Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
+**『Project VX』**は、AIを活用することで、人のアイデアをどこまで実現できるのかを試す実験プロジェクトです。<ruby>バーチャル開発者<rt>AI開発者</rt></ruby>を構築し、テストし、実際の開発へと活用していく過程を記録していく予定です。
+AIを単なる補助ツールとして使うのではなく、人間がアイデアを定義し、AIをディレクションすることで、どこまで開発を進められるのかを検証します。
 
-[『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
-<br><br>
-[開発計画について、詳しくはこちらです。]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysの開発計画)
+<br>
+[**#ProjectVX**]({{ site.baseurl }}/tags/projectvx/) <br>
+[**#Development**]({{ site.baseurl }}/tags/development/) <br>
+[**AI**]({{ site.baseurl }}/tags/ai/) <br>
 
-[**#AstralDays**]({{ site.baseurl }}/tags/astraldays/) <br>
-[**#アスデイ**]({{ site.baseurl }}/tags/アスデイ/) <br>
-[**#DevLog**]({{ site.baseurl }}/tags/devlog/) <br>
-
-[カテゴリーへ移動]({{ site.baseurl }}/categories/astral-days-の企画-開発秘話/){:.btn .btn-outline-primary }
+[カテゴリーへ移動]({{ site.baseurl }}/categories/project-vx/){:.btn .btn-outline-primary }
 
 
 
 
 
 
-## 🎮 コンテスト・制作物 (CT)
+## 🎮 コンテスト・成果物 (CT)
 > 「小さな動きから、一歩ずつ、一歩ずつ。」
 
 より広い世界で、新しい挑戦を続けます。
@@ -103,7 +101,7 @@ label: 自己紹介
 
 
 
-[カテゴリーへ移動]({{ site.baseurl }}/categories/コンテスト-制作物/){:.btn .btn-outline-primary }
+[カテゴリーへ移動]({{ site.baseurl }}/categories/コンテスト-成果物/){:.btn .btn-outline-primary }
 
 ## 🔍 他の創作物の深層分析 (BS)
 > 「先輩の教え、あの始まりは足跡から。」
@@ -124,7 +122,7 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 
 
 ## 🌏 大学内外スタディ記録 (ST)
-> 「一人ではなく、一つになろ。」
+> 「一人ではなく、一つになろう。」
 
 共に学びと試行錯誤の記録です。
 
@@ -184,7 +182,7 @@ DevLog의 한국어 버전입니다.
  - ✅ **ゲームマル２０２６夏コンテスト参加**
 
 ### 🕑 2027年まで （大学 2年生）
- - 📅 **情報処理産業技者（韓国の資格証）合格**
+ - 📅 **情報処理産業技士（韓国の資格証）合格**
  - 📅 **AtCoder Gray**
  - 📅 **UNICON（UNIDEVのコンテスト）参加**
 
