@@ -76,6 +76,15 @@ label: 自己紹介
 **『Project VX』**は、AIを活用することで、人のアイデアをどこまで実現できるのかを試す実験プロジェクトです。<ruby>バーチャル開発者<rt>AI開発者</rt></ruby>を構築し、テストし、実際の開発へと活用していく過程を記録していく予定です。
 AIを単なる補助ツールとして使うのではなく、人間がアイデアを定義し、AIをディレクションすることで、どこまで開発を進められるのかを検証します。
 
+| Version | Main Target | Keywords | Status |
+|:---:|:---:|:---:|:---:|
+| **Test #1** | Basic Workflow | Connectivity |  ✅Done |
+| **Test #2** | Complex Development | Autonomy | 🔄 In Progress |
+| **Test #3** | Multimodal Assets | Multimodality | 📅 Planned  |
+| **Test #4** | Vertical Slice | Integration | 📅 Planned |
+| **Project VX** | Full Production | Production | 📅 Planned |
+
+
 <br>
 [**#ProjectVX**]({{ site.baseurl }}/tags/projectvx/) <br>
 [**#Development**]({{ site.baseurl }}/tags/development/) <br>
