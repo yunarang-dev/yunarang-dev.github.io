@@ -34,7 +34,7 @@ label: 自己紹介
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
 - **Scenario Writing:** Obsidian / Google Docs
-- **Game Planning:** Google Docs / Google Spreadsheets
+- **Game Planning:** Obsidian / Google Docs / Google Spreadsheets
 
 - [Email](mailto:yunarang97@gmail.com)
 - [X/Twitter](https://x.com/yunarang_dev)
