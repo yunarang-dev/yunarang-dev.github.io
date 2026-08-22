@@ -16,10 +16,10 @@ timezone:
 
 title: ゆならんのDevLog # the main title
 
-tagline: 一行のコードに宿るキャラクターの息遣いが、あなたの心に届き、ささやかな幸せになりますように. # it will display as the subtitle
+tagline: 夜明けの薄明かりの中を進みながら、一行のコードをあなたの心に残せますように。 # it will display as the subtitle
 
 description: >- # used by seo meta and the atom feed
-  一行のコードに宿るキャラクターの息遣いが、あなたの心に届き、ささやかな幸せになりますように。
+  夜明けの薄明かりの中を進みながら、一行のコードをあなたの心に残せますように。
   韓国で電子情報工学・IT融合を専攻しており、ゲーム開発者を目指している「ゆならん」と申します。
 
 # Fill in the protocol & hostname for your site.

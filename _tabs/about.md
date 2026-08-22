@@ -12,7 +12,7 @@ label: 自己紹介
 {: .prompt-tip }
  -->
 
-> 一行のコードに宿るキャラクターの息遣いが、あなたの心に届き、ささやかな幸せになりますように。
+> 夜明けの薄明かりの中を進みながら、一行のコードをあなたの心に残せますように。
 
 初めまして！ 私は韓国の大学で電子情報工学・IT融合を専攻しており、ゲーム開発者を目指している「ゆならん」と申します。
 ここでは主に、Unityで感情を重視したストーリーゲームを制作する過程を記録しています。
@@ -38,11 +38,9 @@ label: 自己紹介
 
 - [Email](mailto:yunarang97@gmail.com)
 - [X/Twitter](https://x.com/yunarang_dev)
-- [Instagram](https://www.instagram.com/yunarang_dev/)
 - [AtCoder](https://atcoder.jp/users/yunarang_dev)
 - [Baekjoon😢](https://www.acmicpc.net/user/yunarang_dev)
 - [SoundCloud](https://soundcloud.com/yunarang)
-- [Discord](https://discordapp.com/users/yunarang_dev)
 
 [<i class="fab fa-github"></i> GitHub](https://github.com/yunarang-dev){:target="_blank" .btn .btn-outline-primary }
 
@@ -71,15 +69,15 @@ label: 自己紹介
 
 
 ## 🤖 Project VX (VX)
-> 「Virtual Developer Transformation、その可能性を試してみる。」
+> 「Virtual Developer Transformation――その可能性を試す。」
 
-**『Project VX』**は、AIを活用することで、人のアイデアをどこまで実現できるのかを試す実験プロジェクトです。<ruby>バーチャル開発者<rt>AI開発者</rt></ruby>を構築し、テストし、実際の開発へと活用していく過程を記録していく予定です。
+**『Project VX』**は、AIを活用することで、人のアイデアをどこまで実現できるのかを試す実験プロジェクトです。<ruby>バーチャル開発者<rt>AI Developer</rt></ruby>を構築し、テストし、実際の開発へと活用していくその過程を記録しています。
 AIを単なる補助ツールとして使うのではなく、人間がアイデアを定義し、AIをディレクションすることで、どこまで開発を進められるのかを検証します。
 
 | Version | Main Target | Keywords | Status |
 |:---:|:---:|:---:|:---:|
 | **Test #1** | Basic Workflow | Connectivity |  ✅ Done |
-| **Test #2** | Complex Development | Autonomy | 🔄 In Progress |
+| **Test #2** | Complex Development | Autonomy | 🔄 In Progress |ㄴ
 | **Test #3** | Multimodal Assets | Multimodality | 📅 Planned  |
 | **Test #4** | Vertical Slice | Integration & Efficiency | 📅 Planned |
 | **Special Test** | Lumi's Astral Days! Prototype | Generalization | 📅 Planned |
@@ -89,7 +87,7 @@ AIを単なる補助ツールとして使うのではなく、人間がアイデ
 <br>
 [**#ProjectVX**]({{ site.baseurl }}/tags/projectvx/) <br>
 [**#Development**]({{ site.baseurl }}/tags/development/) <br>
-[**AI**]({{ site.baseurl }}/tags/ai/) <br>
+[**#AI**]({{ site.baseurl }}/tags/ai/) <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/project-vx/){:.btn .btn-outline-primary }
 
@@ -99,7 +97,7 @@ AIを単なる補助ツールとして使うのではなく、人間がアイデ
 
 
 ## 🎮 コンテスト・成果物 (CT)
-> 「小さな動きから、一歩ずつ、一歩ずつ。」
+> 「小さな一歩から、一歩ずつ。」
 
 より広い世界で、新しい挑戦を続けます。
 <br>
@@ -114,13 +112,13 @@ AIを単なる補助ツールとして使うのではなく、人間がアイデ
 [カテゴリーへ移動]({{ site.baseurl }}/categories/コンテスト-成果物/){:.btn .btn-outline-primary }
 
 ## 🔍 他の創作物の深層分析 (BS)
-> 「先輩の教え、あの始まりは足跡から。」
+> 「先人の足跡から、次の一歩を学ぶ。」
 
 お気に入りのゲームのシステムとストーリーを分析し、開発者としての視野を広げます。
 
 
 ## 🧑🏻‍💻 CS・プログラミング練習 (CS)
-> 「想像を創造する。方法を学んでいく。」
+> 「想像を創造へ。その方法を学んでいく。」
 
 C#、C++、Pythonなど、より良いコードを組むためのアルゴリズムとプログラミング練習記録です。
 <br>
@@ -132,9 +130,9 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 
 
 ## 🌏 大学内外スタディ記録 (ST)
-> 「一人ではなく、一つになろう。」
+> 「一人ではなく、共に歩もう。」
 
-共に学びと試行錯誤の記録です。
+共に学び、試行錯誤してきた記録です。
 
 
 ## 🎤 ゲーム業界イベント記録 (EV)
@@ -153,13 +151,13 @@ C#、C++、Pythonなど、より良いコードを組むためのアルゴリズ
 ## 🇯🇵 日本語の学習ログ (JA)
 > 「いつか、あなたと繋がれるように。」
 
-JLPTなど日本語の勉強記録を入れます。
+JLPTをはじめとした、日本語学習の記録を残します。
 
 
 ## 📝 雑記 (ET)
 > 「些細な記憶の破片。巨大な思い出の断片。」
 
-個人的な、雑多な記録です。 個人的な考えが込められています。
+日々の雑多な記録や、個人的な考えを綴ります。
 <br>
 
 [カテゴリーへ移動]({{ site.baseurl }}/categories/雑記/){:.btn .btn-outline-primary }
@@ -196,11 +194,11 @@ DevLog의 한국어 버전입니다.
  - 📅 **AtCoder Gray**
  - 📅 **UNICON（UNIDEVのコンテスト）参加**
 
-### 🕓 2028年まで （軍隊）
+### 🕓 2028年まで （兵役期間）
  - 📅 **JLPT N1合格**
  - 📅 **AtCoder Brown**
 
-### 🕕 2029年まで （軍隊）
+### 🕕 2029年まで （兵役期間）
  - 📅 **TOEIC 850点以上取得**
 
 ### 🕗 2030年まで （大学 3年生）
