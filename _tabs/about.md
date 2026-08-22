@@ -81,7 +81,7 @@ AIを単なる補助ツールとして使うのではなく、人間がアイデ
 | **Test #1** | Basic Workflow | Connectivity |  ✅ Done |
 | **Test #2** | Complex Development | Autonomy | 🔄 In Progress |
 | **Test #3** | Multimodal Assets | Multimodality | 📅 Planned  |
-| **Test #4** | Vertical Slice | Integration | 📅 Planned |
+| **Test #4** | Vertical Slice | Integration & Efficiency | 📅 Planned |
 | **Special Test** | Lumi's Astral Days! Prototype | Generalization | 📅 Planned |
 | **Project VX** | Full Production | Production | 📅 Planned |
 
