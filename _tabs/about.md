@@ -34,7 +34,7 @@ label: 自己紹介
 - **Designing:** Procreate / Blender
 - **Composing:** Logic Pro
 - **Scenario Writing:** Obsidian / Google Docs
-- **Game Planning:** Obsidian / Google Docs / Google Spreadsheets
+- **Game Planning:** Obsidian / Google Docs / Google Sheets
 
 - [Email](mailto:yunarang97@gmail.com)
 - [X/Twitter](https://x.com/yunarang_dev)
@@ -51,10 +51,10 @@ label: 自己紹介
 
 
 
-## 💫 アスデイ: Astral Days! (AD)
+## 💫 アスデイ：Astral Days! (AD)
 > 「<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。」
 
-**『アスデイ: Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
+**『アスデイ：Astral Days!』**は非日常の中で生きてきた、傷ついた少女たちの連帯、そして救済を描く「百合オープンフィールドリンクアクションRPG」です。精神的なトラウマ、不安な関係を経験しながら、未完成でありながら、成熟していく、「大人」になる一つの成長物語です。
 
 [『アスデイ』について、もっと詳しい情報はこちらです。]({{ site.baseurl }}/posts/AD-00/)
 <br><br>
@@ -77,7 +77,7 @@ AIを単なる補助ツールとして使うのではなく、人間がアイデ
 | Version | Main Target | Keywords | Status |
 |:---:|:---:|:---:|:---:|
 | **Test #1** | Basic Workflow | Connectivity |  ✅ Done |
-| **Test #2** | Complex Development | Autonomy | 🔄 In Progress |ㄴ
+| **Test #2** | Complex Development | Autonomy | 🔄 In Progress |
 | **Test #3** | Multimodal Assets | Multimodality | 📅 Planned  |
 | **Test #4** | Vertical Slice | Integration & Efficiency | 📅 Planned |
 | **Special Test** | Lumi's Astral Days! Prototype | Generalization | 📅 Planned |
