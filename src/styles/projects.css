@@ -18,14 +18,6 @@
 
 .projects-index__hero {
   position: relative;
-  isolation: isolate;
-  max-width: calc(var(--content) + (var(--gutter) * 2));
-  padding: clamp(1.25rem, 3vw, 2.25rem);
-}
-
-.projects-index__hero > :not(.hero-border-trace) {
-  position: relative;
-  z-index: 3;
 }
 
 .projects-index__eyebrow,

@@ -29,6 +29,14 @@
   padding: clamp(1.25rem, 3vw, 2.25rem);
 }
 
+.project-wiki__hero--hub {
+  padding: 0;
+}
+
+.project-wiki__hero--hub .project-wiki__eyebrow {
+  margin-top: 0;
+}
+
 .project-wiki__hero > :not(.hero-border-trace) {
   position: relative;
   z-index: 3;
