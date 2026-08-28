@@ -9,12 +9,16 @@ html.home-scroll {
   --panel-reflection-soft: 5.43%;
   --panel-reflection-soft-drift: 0%;
   --panel-reflection-light-drift: 0%;
-  --glass-edge-top-progress: 0%;
-  --glass-edge-bottom-progress: 0%;
-  --glass-edge-right-progress: 0%;
-  --glass-edge-top-light: 76%;
-  --glass-edge-bottom-light: 0%;
-  --glass-edge-right-light: 0%;
+  --journey-progress: 0;
+  --journey-depth: 0;
+  --journey-current-x: 0vw;
+  --journey-current-y: 0svh;
+  --journey-current-opacity: 0.36;
+  --journey-star-drift-x: 0px;
+  --journey-star-drift-y: 0px;
+  --journey-constellation-x: 0px;
+  --journey-constellation-y: 0px;
+  --journey-veil: 0.18;
   --halo-x: 50vw;
   --halo-y: 50svh;
   --home-halo: radial-gradient(circle 19rem at var(--halo-x) var(--halo-y), rgb(130 174 255 / 5%), transparent 68%);
@@ -40,26 +44,7 @@ html.home-scroll {
       rgb(233 243 255 / var(--panel-reflection-light)) calc(var(--glass-refraction) + 0.7% + var(--panel-reflection-light-drift)),
       transparent calc(var(--glass-refraction) + 3.8% + var(--panel-reflection-light-drift))
     );
-  --home-glass-surface:
-    linear-gradient(
-      90deg,
-      transparent calc(var(--glass-edge-top-progress) - 14%),
-      rgb(232 244 255 / var(--glass-edge-top-light)) var(--glass-edge-top-progress),
-      transparent calc(var(--glass-edge-top-progress) + 14%)
-    ) top / 100% 2px no-repeat,
-    linear-gradient(
-      90deg,
-      transparent calc(var(--glass-edge-bottom-progress) - 14%),
-      rgb(185 220 255 / var(--glass-edge-bottom-light)) var(--glass-edge-bottom-progress),
-      transparent calc(var(--glass-edge-bottom-progress) + 14%)
-    ) bottom / 100% 2px no-repeat,
-    linear-gradient(
-      180deg,
-      transparent calc(var(--glass-edge-right-progress) - 14%),
-      rgb(219 237 255 / var(--glass-edge-right-light)) var(--glass-edge-right-progress),
-      transparent calc(var(--glass-edge-right-progress) + 14%)
-    ) right / 2px 100% no-repeat,
-    linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
+  --home-glass-surface: linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
@@ -163,6 +148,12 @@ html.home-scroll .snap-section {
 .contact-pane > :not(.constellation) {
   position: relative;
   z-index: 2;
+}
+
+.record-column > .hero-border-trace,
+.github-pane > .hero-border-trace,
+.contact-pane > .hero-border-trace {
+  z-index: 3;
 }
 
 html.home-scroll footer {
@@ -406,7 +397,7 @@ html.home-scroll footer {
 .deep-sea-starfield {
   position: absolute;
   inset: 0;
-  opacity: 0.48;
+  opacity: calc(0.48 - (var(--journey-depth) * 0.16));
   background-image:
     radial-gradient(circle at 8% 16%, rgb(196 222 255 / 46%) 0 0.8px, transparent 1.4px),
     radial-gradient(circle at 28% 72%, rgb(151 197 255 / 34%) 0 0.65px, transparent 1.2px),
@@ -414,26 +405,75 @@ html.home-scroll footer {
     radial-gradient(circle at 76% 83%, rgb(156 201 255 / 34%) 0 0.65px, transparent 1.2px),
     radial-gradient(circle at 91% 18%, rgb(199 225 255 / 40%) 0 0.75px, transparent 1.3px);
   background-size: 23rem 19rem, 29rem 23rem, 31rem 27rem, 37rem 31rem, 41rem 35rem;
-  background-position: 0 0, 5rem 3rem, 12rem 9rem, 2rem 14rem, 18rem 6rem;
+  background-position:
+    calc(0rem + var(--journey-star-drift-x)) calc(0rem + var(--journey-star-drift-y)),
+    calc(5rem + var(--journey-star-drift-x)) calc(3rem + var(--journey-star-drift-y)),
+    calc(12rem + var(--journey-star-drift-x)) calc(9rem + var(--journey-star-drift-y)),
+    calc(2rem + var(--journey-star-drift-x)) calc(14rem + var(--journey-star-drift-y)),
+    calc(18rem + var(--journey-star-drift-x)) calc(6rem + var(--journey-star-drift-y));
+  transition: opacity 180ms linear;
 }
 
 .deep-sea-field::after {
   position: absolute;
   inset: 0;
   background:
-    linear-gradient(180deg, rgb(97 166 219 / 7%), transparent 24%, transparent 67%, rgb(0 3 9 / 32%)),
+    linear-gradient(180deg, rgb(97 166 219 / 7%), transparent 24%, transparent 67%, rgb(0 3 9 / var(--journey-veil))),
     radial-gradient(ellipse at 50% 115%, rgb(0 0 0 / 22%), transparent 54%);
   content: '';
 }
 
 .deep-sea-light-columns {
   position: absolute;
-  inset: 0;
-  opacity: 0.26;
+  inset: -8svh -14vw;
+  opacity: calc(var(--journey-current-opacity) * 0.8);
   background:
-    linear-gradient(112deg, transparent 18%, rgb(125 183 238 / 7%) 35%, transparent 48%),
-    linear-gradient(112deg, transparent 52%, rgb(125 183 238 / 5%) 63%, transparent 75%);
+    linear-gradient(112deg, transparent 18%, rgb(125 183 238 / 9%) 35%, transparent 48%),
+    linear-gradient(112deg, transparent 52%, rgb(125 183 238 / 7%) 63%, transparent 75%);
   background-size: 100% 100%;
+  transform: translate3d(var(--journey-current-x), var(--journey-current-y), 0);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.deep-sea-current {
+  position: absolute;
+  inset: -18svh -22vw;
+  opacity: var(--journey-current-opacity);
+  transform: translate3d(calc(var(--journey-current-x) * 1.35), calc(var(--journey-current-y) * 1.18), 0) rotate(-8deg);
+  transform-origin: center;
+  will-change: transform, opacity;
+}
+
+.deep-sea-current span {
+  position: absolute;
+  display: block;
+  width: 58vw;
+  height: 36svh;
+  border: 1px solid rgb(184 222 255 / 8%);
+  border-radius: 50%;
+  background: linear-gradient(112deg, transparent 44%, rgb(207 232 255 / 8%) 49%, transparent 55%);
+  box-shadow: 0 0 3rem rgb(116 185 242 / 6%);
+  filter: blur(0.3px);
+}
+
+.deep-sea-current span:nth-child(1) {
+  top: 7%;
+  left: -12%;
+}
+
+.deep-sea-current span:nth-child(2) {
+  top: 40%;
+  left: 27%;
+  width: 44vw;
+  opacity: 0.72;
+}
+
+.deep-sea-current span:nth-child(3) {
+  top: 69%;
+  left: -4%;
+  width: 51vw;
+  opacity: 0.46;
 }
 
 .deep-sea-constellation {
@@ -450,39 +490,50 @@ html.home-scroll footer {
   stroke-linecap: round;
   stroke-linejoin: round;
   stroke-width: 0.72;
+  vector-effect: non-scaling-stroke;
 }
 
 .deep-sea-constellation .constellation-branch {
   stroke: rgb(154 201 255 / 48%);
+  stroke-dasharray: 4 6;
+  animation: deep-sea-constellation-current 10.5s linear infinite;
 }
 
 .deep-sea-constellation circle {
   fill: rgb(204 225 255 / 78%);
 }
 
+.deep-sea-constellation circle:nth-of-type(3) {
+  fill: rgb(255 190 145 / 72%);
+}
+
+@keyframes deep-sea-constellation-current {
+  to { stroke-dashoffset: -20; }
+}
+
 .deep-sea-constellation--one {
   top: 6%;
   right: 3%;
-  transform: rotate(8deg);
+  transform: translate3d(var(--journey-constellation-x), var(--journey-constellation-y), 0) rotate(8deg);
 }
 
 .deep-sea-constellation--two {
   top: 31%;
   left: 3%;
-  transform: rotate(-12deg);
+  transform: translate3d(calc(var(--journey-constellation-x) * -0.65), calc(var(--journey-constellation-y) * 0.8), 0) rotate(-12deg);
 }
 
 .deep-sea-constellation--three {
   top: 56%;
   right: 4%;
-  transform: rotate(7deg);
+  transform: translate3d(var(--journey-constellation-x), calc(var(--journey-constellation-y) * 1.1), 0) rotate(7deg);
 }
 
 .deep-sea-constellation--four {
   top: 80%;
   left: 5%;
   opacity: 0.09;
-  transform: rotate(-9deg) scale(0.9);
+  transform: translate3d(calc(var(--journey-constellation-x) * -0.55), calc(var(--journey-constellation-y) * 1.2), 0) rotate(-9deg) scale(0.9);
 }
 
 .deep-sea-meteor {
@@ -500,13 +551,13 @@ html.home-scroll footer {
 .deep-sea-meteor--one {
   top: 9%;
   left: 15%;
-  animation: deep-sea-meteor-one 42s steps(1890, end) -14s infinite;
+  animation: deep-sea-meteor-one 42s linear -14s infinite;
 }
 
 .deep-sea-meteor--two {
   top: 58%;
   left: 62%;
-  animation: deep-sea-meteor-two 46s steps(2070, end) -29s infinite;
+  animation: deep-sea-meteor-two 46s linear -29s infinite;
 }
 
 @keyframes deep-sea-meteor-one {
@@ -600,6 +651,7 @@ html.home-scroll footer {
   border-radius: 50%;
   background: var(--color-moon);
   box-shadow: 0 0 0.5rem var(--color-moon);
+  transform: translate(-50%, -50%);
 }
 
 .constellation-lines {
@@ -618,6 +670,12 @@ html.home-scroll footer {
   stroke-width: 0.45;
 }
 
+.constellation-lines .constellation-branch {
+  stroke: var(--color-dawn-soft);
+  stroke-dasharray: 2.2 3;
+  opacity: 0.52;
+}
+
 .constellation-records {
   position: absolute;
   z-index: 3;
@@ -627,10 +685,13 @@ html.home-scroll footer {
   height: 5rem;
 }
 
-.constellation-records span:nth-child(2) { top: 16%; left: 4%; background: var(--color-dawn); }
-.constellation-records span:nth-child(3) { top: 0; left: 28%; }
-.constellation-records span:nth-child(4) { top: 30%; left: 56%; }
-.constellation-records span:nth-child(5) { top: 56%; left: 78%; }
+.constellation-records span:nth-child(2) { top: 24%; left: 4%; background: var(--color-dawn); }
+.constellation-records span:nth-child(3) { top: 8%; left: 27%; }
+.constellation-records span:nth-child(4) { top: 31%; left: 53%; width: 0.42rem; }
+.constellation-records span:nth-child(5) { top: 53%; left: 77%; }
+.constellation-records span:nth-child(6) { top: 28%; left: 96%; }
+.constellation-records span:nth-child(7) { top: 76%; left: 62%; width: 0.27rem; }
+.constellation-records span:nth-child(8) { top: 88%; left: 84%; }
 
 .constellation-github {
   position: absolute;
@@ -640,11 +701,13 @@ html.home-scroll footer {
   height: 8rem;
 }
 
-.constellation-github span:nth-child(2) { top: 10%; right: 0; background: var(--color-dawn); }
-.constellation-github span:nth-child(3) { top: 22%; right: 24%; }
-.constellation-github span:nth-child(4) { top: 37%; right: 47%; }
-.constellation-github span:nth-child(5) { top: 57%; right: 71%; }
-.constellation-github span:nth-child(6) { top: 75%; right: 53%; }
+.constellation-github span:nth-child(2) { top: 12%; left: 96%; background: var(--color-dawn); }
+.constellation-github span:nth-child(3) { top: 24%; left: 75%; }
+.constellation-github span:nth-child(4) { top: 41%; left: 51%; width: 0.43rem; }
+.constellation-github span:nth-child(5) { top: 62%; left: 27%; }
+.constellation-github span:nth-child(6) { top: 82%; left: 45%; }
+.constellation-github span:nth-child(7) { top: 71%; left: 66%; width: 0.28rem; }
+.constellation-github span:nth-child(8) { top: 63%; left: 82%; }
 
 .constellation-contact {
   position: absolute;
@@ -654,9 +717,11 @@ html.home-scroll footer {
   height: 8rem;
 }
 
-.constellation-contact span:nth-child(2) { top: 14%; right: 4%; background: var(--color-dawn); }
-.constellation-contact span:nth-child(3) { top: 44%; right: 46%; }
-.constellation-contact span:nth-child(4) { top: 86%; right: 10%; }
+.constellation-contact span:nth-child(2) { top: 12%; left: 94%; background: var(--color-dawn); }
+.constellation-contact span:nth-child(3) { top: 31%; left: 61%; }
+.constellation-contact span:nth-child(4) { top: 57%; left: 38%; width: 0.43rem; }
+.constellation-contact span:nth-child(5) { top: 86%; left: 72%; }
+.constellation-contact span:nth-child(6) { top: 77%; left: 16%; width: 0.28rem; }
 
 @media (max-width: 64rem) {
   .record-column {
@@ -767,5 +832,18 @@ html.home-scroll footer {
 
   .deep-sea-meteor {
     display: none;
+  }
+
+  .deep-sea-light-columns,
+  .deep-sea-current,
+  .deep-sea-constellation--one,
+  .deep-sea-constellation--two,
+  .deep-sea-constellation--three,
+  .deep-sea-constellation--four {
+    transform: none;
+  }
+
+  .deep-sea-constellation .constellation-branch {
+    animation: none;
   }
 }

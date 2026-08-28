@@ -17,7 +17,15 @@
 }
 
 .projects-index__hero {
+  position: relative;
+  isolation: isolate;
   max-width: calc(var(--content) + (var(--gutter) * 2));
+  padding: clamp(1.25rem, 3vw, 2.25rem);
+}
+
+.projects-index__hero > :not(.hero-border-trace) {
+  position: relative;
+  z-index: 3;
 }
 
 .projects-index__eyebrow,
@@ -60,12 +68,23 @@
 }
 
 .project-index-card {
+  position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(20rem, 0.94fr);
   min-height: min(47rem, 62vw);
+  isolation: isolate;
   border: 1px solid var(--color-line);
   background: rgb(5 16 29 / 44%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), var(--shadow-soft);
+}
+
+.project-index-card > :not(.hero-border-trace) {
+  position: relative;
+  z-index: 3;
+}
+
+.project-index-card > .hero-border-trace {
+  z-index: 4;
 }
 
 .project-index-card--reverse .project-index-card__media {

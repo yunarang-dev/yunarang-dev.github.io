@@ -82,15 +82,26 @@
   );
   box-shadow: 0 0 0.7rem rgb(130 174 255 / 24%);
   content: '';
+  animation: archive-thread-breathe 7.5s ease-in-out infinite alternate;
+}
+
+@keyframes archive-thread-breathe {
+  from { opacity: 0.72; filter: brightness(0.9); }
+  to { opacity: 1; filter: brightness(1.14); }
 }
 
 .timeline-entry {
+  --constellation-accent: var(--color-moon);
+  --constellation-glow: rgb(130 174 255 / 42%);
   position: relative;
   display: grid;
   grid-template-columns: var(--timeline-date-width) 3.5rem minmax(0, 1fr);
   gap: var(--space-5);
   align-items: start;
   padding-bottom: var(--space-7);
+  transition:
+    opacity var(--transition-base),
+    filter var(--transition-base);
 }
 
 .timeline-entry:last-child {
@@ -115,12 +126,12 @@
   width: 1.15rem;
   aspect-ratio: 1;
   margin-top: 0.95rem;
-  border: 1px solid rgb(182 206 255 / 76%);
+  border: 1px solid color-mix(in srgb, var(--constellation-accent) 72%, transparent);
   border-radius: 50%;
   background: var(--color-canvas-deep);
   box-shadow:
     0 0 0 0.25rem rgb(6 17 31 / 94%),
-    0 0 0.85rem rgb(130 174 255 / 42%);
+    0 0 0.85rem var(--constellation-glow);
   place-items: center;
 }
 
@@ -128,8 +139,8 @@
   width: 0.3rem;
   aspect-ratio: 1;
   border-radius: 50%;
-  background: var(--color-moon);
-  box-shadow: 0 0 0.45rem rgb(182 206 255 / 90%);
+  background: var(--constellation-accent);
+  box-shadow: 0 0 0.45rem var(--constellation-glow);
 }
 
 .timeline-star::before,
@@ -137,7 +148,7 @@
   position: absolute;
   width: 1px;
   height: 1.65rem;
-  background: linear-gradient(transparent, rgb(182 206 255 / 60%), transparent);
+  background: linear-gradient(transparent, color-mix(in srgb, var(--constellation-accent) 64%, transparent), transparent);
   content: '';
 }
 
@@ -160,6 +171,27 @@
 .timeline-entry.is-latest .timeline-star::before,
 .timeline-entry.is-latest .timeline-star::after {
   background: linear-gradient(transparent, rgb(255 177 125 / 70%), transparent);
+}
+
+.archive-timeline.is-constellation-filtering .timeline-entry.is-constellation-muted {
+  opacity: 0.41;
+  filter: saturate(0.68);
+}
+
+.timeline-entry.is-constellation-active .timeline-star {
+  border-color: color-mix(in srgb, var(--constellation-accent) 92%, white);
+  box-shadow:
+    0 0 0 0.25rem rgb(6 17 31 / 94%),
+    0 0 1.35rem var(--constellation-glow),
+    0 0 2.7rem color-mix(in srgb, var(--constellation-accent) 22%, transparent);
+  transform: scale(1.14);
+}
+
+.timeline-entry.is-constellation-active .timeline-record {
+  border-color: color-mix(in srgb, var(--constellation-accent) 50%, var(--color-line));
+  background:
+    linear-gradient(135deg, color-mix(in srgb, var(--constellation-accent) 10%, transparent), transparent 42%),
+    rgb(8 24 41 / 58%);
 }
 
 .timeline-record {
@@ -188,7 +220,7 @@
   flex-wrap: wrap;
   align-items: center;
   gap: var(--space-2);
-  color: var(--color-moon);
+  color: var(--constellation-accent);
 }
 
 .timeline-record__latest {
@@ -283,5 +315,22 @@
   .timeline-record__latest {
     width: fit-content;
     margin-left: 0;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .archive-timeline::before {
+    animation: none;
+  }
+
+  .timeline-entry,
+  .timeline-star,
+  .timeline-record {
+    transition: none;
+  }
+
+  .timeline-entry.is-constellation-active .timeline-star,
+  .timeline-record:hover {
+    transform: none;
   }
 }

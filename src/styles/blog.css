@@ -85,6 +85,122 @@
   gap: var(--space-2);
 }
 
+.blog-filter-network {
+  display: grid;
+  gap: var(--space-4);
+}
+
+.blog-filter-map {
+  position: relative;
+  min-height: clamp(15rem, 28vw, 18rem);
+  overflow: clip;
+  border: 1px solid rgb(130 174 255 / 20%);
+  background:
+    radial-gradient(circle at 50% 50%, rgb(130 174 255 / 10%), transparent 24%),
+    linear-gradient(135deg, rgb(255 255 255 / 3%), transparent 42%),
+    rgb(5 16 28 / 32%);
+  box-shadow: inset 0 1px 0 rgb(220 233 255 / 5%);
+}
+
+.blog-filter-map::before {
+  position: absolute;
+  inset: 16% 12%;
+  border: 1px solid rgb(130 174 255 / 10%);
+  border-radius: 50%;
+  content: '';
+  pointer-events: none;
+}
+
+.blog-filter-map__lines {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.blog-filter-map__lines line,
+.blog-filter-map__lines polygon {
+  fill: none;
+  stroke: rgb(130 174 255 / 28%);
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  stroke-width: 0.42;
+  filter: drop-shadow(0 0 0.24rem rgb(130 174 255 / 18%));
+}
+
+.blog-filter-map__lines polygon {
+  stroke: rgb(130 174 255 / 14%);
+  stroke-dasharray: 1.2 1.8;
+  animation: blog-constellation-current 12s linear infinite;
+}
+
+@keyframes blog-constellation-current {
+  to { stroke-dashoffset: -12; }
+}
+
+.blog-filter-node {
+  --node-drag-x: 0px;
+  --node-drag-y: 0px;
+  position: absolute;
+  top: var(--node-y);
+  left: var(--node-x);
+  z-index: 1;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.38rem;
+  max-width: min(18rem, 40%);
+  min-height: 1.9rem !important;
+  padding: 0.24rem 0.38rem !important;
+  border-color: transparent !important;
+  color: rgb(196 216 242 / 78%) !important;
+  background: rgb(5 16 28 / 34%) !important;
+  box-shadow: 0 0 0 0.2rem rgb(5 16 28 / 34%);
+  cursor: grab;
+  touch-action: pan-y;
+  transform: translate(-50%, -50%) translate3d(var(--node-drag-x), var(--node-drag-y), 0);
+  user-select: none;
+  white-space: nowrap;
+}
+
+.blog-filter-node.is-dragging {
+  cursor: grabbing;
+  transition:
+    border-color var(--transition-fast),
+    color var(--transition-fast),
+    background-color var(--transition-fast);
+}
+
+.blog-filter-node:hover,
+.blog-filter-node:focus-visible,
+.blog-filter-node.is-active {
+  border-color: rgb(182 206 255 / 52%) !important;
+  color: var(--color-text) !important;
+  background: rgb(45 86 132 / 48%) !important;
+}
+
+.blog-filter-node__dot {
+  display: block;
+  flex: none;
+  width: 0.45rem;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background: var(--color-moon);
+  box-shadow: 0 0 0.55rem rgb(130 174 255 / 72%);
+}
+
+.blog-filter-node.is-active .blog-filter-node__dot {
+  background: var(--color-dawn-soft);
+  box-shadow: 0 0 0.72rem rgb(255 138 61 / 78%);
+}
+
+.blog-filter-node.is-center {
+  min-width: 3.9rem;
+  justify-content: center;
+  border-color: rgb(255 177 125 / 36%) !important;
+}
+
 .blog-filters button {
   min-height: 2.5rem;
   padding: 0.4rem 0.7rem;
@@ -99,7 +215,8 @@
   transition:
     border-color var(--transition-fast),
     color var(--transition-fast),
-    background-color var(--transition-fast);
+    background-color var(--transition-fast),
+    transform 420ms cubic-bezier(0.16, 1, 0.3, 1);
 }
 
 .blog-filters button:hover,
@@ -313,6 +430,39 @@
     padding-top: 0;
   }
 
+  .blog-filter-map {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: var(--space-2);
+    min-height: 0;
+    padding: var(--space-3);
+  }
+
+  .blog-filter-map::before,
+  .blog-filter-map__lines {
+    display: none;
+  }
+
+  .blog-filter-node {
+    position: relative;
+    top: auto;
+    left: auto;
+    align-items: flex-start;
+    max-width: none;
+    width: 100%;
+    min-height: 2.4rem !important;
+    transform: none;
+    white-space: normal;
+    text-align: left;
+    line-height: 1.32;
+  }
+
+  .blog-filter-node.is-center {
+    grid-column: 1 / -1;
+    align-items: center;
+    text-align: center;
+  }
+
   .blog-featured__article {
     grid-template-columns: 1fr;
   }
@@ -369,5 +519,11 @@
 
   .blog-record__description {
     display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .blog-filter-map__lines polygon {
+    animation: none;
   }
 }

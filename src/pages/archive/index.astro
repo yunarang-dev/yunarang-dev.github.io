@@ -22,6 +22,30 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     dateKo: formatDate(post.data.date, 'ko-KR'),
     year: new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' }).format(post.data.date),
   }));
+const constellationPalette = [
+  { accent: 'rgb(130 174 255)', glow: 'rgb(130 174 255 / 48%)' },
+  { accent: 'rgb(158 199 255)', glow: 'rgb(158 199 255 / 46%)' },
+  { accent: 'rgb(116 190 220)', glow: 'rgb(116 190 220 / 42%)' },
+  { accent: 'rgb(205 173 255)', glow: 'rgb(205 173 255 / 42%)' },
+] as const;
+const constellationGroupIndexes = new Map<string, number>();
+const timelinePosts = posts.map((post) => {
+  const projectId = post.data.project?.id;
+  const group = projectId
+    ? `project-${projectId}`
+    : `category-${post.data.category.ja}`;
+  const groupIndex = constellationGroupIndexes.get(group) ?? constellationGroupIndexes.size;
+
+  if (!constellationGroupIndexes.has(group)) {
+    constellationGroupIndexes.set(group, groupIndex);
+  }
+
+  return {
+    post,
+    group,
+    tone: constellationPalette[groupIndex % constellationPalette.length],
+  };
+});
 const site = Astro.site ?? Astro.url;
 const archiveUrl = new URL('/archive/', site).href;
 const archiveSchema = {
@@ -57,8 +81,12 @@ const archiveSchema = {
     </header>
 
     <ol class="archive-timeline" data-i18n-aria="archive.timeline.label" aria-label="投稿の時系列アーカイブ">
-      {posts.map((post, index) => (
-        <li class:list={['timeline-entry', { 'is-latest': index === 0 }]}>
+      {timelinePosts.map(({ post, group, tone }, index) => (
+        <li
+          class:list={['timeline-entry', { 'is-latest': index === 0 }]}
+          data-constellation-group={group}
+          style={`--constellation-accent: ${tone.accent}; --constellation-glow: ${tone.glow};`}
+        >
           <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
           <span class="timeline-star" aria-hidden="true"><span></span></span>
           <article class="timeline-record">
@@ -79,4 +107,33 @@ const archiveSchema = {
       ))}
     </ol>
   </section>
+
+  <script>
+    const timeline = document.querySelector<HTMLElement>('.archive-timeline');
+    const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-constellation-group]'));
+
+    const setActiveConstellation = (group?: string) => {
+      timeline?.classList.toggle('is-constellation-filtering', Boolean(group));
+
+      entries.forEach((entry) => {
+        const isMatch = Boolean(group) && entry.dataset.constellationGroup === group;
+        entry.classList.toggle('is-constellation-active', isMatch);
+        entry.classList.toggle('is-constellation-muted', Boolean(group) && !isMatch);
+      });
+    };
+
+    entries.forEach((entry) => {
+      const group = entry.dataset.constellationGroup;
+      if (!group) return;
+
+      entry.addEventListener('pointerenter', () => setActiveConstellation(group));
+      entry.addEventListener('pointerleave', () => setActiveConstellation());
+      entry.addEventListener('focusin', () => setActiveConstellation(group));
+      entry.addEventListener('focusout', (event) => {
+        const nextTarget = event.relatedTarget;
+        if (nextTarget instanceof Node && entry.contains(nextTarget)) return;
+        setActiveConstellation();
+      });
+    });
+  </script>
 </BaseLayout>

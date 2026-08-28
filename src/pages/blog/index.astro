@@ -26,6 +26,26 @@ const [latestPost, ...remainingPosts] = posts;
 const categories = Array.from(
   new Map(posts.map((post) => [post.data.category.ja, post.data.category])).entries(),
 ).map(([id, label]) => ({ id, label }));
+const constellationFilters = [
+  {
+    id: 'all',
+    label: { ja: 'ALL', ko: 'ALL' },
+    isAll: true,
+    position: { x: 50, y: 50 },
+  },
+  ...categories.map((category, index) => {
+    const angle = (-90 + (360 / categories.length) * index) * (Math.PI / 180);
+
+    return {
+      ...category,
+      isAll: false,
+        position: {
+          x: 50 + Math.cos(angle) * 34,
+          y: 50 + Math.sin(angle) * 31,
+        },
+    };
+  }),
+];
 const site = Astro.site ?? Astro.url;
 const blogUrl = new URL('/blog/', site).href;
 const blogSchema = {
@@ -62,17 +82,50 @@ const blogSchema = {
 
     <nav class="blog-filters" aria-label="Blog category filters" data-i18n-aria="blog.filter.label">
       <span class="blog-filters__label" data-i18n="blog.filter.label">FILTER BY CATEGORY</span>
-      <div class="blog-filters__controls">
-        <button class="is-active" type="button" data-blog-filter="all" aria-pressed="true" data-i18n="blog.filter.all">ALL</button>
-        {categories.map((category) => (
-          <button
-            type="button"
-            data-blog-filter={category.id}
-            aria-pressed="false"
-            data-locale-ja={category.label.ja}
-            data-locale-ko={category.label.ko}
-          >{category.label.ja}</button>
-        ))}
+      <div class="blog-filter-network">
+        <div class="blog-filter-map" role="group" aria-label="Category constellation" data-i18n-aria="blog.filter.label">
+          <svg class="blog-filter-map__lines" viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">
+            {constellationFilters.slice(1).map((filter) => (
+              <line data-blog-line={filter.id} x1="50" y1="50" x2={filter.position.x} y2={filter.position.y} />
+            ))}
+            {constellationFilters.slice(1).length > 2 && (
+              <polygon
+                data-blog-polygon
+                data-blog-polygon-ids={constellationFilters.slice(1).map((filter) => filter.id).join('|')}
+                points={constellationFilters.slice(1).map((filter) => `${filter.position.x},${filter.position.y}`).join(' ')}
+              />
+            )}
+          </svg>
+          {constellationFilters.map((filter) => (
+            <button
+              class:list={['blog-filter-node', { 'is-active': filter.id === 'all', 'is-center': filter.isAll }]}
+              type="button"
+              data-blog-filter={filter.id}
+              aria-pressed={filter.id === 'all' ? 'true' : 'false'}
+              style={`--node-x: ${filter.position.x}%; --node-y: ${filter.position.y}%;`}
+            >
+              <span class="blog-filter-node__dot" aria-hidden="true"></span>
+              {filter.isAll ? (
+                <span data-i18n="blog.filter.all">ALL</span>
+              ) : (
+                <span data-locale-ja={filter.label.ja} data-locale-ko={filter.label.ko}>{filter.label.ja}</span>
+              )}
+            </button>
+          ))}
+        </div>
+
+        <div class="blog-filters__controls" aria-label="Category filter controls">
+          <button class="is-active" type="button" data-blog-filter="all" aria-pressed="true" data-i18n="blog.filter.all">ALL</button>
+          {categories.map((category) => (
+            <button
+              type="button"
+              data-blog-filter={category.id}
+              aria-pressed="false"
+              data-locale-ja={category.label.ja}
+              data-locale-ko={category.label.ko}
+            >{category.label.ja}</button>
+          ))}
+        </div>
       </div>
     </nav>
 
@@ -148,6 +201,37 @@ const blogSchema = {
     const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-entry]'));
     const count = document.querySelector<HTMLElement>('[data-blog-visible-count]');
     const empty = document.querySelector<HTMLElement>('[data-blog-empty]');
+    const map = document.querySelector<HTMLElement>('.blog-filter-map');
+    const mapNodes = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-filter-node'));
+    const mapLines = Array.from(document.querySelectorAll<SVGLineElement>('[data-blog-line]'));
+    const mapPolygon = document.querySelector<SVGPolygonElement>('[data-blog-polygon]');
+    const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const mapIsCompact = window.matchMedia('(max-width: 50rem)');
+    const maxNudge = 18;
+    const returnDuration = 420;
+    let lineReturnFrame: number | undefined;
+    let dragState:
+      | {
+          node: HTMLButtonElement;
+          pointerId: number;
+          startX: number;
+          startY: number;
+          offsetX: number;
+          offsetY: number;
+          hasMoved: boolean;
+        }
+      | undefined;
+
+    mapLines.forEach((line) => {
+      line.dataset.originX1 = line.getAttribute('x1') ?? '50';
+      line.dataset.originY1 = line.getAttribute('y1') ?? '50';
+      line.dataset.originX2 = line.getAttribute('x2') ?? '50';
+      line.dataset.originY2 = line.getAttribute('y2') ?? '50';
+    });
+    const polygonIds = mapPolygon?.dataset.blogPolygonIds?.split('|') ?? [];
+    const polygonOrigins = mapPolygon?.points
+      ? Array.from(mapPolygon.points).map((point) => ({ x: point.x, y: point.y }))
+      : [];
 
     const applyFilter = (filter: string) => {
       let visible = 0;
@@ -170,6 +254,162 @@ const blogSchema = {
 
     filters.forEach((button) => {
       button.addEventListener('click', () => applyFilter(button.dataset.blogFilter ?? 'all'));
+    });
+
+    const canNudgeMapNode = () => !reducedMotion.matches && !mapIsCompact.matches;
+
+    const setLineCoordinate = (line: SVGLineElement, coordinate: 'x1' | 'y1' | 'x2' | 'y2', value: number) => {
+      line.setAttribute(coordinate, value.toFixed(3));
+    };
+
+    const resetMapLines = () => {
+      mapLines.forEach((line) => {
+        line.setAttribute('x1', line.dataset.originX1 ?? '50');
+        line.setAttribute('y1', line.dataset.originY1 ?? '50');
+        line.setAttribute('x2', line.dataset.originX2 ?? '50');
+        line.setAttribute('y2', line.dataset.originY2 ?? '50');
+      });
+      if (mapPolygon && polygonOrigins.length > 0) {
+        mapPolygon.setAttribute('points', polygonOrigins.map((point) => `${point.x},${point.y}`).join(' '));
+      }
+    };
+
+    const moveConnectedLines = (node: HTMLButtonElement, offsetX: number, offsetY: number) => {
+      if (!map) return;
+      const mapRect = map.getBoundingClientRect();
+      if (mapRect.width === 0 || mapRect.height === 0) return;
+
+      const relativeX = (offsetX / mapRect.width) * 100;
+      const relativeY = (offsetY / mapRect.height) * 100;
+      const filter = node.dataset.blogFilter;
+
+      mapLines.forEach((line) => {
+        if (filter === 'all') {
+          setLineCoordinate(line, 'x1', Number(line.dataset.originX1) + relativeX);
+          setLineCoordinate(line, 'y1', Number(line.dataset.originY1) + relativeY);
+          return;
+        }
+
+        if (line.dataset.blogLine === filter) {
+          setLineCoordinate(line, 'x2', Number(line.dataset.originX2) + relativeX);
+          setLineCoordinate(line, 'y2', Number(line.dataset.originY2) + relativeY);
+        }
+      });
+
+      if (mapPolygon && filter !== 'all') {
+        const movedIndex = polygonIds.indexOf(filter ?? '');
+        if (movedIndex >= 0) {
+          mapPolygon.setAttribute(
+            'points',
+            polygonOrigins
+              .map((point, index) => index === movedIndex
+                ? `${point.x + relativeX},${point.y + relativeY}`
+                : `${point.x},${point.y}`)
+              .join(' '),
+          );
+        }
+      }
+    };
+
+    const returnConnectedLines = (node: HTMLButtonElement, offsetX: number, offsetY: number) => {
+      if (lineReturnFrame !== undefined) window.cancelAnimationFrame(lineReturnFrame);
+
+      const startedAt = performance.now();
+      const tick = (timestamp: number) => {
+        const progress = Math.min((timestamp - startedAt) / returnDuration, 1);
+        const eased = 1 - Math.pow(1 - progress, 4);
+        moveConnectedLines(node, offsetX * (1 - eased), offsetY * (1 - eased));
+
+        if (progress < 1) {
+          lineReturnFrame = window.requestAnimationFrame(tick);
+          return;
+        }
+
+        resetMapLines();
+        lineReturnFrame = undefined;
+      };
+
+      lineReturnFrame = window.requestAnimationFrame(tick);
+    };
+
+    const settleMapNode = () => {
+      const currentDrag = dragState;
+      if (!currentDrag) return;
+
+      dragState = undefined;
+      currentDrag.node.classList.remove('is-dragging');
+      currentDrag.node.style.setProperty('--node-drag-x', '0px');
+      currentDrag.node.style.setProperty('--node-drag-y', '0px');
+
+      if (currentDrag.hasMoved) {
+        returnConnectedLines(currentDrag.node, currentDrag.offsetX, currentDrag.offsetY);
+        currentDrag.node.dataset.blogDrag = 'true';
+        window.setTimeout(() => {
+          delete currentDrag.node.dataset.blogDrag;
+        }, 0);
+      }
+
+      if (currentDrag.node.hasPointerCapture(currentDrag.pointerId)) {
+        currentDrag.node.releasePointerCapture(currentDrag.pointerId);
+      }
+    };
+
+    mapNodes.forEach((node) => {
+      node.addEventListener(
+        'click',
+        (event) => {
+          if (node.dataset.blogDrag !== 'true') return;
+          event.preventDefault();
+          event.stopImmediatePropagation();
+          delete node.dataset.blogDrag;
+        },
+        true,
+      );
+
+      node.addEventListener('pointerdown', (event) => {
+        if (event.button !== 0 || !canNudgeMapNode()) return;
+
+        dragState = {
+          node,
+          pointerId: event.pointerId,
+          startX: event.clientX,
+          startY: event.clientY,
+          offsetX: 0,
+          offsetY: 0,
+          hasMoved: false,
+        };
+        if (lineReturnFrame !== undefined) {
+          window.cancelAnimationFrame(lineReturnFrame);
+          lineReturnFrame = undefined;
+          resetMapLines();
+        }
+        node.setPointerCapture(event.pointerId);
+      });
+
+      node.addEventListener('pointermove', (event) => {
+        if (!dragState || dragState.node !== node || dragState.pointerId !== event.pointerId) return;
+
+        const deltaX = event.clientX - dragState.startX;
+        const deltaY = event.clientY - dragState.startY;
+        const distance = Math.hypot(deltaX, deltaY);
+
+        if (!dragState.hasMoved && distance < 3) return;
+
+        event.preventDefault();
+        dragState.hasMoved = true;
+        node.classList.add('is-dragging');
+
+        const scale = distance > maxNudge ? maxNudge / distance : 1;
+        dragState.offsetX = deltaX * scale;
+        dragState.offsetY = deltaY * scale;
+        node.style.setProperty('--node-drag-x', `${dragState.offsetX.toFixed(2)}px`);
+        node.style.setProperty('--node-drag-y', `${dragState.offsetY.toFixed(2)}px`);
+        moveConnectedLines(node, dragState.offsetX, dragState.offsetY);
+      });
+
+      node.addEventListener('pointerup', settleMapNode);
+      node.addEventListener('pointercancel', settleMapNode);
+      node.addEventListener('lostpointercapture', settleMapNode);
     });
   </script>
 </BaseLayout>

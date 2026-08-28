@@ -1,6 +1,7 @@
 ---
 import { getCollection } from 'astro:content';
 import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
+import HeroBorderTrace from '../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { wikiCopy } from '../../data/project-wiki';
@@ -42,7 +43,8 @@ const wikiSchema = {
 >
   <section class="project-wiki project-wiki--hub" aria-labelledby="wiki-hub-title">
     <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
-    <header class="project-wiki__hero content-container">
+    <header class="project-wiki__hero content-container" data-hero-border-target>
+      <HeroBorderTrace />
       <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.indexEyebrow} /></p>
       <h1 id="wiki-hub-title">Project Wiki</h1>
       <LocalizedText as="p" class="project-wiki__lead" value={wikiCopy.indexLead} />
@@ -61,6 +63,7 @@ const wikiSchema = {
         {wikiProjects.map((project) => (
           <li>
             <article class="project-wiki-project-card">
+              <HeroBorderTrace />
               <div class="project-wiki-project-card__topline">
                 <span>{project.data.shortTitle}</span>
                 <span>{project.entries.length} ENTRIES</span>

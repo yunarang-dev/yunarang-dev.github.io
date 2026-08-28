@@ -1,0 +1,115 @@
+<span class="hero-border-trace" data-hero-border-trace aria-hidden="true"></span>
+
+<script>
+  const traces = Array.from(document.querySelectorAll<HTMLElement>('[data-hero-border-trace]'));
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  let frame: number | undefined;
+
+  const clamp = (value: number) => Math.min(Math.max(value, 0), 1);
+
+  const updateTrace = (trace: HTMLElement, target: HTMLElement, progress: number) => {
+    // Two reflections split from the upper-left corner at the same time:
+    // one crosses the top edge while the other descends the left edge. Once
+    // they reach their corners, the right and bottom edges carry them to the
+    // lower-right corner together.
+    const { width, height } = target.getBoundingClientRect();
+    const horizontalLength = Math.max(width, 1);
+    const verticalLength = Math.max(height, 1);
+    const pathLength = horizontalLength + verticalLength;
+    const path = Math.min(clamp(progress) * 1.08, 1.08);
+    const distance = Math.min(path, 1) * pathLength;
+    const reflectionSpan = Math.min(Math.max(Math.min(horizontalLength, verticalLength) * 0.33, 66), 108);
+    const exit = clamp((path - 0.92) / 0.08);
+    const visibility = 1 - exit * exit;
+    const topPosition = Math.min(distance, horizontalLength);
+    const leftPosition = Math.min(distance, verticalLength);
+    const rightPosition = clamp((distance - horizontalLength) / verticalLength) * verticalLength;
+    const bottomPosition = clamp((distance - verticalLength) / horizontalLength) * horizontalLength;
+    const fadeOutAtCorner = (cornerDistance: number) => clamp((cornerDistance - distance + reflectionSpan) / reflectionSpan);
+    const fadeInAtCorner = (cornerDistance: number) => clamp((distance - cornerDistance + reflectionSpan) / reflectionSpan);
+
+    trace.style.setProperty('--hero-trace-top-progress', `${topPosition.toFixed(2)}px`);
+    trace.style.setProperty('--hero-trace-left-progress', `${leftPosition.toFixed(2)}px`);
+    trace.style.setProperty('--hero-trace-right-progress', `${rightPosition.toFixed(2)}px`);
+    trace.style.setProperty('--hero-trace-bottom-progress', `${bottomPosition.toFixed(2)}px`);
+    trace.style.setProperty('--hero-trace-span', `${reflectionSpan.toFixed(2)}px`);
+    trace.style.setProperty('--hero-trace-top-light', String((0.9 * visibility * fadeOutAtCorner(horizontalLength)).toFixed(3)));
+    trace.style.setProperty('--hero-trace-left-light', String((0.76 * visibility * fadeOutAtCorner(verticalLength)).toFixed(3)));
+    trace.style.setProperty('--hero-trace-right-light', String((0.78 * visibility * fadeInAtCorner(horizontalLength)).toFixed(3)));
+    trace.style.setProperty('--hero-trace-bottom-light', String((0.7 * visibility * fadeInAtCorner(verticalLength)).toFixed(3)));
+  };
+
+  const updateAllTraces = () => {
+    traces.forEach((trace) => {
+      const target = trace.parentElement;
+      if (!target) return;
+
+      if (reducedMotion.matches) {
+        updateTrace(trace, target, 0.02);
+        return;
+      }
+
+      const targetTop = target.getBoundingClientRect().top + window.scrollY;
+      const start = Math.max(targetTop - window.innerHeight * 0.36, 0);
+      const travel = Math.max(window.innerHeight * 0.55, target.offsetHeight * 1.12);
+      updateTrace(trace, target, (window.scrollY - start) / travel);
+    });
+
+    frame = undefined;
+  };
+
+  const requestTraceUpdate = () => {
+    if (frame !== undefined) return;
+    frame = window.requestAnimationFrame(updateAllTraces);
+  };
+
+  updateAllTraces();
+  window.addEventListener('scroll', requestTraceUpdate, { passive: true });
+  window.addEventListener('resize', requestTraceUpdate, { passive: true });
+  reducedMotion.addEventListener('change', requestTraceUpdate);
+</script>
+
+<style>
+  .hero-border-trace {
+    --hero-trace-top-progress: 4px;
+    --hero-trace-left-progress: 4px;
+    --hero-trace-right-progress: 0px;
+    --hero-trace-bottom-progress: 0px;
+    --hero-trace-span: 3.5rem;
+    --hero-trace-top-light: 0.9;
+    --hero-trace-left-light: 0.76;
+    --hero-trace-right-light: 0;
+    --hero-trace-bottom-light: 0;
+    position: absolute;
+    z-index: 2;
+    inset: -1px;
+    border: 1px solid rgb(182 206 255 / 24%);
+    background:
+      linear-gradient(
+        90deg,
+        transparent calc(var(--hero-trace-top-progress) - var(--hero-trace-span)),
+        rgb(231 243 255 / var(--hero-trace-top-light)) var(--hero-trace-top-progress),
+        transparent calc(var(--hero-trace-top-progress) + var(--hero-trace-span))
+      ) top / 100% 1px no-repeat,
+      linear-gradient(
+        180deg,
+        transparent calc(var(--hero-trace-right-progress) - var(--hero-trace-span)),
+        rgb(207 230 255 / var(--hero-trace-right-light)) var(--hero-trace-right-progress),
+        transparent calc(var(--hero-trace-right-progress) + var(--hero-trace-span))
+      ) right / 1px 100% no-repeat,
+      linear-gradient(
+        90deg,
+        transparent calc(var(--hero-trace-bottom-progress) - var(--hero-trace-span)),
+        rgb(186 220 255 / var(--hero-trace-bottom-light)) var(--hero-trace-bottom-progress),
+        transparent calc(var(--hero-trace-bottom-progress) + var(--hero-trace-span))
+      ) bottom / 100% 1px no-repeat,
+      linear-gradient(
+        180deg,
+        transparent calc(var(--hero-trace-left-progress) - var(--hero-trace-span)),
+        rgb(196 224 255 / var(--hero-trace-left-light)) var(--hero-trace-left-progress),
+        transparent calc(var(--hero-trace-left-progress) + var(--hero-trace-span))
+      ) left / 1px 100% no-repeat;
+    box-shadow: inset 0 1px 0 rgb(226 241 255 / 4%);
+    pointer-events: none;
+  }
+</style>

@@ -5,6 +5,7 @@ import projectVxHero from '../assets/projects/project-vx-workflow.png';
 import DeepSeaField from '../components/home/DeepSeaField.astro';
 import MainProjectNavigator from '../components/home/MainProjectNavigator.astro';
 import ProjectSlider from '../components/home/ProjectSlider.astro';
+import HeroBorderTrace from '../components/ui/HeroBorderTrace.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
 import LocalizedText from '../components/ui/LocalizedText.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -182,11 +183,15 @@ const githubActivity = await fetchGitHubActivity();
 
     <section class="records-section snap-section" id="recent-records" aria-labelledby="records-title">
     <div class="constellation constellation-records" aria-hidden="true">
-      <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="4,16 28,0 56,30 78,56" /></svg>
-      <span></span><span></span><span></span><span></span>
+      <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+        <polyline points="4,24 27,8 53,31 77,53 96,28" />
+        <polyline class="constellation-branch" points="53,31 62,76 84,88" />
+      </svg>
+      <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
     </div>
     <div class="container records-grid">
       <div class="record-column glass-pane">
+        <HeroBorderTrace />
         <div class="column-heading">
           <h2 id="records-title" data-i18n="home.logs.title">Recent Development Logs</h2>
           <p data-i18n="home.logs.description">実装、設計、試行錯誤を残した直近の開発記録。</p>
@@ -204,6 +209,7 @@ const githubActivity = await fetchGitHubActivity();
       </div>
 
       <div class="record-column glass-pane">
+        <HeroBorderTrace />
         <div class="column-heading">
           <h2 data-i18n="home.posts.title">Recent Blog Posts</h2>
           <p data-i18n="home.posts.description">開発の外側にある考察や、制作を支える小さな記録。</p>
@@ -223,9 +229,13 @@ const githubActivity = await fetchGitHubActivity();
 
     <section class="github-section snap-section" aria-labelledby="github-title">
     <div class="container github-pane glass-pane">
+      <HeroBorderTrace />
       <div class="constellation constellation-github" aria-hidden="true">
-        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="100,10 76,22 53,37 29,57 47,75" /></svg>
-        <span></span><span></span><span></span><span></span><span></span>
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline points="96,12 75,24 51,41 27,62 45,82" />
+          <polyline class="constellation-branch" points="51,41 66,71 82,63" />
+        </svg>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
       <div class="github-heading">
         <div>
@@ -271,9 +281,13 @@ const githubActivity = await fetchGitHubActivity();
 
     <section class="contact-section snap-section" aria-labelledby="contact-title">
     <div class="container contact-pane glass-pane">
+      <HeroBorderTrace />
       <div class="constellation constellation-contact" aria-hidden="true">
-        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="96,14 54,44 90,86" /></svg>
-        <span></span><span></span><span></span>
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline points="94,12 61,31 38,57 72,86" />
+          <polyline class="constellation-branch" points="38,57 16,77" />
+        </svg>
+        <span></span><span></span><span></span><span></span><span></span>
       </div>
       <p class="contact-label" data-i18n="home.contact.eyebrow">LET'S CONNECT</p>
       <h2 id="contact-title" data-i18n="home.contact.title">Continue the conversation.</h2>
@@ -291,22 +305,14 @@ const githubActivity = await fetchGitHubActivity();
 <script>
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const root = document.documentElement;
-  const backgroundFrameInterval = 1000 / 45;
   let scrollFrame: number | undefined;
   let haloFrame: number | undefined;
-  let lastRefractionUpdate = 0;
-  let lastHaloUpdate = 0;
   let haloX = window.innerWidth * 0.5;
   let haloY = window.innerHeight * 0.5;
   let haloTargetX = haloX;
   let haloTargetY = haloY;
 
-  const updateGlassRefraction = (timestamp = performance.now()) => {
-    if (timestamp - lastRefractionUpdate < backgroundFrameInterval) {
-      scrollFrame = window.requestAnimationFrame(updateGlassRefraction);
-      return;
-    }
-    lastRefractionUpdate = timestamp;
+  const updateGlassRefraction = () => {
     const position = window.scrollY;
     const scrollableHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
     const depthProgress = Math.min(Math.max(position / scrollableHeight, 0), 1);
@@ -320,19 +326,15 @@ const githubActivity = await fetchGitHubActivity();
     // and narrow streaks use independent drift values below.
     const refractionLight = 4.6 - easedDepth * 2.65;
     const refractionSoft = 1.55 - easedDepth * 0.78;
-    const glassPathProgress = Math.min(journeyProgress * 1.14, 1.12);
-    const glassPathExit = Math.min(Math.max((journeyProgress - 0.76) / 0.24, 0), 1);
-    const glassPathVisibility = 1 - glassPathExit * glassPathExit;
-    const bottomEdgeArrival = Math.min(Math.max((glassPathProgress - 0.16) / 0.16, 0), 1);
-    const edgeBottomProgress = Math.min(Math.max((glassPathProgress - 0.16) / 0.84, 0), 1);
-    const rightEdgeArrival = Math.min(Math.max((glassPathProgress - 0.52) / 0.16, 0), 1);
-    const edgeRightProgress = Math.min(Math.max((glassPathProgress - 0.52) / 0.38, 0), 1);
-
     root.style.setProperty('--refraction-light', String(refractionLight.toFixed(2)) + '%');
     root.style.setProperty('--refraction-soft', String(refractionSoft.toFixed(2)) + '%');
     root.style.setProperty('--refraction-visibility', String(afterHeroProgress.toFixed(2)));
     root.style.setProperty('--panel-reflection-light', String((refractionLight * 1.75).toFixed(2)) + '%');
     root.style.setProperty('--panel-reflection-soft', String((refractionLight * 1.18).toFixed(2)) + '%');
+    root.style.setProperty('--journey-progress', journeyProgress.toFixed(3));
+    root.style.setProperty('--journey-depth', easedDepth.toFixed(3));
+    root.style.setProperty('--journey-current-opacity', String((0.36 - easedDepth * 0.17).toFixed(3)));
+    root.style.setProperty('--journey-veil', String((0.18 + easedDepth * 0.3).toFixed(3)));
 
     if (reducedMotion.matches) {
       scrollFrame = undefined;
@@ -344,17 +346,23 @@ const githubActivity = await fetchGitHubActivity();
     const refraction = 35 + depthProgress * 42;
     const softReflectionDrift = journeyProgress * 14;
     const lightReflectionDrift = journeyProgress * 28;
+    const currentX = journeyProgress * 13;
+    const currentY = journeyProgress * 3.4;
+    const starDriftX = journeyProgress * -34;
+    const starDriftY = journeyProgress * 20;
+    const constellationX = journeyProgress * 18;
+    const constellationY = journeyProgress * 7;
     root.style.setProperty('--glass-shift-x', String(shiftX.toFixed(2)) + 'px');
     root.style.setProperty('--glass-shift-y', String(shiftY.toFixed(2)) + 'px');
     root.style.setProperty('--glass-refraction', String(refraction.toFixed(2)) + '%');
     root.style.setProperty('--panel-reflection-soft-drift', String(softReflectionDrift.toFixed(2)) + '%');
     root.style.setProperty('--panel-reflection-light-drift', String(lightReflectionDrift.toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-top-progress', String(Math.min(glassPathProgress * 100, 100).toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-bottom-progress', String((edgeBottomProgress * 100).toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-right-progress', String((edgeRightProgress * 100).toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-top-light', String((76 * glassPathVisibility).toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-bottom-light', String((62 * glassPathVisibility * bottomEdgeArrival).toFixed(2)) + '%');
-    root.style.setProperty('--glass-edge-right-light', String((70 * glassPathVisibility * rightEdgeArrival).toFixed(2)) + '%');
+    root.style.setProperty('--journey-current-x', String(currentX.toFixed(2)) + 'vw');
+    root.style.setProperty('--journey-current-y', String(currentY.toFixed(2)) + 'svh');
+    root.style.setProperty('--journey-star-drift-x', String(starDriftX.toFixed(2)) + 'px');
+    root.style.setProperty('--journey-star-drift-y', String(starDriftY.toFixed(2)) + 'px');
+    root.style.setProperty('--journey-constellation-x', String(constellationX.toFixed(2)) + 'px');
+    root.style.setProperty('--journey-constellation-y', String(constellationY.toFixed(2)) + 'px');
     scrollFrame = undefined;
   };
 
@@ -363,12 +371,7 @@ const githubActivity = await fetchGitHubActivity();
     scrollFrame = window.requestAnimationFrame(updateGlassRefraction);
   };
 
-  const updateHalo = (timestamp = performance.now()) => {
-    if (timestamp - lastHaloUpdate < backgroundFrameInterval) {
-      haloFrame = window.requestAnimationFrame(updateHalo);
-      return;
-    }
-    lastHaloUpdate = timestamp;
+  const updateHalo = () => {
     haloX += (haloTargetX - haloX) * 0.055;
     haloY += (haloTargetY - haloY) * 0.055;
     root.style.setProperty('--halo-x', String(haloX.toFixed(1)) + 'px');

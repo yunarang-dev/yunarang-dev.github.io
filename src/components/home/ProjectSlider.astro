@@ -48,8 +48,11 @@ const { projects } = Astro.props;
         <div class="container slide-content">
           <div class="slide-copy">
             <div class="oled-constellation" aria-hidden="true">
-              <svg class="oled-constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="10,20 28,11 48,43 72,68 88,82" /></svg>
-              <span></span><span></span><span></span><span></span><span></span>
+              <svg class="oled-constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+                <polyline points="7,68 23,47 42,55 59,27 77,38 92,17" />
+                <polyline class="oled-constellation-branch" points="42,55 53,79 70,67 84,84" />
+              </svg>
+              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
             </div>
             <h1 data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</h1>
             <p data-locale-ja={copy.ja.summary} data-locale-ko={copy.ko.summary}>{copy.ja.summary}</p>
@@ -395,10 +398,19 @@ const { projects } = Astro.props;
     position: absolute;
     inset: 0;
     pointer-events: none;
-    opacity: 0.32;
-    transform: translate3d(var(--glass-shift-x, 0), var(--glass-shift-y, 0), 0);
-    transition: transform 90ms linear;
+    opacity: 0.18;
+    transform: translate3d(0, 0, 0);
+    transform-origin: 48% 52%;
     will-change: transform;
+  }
+
+  .slide.is-active .oled-constellation {
+    animation: hero-constellation-drift 10.5s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
+  }
+
+  .slide:nth-child(even).is-active .oled-constellation {
+    animation-direction: alternate-reverse;
+    animation-duration: 12s;
   }
 
   .oled-constellation-lines {
@@ -414,7 +426,12 @@ const { projects } = Astro.props;
     stroke: var(--color-moon);
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 0.42;
+    stroke-width: 0.34;
+  }
+
+  .oled-constellation-lines .oled-constellation-branch {
+    stroke: rgb(167 201 245 / 72%);
+    stroke-dasharray: 1.2 1.1;
   }
 
   .oled-constellation span {
@@ -424,13 +441,32 @@ const { projects } = Astro.props;
     border-radius: 50%;
     background: var(--color-moon);
     box-shadow: 0 0 0.6rem var(--color-moon);
+    transform: translate(-50%, -50%);
   }
 
-  .oled-constellation span:nth-child(2) { top: 20%; left: 10%; background: var(--color-dawn); }
-  .oled-constellation span:nth-child(3) { top: 11%; left: 28%; }
-  .oled-constellation span:nth-child(4) { top: 43%; left: 48%; background: var(--color-dawn); }
-  .oled-constellation span:nth-child(5) { top: 68%; left: 72%; }
-  .oled-constellation span:nth-child(6) { top: 82%; left: 88%; }
+  .oled-constellation span:nth-child(2) { top: 68%; left: 7%; }
+  .oled-constellation span:nth-child(3) { top: 47%; left: 23%; background: var(--color-dawn); }
+  .oled-constellation span:nth-child(4) { top: 55%; left: 42%; width: 0.42rem; }
+  .oled-constellation span:nth-child(5) { top: 27%; left: 59%; }
+  .oled-constellation span:nth-child(6) { top: 38%; left: 77%; background: var(--color-dawn); }
+  .oled-constellation span:nth-child(7) { top: 17%; left: 92%; }
+  .oled-constellation span:nth-child(8) { top: 79%; left: 53%; }
+  .oled-constellation span:nth-child(9) { top: 67%; left: 70%; width: 0.26rem; }
+  .oled-constellation span:nth-child(10) { top: 84%; left: 84%; }
+
+  @keyframes hero-constellation-drift {
+    0% {
+      transform: translate3d(-0.9rem, -0.42rem, 0) rotate(-0.38deg) scale(1.004);
+    }
+
+    48% {
+      transform: translate3d(0.18rem, 0.58rem, 0) rotate(0.12deg) scale(1.012);
+    }
+
+    100% {
+      transform: translate3d(1.25rem, -0.18rem, 0) rotate(0.46deg) scale(1.02);
+    }
+  }
 
   @media (max-width: 58rem) {
     .slide-content {
@@ -478,7 +514,7 @@ const { projects } = Astro.props;
     }
 
     .oled-constellation {
-      opacity: 0.26;
+      opacity: 0.15;
     }
 
     .slide-copy p {
@@ -506,8 +542,8 @@ const { projects } = Astro.props;
 
   @media (prefers-reduced-motion: reduce) {
     .oled-constellation {
+      animation: none !important;
       transform: none;
-      transition: none;
     }
   }
 </style>

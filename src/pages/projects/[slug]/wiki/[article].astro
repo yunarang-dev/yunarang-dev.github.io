@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import ConstellationMotif from '../../../../components/ui/ConstellationMotif.astro';
+import HeroBorderTrace from '../../../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../../../components/ui/LocalizedText.astro';
 import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
@@ -67,7 +68,8 @@ const articleSchema = {
 >
   <article class="project-wiki project-wiki--article" aria-labelledby="wiki-article-title">
     <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
-    <header class="project-wiki__hero project-wiki__hero--article content-container">
+    <header class="project-wiki__hero project-wiki__hero--article content-container" data-hero-border-target>
+      <HeroBorderTrace />
       <a class="project-wiki__back" href={`/projects/${project.id}/wiki/`}>
         <span aria-hidden="true">←</span>
         <span>{project.data.shortTitle} / <LocalizedText value={wikiCopy.indexEyebrow} /></span>

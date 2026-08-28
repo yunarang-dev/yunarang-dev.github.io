@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getProjectCopy } from '../../i18n/projects';
+import HeroBorderTrace from '../ui/HeroBorderTrace.astro';
 
 interface MainProject {
   id: string;
@@ -29,6 +30,7 @@ const { projects } = Astro.props;
 
   <div class="container project-layout">
     <div class="project-rail glass-pane">
+      <HeroBorderTrace />
       <h2 id="main-projects-title" data-i18n="home.projects.title">Main Projects</h2>
       <div class="project-tabs" role="tablist" aria-label="メインプロジェクト" data-i18n-aria="home.slider.label">
         {projects.map((project, index) => {
@@ -56,9 +58,13 @@ const { projects } = Astro.props;
     </div>
 
     <div class="project-panels glass-pane">
+      <HeroBorderTrace />
       <div class="constellation-path" aria-hidden="true">
-        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="0,10 44,32 70,64 90,78 75,92" /></svg>
-        <span></span><span></span><span></span><span></span><span></span>
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
+          <polyline points="4,8 39,27 67,55 91,73 74,94" />
+          <polyline class="constellation-branch" points="67,55 38,72 18,61" />
+        </svg>
+        <span></span><span></span><span></span><span></span><span></span><span></span><span></span>
       </div>
 
       {projects.map((project, index) => {
@@ -397,6 +403,12 @@ const { projects } = Astro.props;
     stroke-width: 0.45;
   }
 
+  .constellation-lines .constellation-branch {
+    stroke: var(--color-dawn-soft);
+    stroke-dasharray: 2.2 3;
+    opacity: 0.55;
+  }
+
   .constellation-path span {
     position: absolute;
     width: 0.38rem;
@@ -404,13 +416,16 @@ const { projects } = Astro.props;
     border-radius: 50%;
     background: var(--color-moon);
     box-shadow: 0 0 0.7rem var(--color-moon);
+    transform: translate(-50%, -50%);
   }
 
-  .constellation-path span:nth-child(2) { top: 10%; left: 0; background: var(--color-dawn); }
-  .constellation-path span:nth-child(3) { top: 32%; left: 44%; }
-  .constellation-path span:nth-child(4) { top: 64%; left: 70%; }
-  .constellation-path span:nth-child(5) { top: 78%; left: 90%; }
-  .constellation-path span:nth-child(6) { top: 92%; left: 75%; }
+  .constellation-path span:nth-child(2) { top: 8%; left: 4%; background: var(--color-dawn); }
+  .constellation-path span:nth-child(3) { top: 27%; left: 39%; }
+  .constellation-path span:nth-child(4) { top: 55%; left: 67%; width: 0.46rem; }
+  .constellation-path span:nth-child(5) { top: 73%; left: 91%; }
+  .constellation-path span:nth-child(6) { top: 94%; left: 74%; }
+  .constellation-path span:nth-child(7) { top: 72%; left: 38%; width: 0.3rem; }
+  .constellation-path span:nth-child(8) { top: 61%; left: 18%; width: 0.28rem; }
 
   .ambient-line {
     position: absolute;

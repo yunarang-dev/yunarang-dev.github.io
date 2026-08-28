@@ -102,6 +102,8 @@
   opacity: 0.18;
   pointer-events: none;
   transform: rotate(10deg);
+  transform-origin: 52% 50%;
+  animation: about-constellation-drift 14s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite alternate;
 }
 
 .about-hero-constellation svg {
@@ -118,9 +120,26 @@
   stroke-width: 0.72;
 }
 
+.about-hero-constellation .about-hero-constellation__branch {
+  stroke: var(--color-dawn-soft);
+  stroke-dasharray: 5 7;
+  opacity: 0.52;
+}
+
 .about-hero-constellation circle {
   fill: var(--color-moon);
   filter: drop-shadow(0 0 0.3rem var(--color-moon));
+}
+
+.about-hero-constellation circle:nth-of-type(3) {
+  fill: var(--color-dawn-soft);
+  filter: drop-shadow(0 0 0.38rem rgb(255 138 61 / 58%));
+}
+
+@keyframes about-constellation-drift {
+  0% { transform: translate3d(-0.65rem, -0.2rem, 0) rotate(9.55deg); }
+  50% { transform: translate3d(0.1rem, 0.45rem, 0) rotate(10deg); }
+  100% { transform: translate3d(1rem, -0.05rem, 0) rotate(10.45deg); }
 }
 
 .about-section {
@@ -495,6 +514,13 @@
     grid-template-columns: 1fr;
   }
 
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .about-hero-constellation {
+    animation: none;
+    transform: rotate(10deg);
+  }
 }
 
 @media (max-width: 64rem) {
