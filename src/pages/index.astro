@@ -1,0 +1,392 @@
+---
+import { getCollection } from 'astro:content';
+import astralDaysHero from '../assets/projects/astral-days-dawn.png';
+import projectVxHero from '../assets/projects/project-vx-workflow.png';
+import DeepSeaField from '../components/home/DeepSeaField.astro';
+import MainProjectNavigator from '../components/home/MainProjectNavigator.astro';
+import ProjectSlider from '../components/home/ProjectSlider.astro';
+import ArrowLink from '../components/ui/ArrowLink.astro';
+import LocalizedText from '../components/ui/LocalizedText.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import '../styles/home.css';
+
+const featuredProjects = (await getCollection('projects'))
+  .filter((project) => project.data.featured && project.data.heroImage && project.data.heroAlt)
+  .sort((a, b) => a.data.order - b.data.order)
+  .map((project) => ({
+    id: project.id,
+    role: project.data.role,
+    technologies: project.data.technologies,
+    image: project.data.heroImage!,
+    imageAlt: project.data.heroAlt!,
+  }));
+
+/**
+ * The homepage is the visual entry point of the archive. Keep its two primary
+ * project slides available while Astro refreshes Content Collection data in a
+ * development session; normal builds and synced collections still use the
+ * project Markdown metadata above.
+ */
+const primaryProjectFallback = [
+  {
+    id: 'astral-days',
+    role: 'Direction · Narrative · Client Development',
+    technologies: ['Unity', 'C#', 'Narrative Design'],
+    image: astralDaysHero,
+    imageAlt: '夜明け前の海辺の駅で、二人の人物が同じ地平線を見つめている風景',
+  },
+  {
+    id: 'project-vx',
+    role: 'Game Systems · AI Workflow · Direction',
+    technologies: ['Unity', 'C#', 'AI Agents'],
+    image: projectVxHero,
+    imageAlt: '開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ',
+  },
+];
+
+const homeProjects = featuredProjects.length >= 2 ? featuredProjects : primaryProjectFallback;
+
+const timeZone = 'Asia/Seoul';
+const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
+  new Intl.DateTimeFormat(locale, {
+    timeZone,
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+
+const allPosts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime());
+
+/**
+ * A development log belongs to a project or explicitly carries the DevLog
+ * tag. Everything else is a general archive entry, keeping the two Home
+ * lists distinct while allowing ordinary Markdown front matter to drive both.
+ */
+const isDevelopmentLog = (post: (typeof allPosts)[number]) =>
+  Boolean(post.data.project) || post.data.tags.some((tag) => tag.ja === 'DevLog');
+
+const toHomeRecord = (post: (typeof allPosts)[number]) => ({
+  ...post,
+  dateJa: formatDate(post.data.date, 'ja-JP'),
+  dateKo: formatDate(post.data.date, 'ko-KR'),
+});
+
+const developmentLogs = allPosts.filter(isDevelopmentLog).slice(0, 3).map(toHomeRecord);
+const recentPosts = allPosts.filter((post) => !isDevelopmentLog(post)).slice(0, 4).map(toHomeRecord);
+
+interface GitHubEvent {
+  id: string;
+  type: string;
+  repo: { name: string };
+  created_at: string;
+  payload?: {
+    action?: string;
+    ref?: string;
+    pull_request?: { html_url?: string; number?: number };
+    issue?: { html_url?: string; number?: number };
+  };
+}
+
+interface ActivityItem {
+  id: string;
+  date: string;
+  dateTime: string;
+  label: string;
+  repository: string;
+  href: string;
+}
+
+const fallbackGitHubActivity: ActivityItem[] = [
+  {
+    id: 'fallback-2026-08-26',
+    date: '2026/08/27 07:50',
+    dateTime: '2026-08-26T22:50:06Z',
+    label: 'mainへpush',
+    repository: 'yunarang-dev/yunarang-dev.github.io',
+    href: 'https://github.com/yunarang-dev/yunarang-dev.github.io',
+  },
+];
+
+const eventLabel = (event: GitHubEvent) => {
+  const branch = event.payload?.ref?.replace('refs/heads/', '');
+  if (event.type === 'PushEvent') return (branch ?? 'repository') + 'へpush';
+  if (event.type === 'PullRequestEvent') {
+    const action = event.payload?.action === 'closed' ? 'Pull Requestを更新' : 'Pull Requestを作成';
+    return action + ' #' + (event.payload?.pull_request?.number ?? '');
+  }
+  if (event.type === 'IssuesEvent') {
+    const action = event.payload?.action === 'closed' ? 'Issueを完了' : 'Issueを更新';
+    return action + ' #' + (event.payload?.issue?.number ?? '');
+  }
+  if (event.type === 'CreateEvent') return '新しいブランチまたはリポジトリを作成';
+  if (event.type === 'ReleaseEvent') return 'Releaseを公開';
+  return event.type.replace('Event', '');
+};
+
+const fetchGitHubActivity = async (): Promise<ActivityItem[]> => {
+  try {
+    const response = await fetch('https://api.github.com/users/yunarang-dev/events/public?per_page=12', {
+      headers: {
+        Accept: 'application/vnd.github+json',
+        'X-GitHub-Api-Version': '2026-03-10',
+      },
+      signal: AbortSignal.timeout(3500),
+    });
+    if (!response.ok) return fallbackGitHubActivity;
+
+    const events = (await response.json()) as GitHubEvent[];
+    const seen = new Set<string>();
+    const activity = events.flatMap((event) => {
+      const key = [event.type, event.repo.name, event.payload?.ref ?? event.payload?.action ?? ''].join(':');
+      if (seen.has(key)) return [];
+      seen.add(key);
+      return [{
+        id: event.id,
+        date: new Intl.DateTimeFormat('ja-JP', {
+          year: 'numeric',
+          month: '2-digit',
+          day: '2-digit',
+          hour: '2-digit',
+          minute: '2-digit',
+        }).format(new Date(event.created_at)),
+        dateTime: event.created_at,
+        label: eventLabel(event),
+        repository: event.repo.name,
+        href:
+          event.payload?.pull_request?.html_url ??
+          event.payload?.issue?.html_url ??
+          'https://github.com/' + event.repo.name,
+      }];
+    });
+    return activity.slice(0, 5).length > 0 ? activity.slice(0, 5) : fallbackGitHubActivity;
+  } catch {
+    return fallbackGitHubActivity;
+  }
+};
+
+const githubActivity = await fetchGitHubActivity();
+---
+
+<BaseLayout
+  title="Yunarang — Game Developer & Development Archive"
+  description="ゲーム、物語、AIを用いた開発の過程を記録する、ゆならんの個人ポートフォリオ兼開発アーカイブ。"
+  pageClass="home-scroll"
+  overlayHeader
+>
+  <div class="home-refraction-layer" aria-hidden="true"></div>
+  <ProjectSlider projects={homeProjects} />
+  <div class="deep-sea-journey">
+    <DeepSeaField />
+    <MainProjectNavigator projects={homeProjects} />
+
+    <section class="records-section snap-section" id="recent-records" aria-labelledby="records-title">
+    <div class="constellation constellation-records" aria-hidden="true">
+      <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="4,16 28,0 56,30 78,56" /></svg>
+      <span></span><span></span><span></span><span></span>
+    </div>
+    <div class="container records-grid">
+      <div class="record-column glass-pane">
+        <div class="column-heading">
+          <h2 id="records-title" data-i18n="home.logs.title">Recent Development Logs</h2>
+          <p data-i18n="home.logs.description">実装、設計、試行錯誤を残した直近の開発記録。</p>
+        </div>
+        <ol class="timeline-list">
+          {developmentLogs.map((log) => (
+            <li>
+              <span class="timeline-point" aria-hidden="true"></span>
+              <time datetime={log.data.date.toISOString()} data-locale-ja={log.dateJa} data-locale-ko={log.dateKo}>{log.dateJa}</time>
+              <a href={`/posts/${log.data.legacySlug}/`}><LocalizedText value={log.data.title} /></a>
+            </li>
+          ))}
+        </ol>
+        <ArrowLink href="/blog/" tone="cool"><span data-i18n="home.logs.all">すべての開発記録を見る</span></ArrowLink>
+      </div>
+
+      <div class="record-column glass-pane">
+        <div class="column-heading">
+          <h2 data-i18n="home.posts.title">Recent Blog Posts</h2>
+          <p data-i18n="home.posts.description">開発の外側にある考察や、制作を支える小さな記録。</p>
+        </div>
+        <ol class="post-list">
+          {recentPosts.map((post) => (
+            <li>
+              <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
+              <a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a>
+            </li>
+          ))}
+        </ol>
+        <ArrowLink href="/blog/" tone="warm"><span data-i18n="home.posts.all">ブログ一覧へ</span></ArrowLink>
+      </div>
+    </div>
+    </section>
+
+    <section class="github-section snap-section" aria-labelledby="github-title">
+    <div class="container github-pane glass-pane">
+      <div class="constellation constellation-github" aria-hidden="true">
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="100,10 76,22 53,37 29,57 47,75" /></svg>
+        <span></span><span></span><span></span><span></span><span></span>
+      </div>
+      <div class="github-heading">
+        <div>
+          <h2 id="github-title" data-i18n="home.github.title">GitHub Activity</h2>
+          <p data-i18n="home.github.description">公開リポジトリに残る、直近の制作の足跡。</p>
+        </div>
+        <ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.github.profile">GitHub プロフィールへ</span></ArrowLink>
+      </div>
+
+      {githubActivity.length > 0 ? (
+        <ol class="activity-list">
+          {githubActivity.map((activity) => (
+            <li>
+              <svg viewBox="0 0 24 24" aria-hidden="true">
+                <circle cx="6" cy="5" r="2" />
+                <circle cx="18" cy="8" r="2" />
+                <circle cx="8" cy="19" r="2" />
+                <path d="M6 7v7a5 5 0 0 0 5 5M8 12h4a6 6 0 0 0 6-6" />
+              </svg>
+              <time datetime={activity.dateTime}>{activity.date}</time>
+              <a href={activity.href} target="_blank" rel="noreferrer">{activity.label}</a>
+              <span>{activity.repository}</span>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <div class="activity-fallback">
+          <p data-i18n="home.github.description">公開リポジトリに残る、直近の制作の足跡。</p>
+        </div>
+      )}
+
+      <aside class="project-board-link" aria-labelledby="astral-days-board-title">
+        <div class="project-board-link__copy">
+          <p class="project-board-link__eyebrow" data-i18n="home.github.board.eyebrow">PROJECT BOARD</p>
+          <h3 id="astral-days-board-title" data-i18n="home.github.board.title">Astral Days! Development</h3>
+          <p data-i18n="home.github.board.description">『アスデイ』の公開開発ボード。進行中の制作管理は GitHub Projects で記録しています。</p>
+          <ArrowLink href="https://github.com/users/yunarang-dev/projects/1/views/2" tone="cool" external><span data-i18n="home.github.board.open">開発ボードを見る</span></ArrowLink>
+        </div>
+        <span class="project-board-link__status" data-i18n="home.github.board.status">PUBLIC BOARD</span>
+      </aside>
+    </div>
+    </section>
+
+    <section class="contact-section snap-section" aria-labelledby="contact-title">
+    <div class="container contact-pane glass-pane">
+      <div class="constellation constellation-contact" aria-hidden="true">
+        <svg class="constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none"><polyline points="96,14 54,44 90,86" /></svg>
+        <span></span><span></span><span></span>
+      </div>
+      <p class="contact-label" data-i18n="home.contact.eyebrow">LET'S CONNECT</p>
+      <h2 id="contact-title" data-i18n="home.contact.title">Continue the conversation.</h2>
+      <p data-i18n="home.contact.description">ゲーム開発、技術、ポートフォリオについての連絡は、GitHub またはメールからどうぞ。</p>
+      <ul>
+        <li><ArrowLink href="https://github.com/yunarang-dev" tone="warm" external>GitHub</ArrowLink></li>
+        <li><ArrowLink href="https://x.com/yunarang_dev" tone="warm" external>X / Twitter</ArrowLink></li>
+        <li><ArrowLink href="mailto:yunarang97@gmail.com" tone="warm">Email</ArrowLink></li>
+      </ul>
+    </div>
+    </section>
+  </div>
+</BaseLayout>
+
+<script>
+  const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const root = document.documentElement;
+  const backgroundFrameInterval = 1000 / 45;
+  let scrollFrame: number | undefined;
+  let haloFrame: number | undefined;
+  let lastRefractionUpdate = 0;
+  let lastHaloUpdate = 0;
+  let haloX = window.innerWidth * 0.5;
+  let haloY = window.innerHeight * 0.5;
+  let haloTargetX = haloX;
+  let haloTargetY = haloY;
+
+  const updateGlassRefraction = (timestamp = performance.now()) => {
+    if (timestamp - lastRefractionUpdate < backgroundFrameInterval) {
+      scrollFrame = window.requestAnimationFrame(updateGlassRefraction);
+      return;
+    }
+    lastRefractionUpdate = timestamp;
+    const position = window.scrollY;
+    const scrollableHeight = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+    const depthProgress = Math.min(Math.max(position / scrollableHeight, 0), 1);
+    const heroHeight = document.querySelector<HTMLElement>('[data-project-slider]')?.offsetHeight ?? window.innerHeight;
+    const afterHeroProgress = Math.min(Math.max((position - heroHeight) / (window.innerHeight * 0.18), 0), 1);
+    const journeyProgress = Math.min(Math.max((position - heroHeight) / Math.max(scrollableHeight - heroHeight, 1), 0), 1);
+    const deepWaterProgress = Math.min(Math.max((depthProgress - 0.52) / 0.28, 0), 1);
+    const easedDepth = deepWaterProgress * deepWaterProgress * (3 - 2 * deepWaterProgress);
+    const refractionLight = 3.2 - easedDepth * 2.4;
+
+    root.style.setProperty('--refraction-light', String(refractionLight.toFixed(2)) + '%');
+    root.style.setProperty('--refraction-visibility', String(afterHeroProgress.toFixed(2)));
+    root.style.setProperty('--panel-reflection-light', String((refractionLight * 1.35).toFixed(2)) + '%');
+    root.style.setProperty('--panel-reflection-soft', String((refractionLight * 0.82).toFixed(2)) + '%');
+
+    if (reducedMotion.matches) {
+      scrollFrame = undefined;
+      return;
+    }
+
+    const shiftX = depthProgress * 3.2;
+    const shiftY = depthProgress * 1.2;
+    const refraction = 35 + depthProgress * 42;
+    const softReflectionDrift = journeyProgress * 10;
+    const lightReflectionDrift = journeyProgress * 20;
+    root.style.setProperty('--glass-shift-x', String(shiftX.toFixed(2)) + 'px');
+    root.style.setProperty('--glass-shift-y', String(shiftY.toFixed(2)) + 'px');
+    root.style.setProperty('--glass-refraction', String(refraction.toFixed(2)) + '%');
+    root.style.setProperty('--panel-reflection-soft-drift', String(softReflectionDrift.toFixed(2)) + '%');
+    root.style.setProperty('--panel-reflection-light-drift', String(lightReflectionDrift.toFixed(2)) + '%');
+    scrollFrame = undefined;
+  };
+
+  const requestRefractionUpdate = () => {
+    if (scrollFrame !== undefined) return;
+    scrollFrame = window.requestAnimationFrame(updateGlassRefraction);
+  };
+
+  const updateHalo = (timestamp = performance.now()) => {
+    if (timestamp - lastHaloUpdate < backgroundFrameInterval) {
+      haloFrame = window.requestAnimationFrame(updateHalo);
+      return;
+    }
+    lastHaloUpdate = timestamp;
+    haloX += (haloTargetX - haloX) * 0.055;
+    haloY += (haloTargetY - haloY) * 0.055;
+    root.style.setProperty('--halo-x', String(haloX.toFixed(1)) + 'px');
+    root.style.setProperty('--halo-y', String(haloY.toFixed(1)) + 'px');
+
+    if (Math.abs(haloTargetX - haloX) > 0.2 || Math.abs(haloTargetY - haloY) > 0.2) {
+      haloFrame = window.requestAnimationFrame(updateHalo);
+    } else {
+      haloFrame = undefined;
+    }
+  };
+
+  const requestHaloUpdate = () => {
+    if (reducedMotion.matches || haloFrame !== undefined) return;
+    haloFrame = window.requestAnimationFrame(updateHalo);
+  };
+
+  const updateHaloTarget = (event: PointerEvent) => {
+    if (event.pointerType === 'touch') return;
+    haloTargetX = event.clientX;
+    haloTargetY = event.clientY;
+    requestHaloUpdate();
+  };
+
+  updateGlassRefraction();
+  window.addEventListener('scroll', requestRefractionUpdate, { passive: true });
+  window.addEventListener('pointermove', updateHaloTarget, { passive: true });
+  reducedMotion.addEventListener('change', () => {
+    if (reducedMotion.matches) {
+      if (haloFrame !== undefined) window.cancelAnimationFrame(haloFrame);
+      haloFrame = undefined;
+      root.style.removeProperty('--glass-shift-x');
+      root.style.removeProperty('--glass-shift-y');
+      root.style.removeProperty('--glass-refraction');
+    } else {
+      updateGlassRefraction();
+    }
+  });
+</script>

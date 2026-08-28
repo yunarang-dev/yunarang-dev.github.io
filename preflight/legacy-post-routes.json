@@ -1,0 +1,204 @@
+{
+  "generatedAt": "2026-08-28T12:58:49+09:00",
+  "head": "f03e6be1e284624f56bd2e61352853d4259de8a8",
+  "originMain": "f03e6be1e284624f56bd2e61352853d4259de8a8",
+  "postCount": 28,
+  "routes": [
+    {
+      "source": "_posts/2026-01-14-AD-00.md",
+      "legacySlug": "AD-00",
+      "url": "/posts/AD-00/",
+      "title": "[AD] 00. The Project 『アスデイ：Astral Days!』",
+      "date": "2026-01-14 00:55:49 +0900"
+    },
+    {
+      "source": "_posts/2026-01-25-AD-01.md",
+      "legacySlug": "AD-01",
+      "url": "/posts/AD-01/",
+      "title": "[AD] 01. 普通だったある日、私に夢が生まれた。（切っ掛け編）",
+      "date": "2026-01-25 14:20:45 +0900"
+    },
+    {
+      "source": "_posts/2026-02-06-KR-01.md",
+      "legacySlug": "KR-01",
+      "url": "/posts/KR-01/",
+      "title": "[AD-01] 01. 평범했던 어느 날, 내게 꿈이 생겨났다.",
+      "date": "2026-02-06 00:10:26 +0900"
+    },
+    {
+      "source": "_posts/2026-02-22-ET-01.md",
+      "legacySlug": "ET-01",
+      "url": "/posts/ET-01/",
+      "title": "[ET] 01. 『アスデイ』について、極めて個人的な話。",
+      "date": "2026-02-22 20:01:41 +0900"
+    },
+    {
+      "source": "_posts/2026-03-06-KR-02.md",
+      "legacySlug": "KR-02",
+      "url": "/posts/KR-02/",
+      "title": "[AD-00] 02. The Project 『아스데이: Astral Days!』",
+      "date": "2026-03-06 16:39:49 +0900"
+    },
+    {
+      "source": "_posts/2026-04-09-CS-01.md",
+      "legacySlug": "CS-01",
+      "url": "/posts/CS-01/",
+      "title": "[CS] 01. 基礎的な動的計画法の練習とフィボナッチ数列の計算",
+      "date": "2026-04-09 14:20:45 +0900"
+    },
+    {
+      "source": "_posts/2026-05-19-EV-01.md",
+      "legacySlug": "EV-01",
+      "url": "/posts/EV-01/",
+      "title": "[EV] 01. SEGA社の就活説明会に参加してきました。",
+      "date": "2026-05-19 20:56:09 +0900"
+    },
+    {
+      "source": "_posts/2026-06-29-AD-02.md",
+      "legacySlug": "AD-02",
+      "url": "/posts/AD-02/",
+      "title": "[AD] 02. これまでの歩み、そしてこれから。（ストーリー編）",
+      "date": "2026-06-29 12:31:45 +0900"
+    },
+    {
+      "source": "_posts/2026-07-06-CT-01.md",
+      "legacySlug": "CT-01",
+      "url": "/posts/CT-01/",
+      "title": "[CT] 01. 初めての本格的なチームプロジェクトの始まり （GAMMARU２０２６夏コンテスト）",
+      "date": "2026-07-06 13:13:18 +0900"
+    },
+    {
+      "source": "_posts/2026-07-12-CT-02.md",
+      "legacySlug": "CT-02",
+      "url": "/posts/CT-02/",
+      "title": "[CT] 02. 1주차 - 플레이어 상태와 Heat·Core UI 만들기 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-07-12 13:51:29 +0900"
+    },
+    {
+      "source": "_posts/2026-07-21-CT-03.md",
+      "legacySlug": "CT-03",
+      "url": "/posts/CT-03/",
+      "title": "[CT] 03. 2주차 — HP 감소 VFX와 Low HP 경고, HUD 프리팹 정리 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-07-21 15:29:18 +0900"
+    },
+    {
+      "source": "_posts/2026-07-28-CT-04.md",
+      "legacySlug": "CT-04",
+      "url": "/posts/CT-04/",
+      "title": "[CT] 04. 3주차 — 사이버펑크 스타일 HUD 리메이크와 스킬·사망 연출 구현 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-07-28 17:01:06 +0900"
+    },
+    {
+      "source": "_posts/2026-08-04-CT-05.md",
+      "legacySlug": "CT-05",
+      "url": "/posts/CT-05/",
+      "title": "[CT] 05. 4주차 — ESC 일시정지와 마우스 반응형 Pause 화면 만들기 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-08-04 13:18:32 +0900"
+    },
+    {
+      "source": "_posts/2026-08-08-EV-02.md",
+      "legacySlug": "EV-02",
+      "url": "/posts/EV-02/",
+      "title": "[EV] 02. Unity Korea & UNIDEV ネットワーキングデイ",
+      "date": "2026-08-08 19:24:03 +0900"
+    },
+    {
+      "source": "_posts/2026-08-12-CT-06.md",
+      "legacySlug": "CT-06",
+      "url": "/posts/CT-06/",
+      "title": "[CT] 06. 5주차 — Resume·볼륨 설정과 Core 2·3 UI 대응 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-08-12 10:57:19 +0900"
+    },
+    {
+      "source": "_posts/2026-08-16-CT-07.md",
+      "legacySlug": "CT-07",
+      "url": "/posts/CT-07/",
+      "title": "[CT] 07. 6주차 — 공통 UI 프리팹을 실제 플레이 씬에 통합하다 （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-08-16 11:19:38 +0900"
+    },
+    {
+      "source": "_posts/2026-08-17-CT-08.md",
+      "legacySlug": "CT-08",
+      "url": "/posts/CT-08/",
+      "title": "[CT] 08. 6주 간의 여정, 그리고 그 마지막. （ゲームマル２０２６夏コンテスト）",
+      "date": "2026-08-17 11:29:47 +0900"
+    },
+    {
+      "source": "_posts/2026-08-18-VX-00.md",
+      "legacySlug": "VX-00",
+      "url": "/posts/VX-00/",
+      "title": "[VX] 00. 『Project VX』　起動！",
+      "date": "2026-08-18 23:11:08 +0900"
+    },
+    {
+      "source": "_posts/2026-08-19-VX-01.md",
+      "legacySlug": "VX-01",
+      "url": "/posts/VX-01/",
+      "title": "[VX] 01. 루미-코덱스-유니티 첫 연결 시도",
+      "date": "2026-08-19 18:53:51 +0900"
+    },
+    {
+      "source": "_posts/2026-08-20-VX-02.md",
+      "legacySlug": "VX-02",
+      "url": "/posts/VX-02/",
+      "title": "[VX] 02. 루미 및 Codex Git/Github 작업 권한 관련 지침 수정",
+      "date": "2026-08-20 02:57:31 +0900"
+    },
+    {
+      "source": "_posts/2026-08-20-VX-03.md",
+      "legacySlug": "VX-03",
+      "url": "/posts/VX-03/",
+      "title": "[VX] 03. Codex와 Lumi 관련 지침 수정",
+      "date": "2026-08-20 05:07:03 +0900"
+    },
+    {
+      "source": "_posts/2026-08-20-VX-04.md",
+      "legacySlug": "VX-04",
+      "url": "/posts/VX-04/",
+      "title": "[VX] 04. 첫 게임 개발 테스트(Test #1)",
+      "date": "2026-08-20 15:04:39 +0900"
+    },
+    {
+      "source": "_posts/2026-08-21-VX-05.md",
+      "legacySlug": "VX-05",
+      "url": "/posts/VX-05/",
+      "title": "[VX] 05. 루미에게 Obsidian 기획을 읽고 개발 계획을 세우게 하기",
+      "date": "2026-08-21 01:39:31 +0900"
+    },
+    {
+      "source": "_posts/2026-08-21-VX-06.md",
+      "legacySlug": "VX-06",
+      "url": "/posts/VX-06/",
+      "title": "[VX] 06. 복잡한 기획안을 불러와 루미 스스로 게임 구현(Test #2-1)",
+      "date": "2026-08-21 06:41:22 +0900"
+    },
+    {
+      "source": "_posts/2026-08-23-VX-07.md",
+      "legacySlug": "VX-07",
+      "url": "/posts/VX-07/",
+      "title": "[VX] 07. 적, 그리고 전투 구현(Test #2-2)",
+      "date": "2026-08-23 23:35:21 +0900"
+    },
+    {
+      "source": "_posts/2026-08-25-VX-08.md",
+      "legacySlug": "VX-08",
+      "url": "/posts/VX-08/",
+      "title": "[VX] 08. Codex 사용량 소진에 대비한 Antigravity Failover 시도",
+      "date": "2026-08-25 09:36:57 +0900"
+    },
+    {
+      "source": "_posts/2026-08-26-VX-09.md",
+      "legacySlug": "VX-09",
+      "url": "/posts/VX-09/",
+      "title": "[VX] 09. 루미의 레벨 디자인 구현(Test #2-3)",
+      "date": "2026-08-26 18:45:58 +0900"
+    },
+    {
+      "source": "_posts/2026-08-28-VX-10.md",
+      "legacySlug": "VX-10",
+      "url": "/posts/VX-10/",
+      "title": "[VX] 10. 기존 루미&Codex와 별개의 Independent Review 프로세스 추가 (Test #2-3)",
+      "date": "2026-08-28 06:56:43 +0900"
+    }
+  ]
+}

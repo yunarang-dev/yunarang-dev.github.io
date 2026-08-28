@@ -1,0 +1,175 @@
+---
+import { getCollection } from 'astro:content';
+import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
+import LocalizedText from '../../components/ui/LocalizedText.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/blog.css';
+
+const timeZone = 'Asia/Seoul';
+const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
+  new Intl.DateTimeFormat(locale, {
+    timeZone,
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((post) => ({
+    ...post,
+    dateJa: formatDate(post.data.date, 'ja-JP'),
+    dateKo: formatDate(post.data.date, 'ko-KR'),
+  }));
+
+const [latestPost, ...remainingPosts] = posts;
+const categories = Array.from(
+  new Map(posts.map((post) => [post.data.category.ja, post.data.category])).entries(),
+).map(([id, label]) => ({ id, label }));
+const site = Astro.site ?? Astro.url;
+const blogUrl = new URL('/blog/', site).href;
+const blogSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${blogUrl}#collection`,
+  name: 'Yunarang Development Archive — Blog',
+  description: 'ゲーム開発、設計、実装、学びの過程を積み重ねていく個人開発アーカイブ。',
+  url: blogUrl,
+  inLanguage: ['ja', 'ko'],
+  isPartOf: { '@id': `${new URL('/', site).href}#website` },
+};
+---
+
+<BaseLayout
+  title="Blog — Yunarang"
+  titleKo="블로그 — Yunarang"
+  description="ゲーム開発、設計、実装、学びの過程を積み重ねていく個人開発アーカイブ。"
+  descriptionKo="게임 개발, 설계, 구현, 배움의 과정을 차곡차곡 쌓아 가는 개인 개발 아카이브입니다."
+  structuredData={blogSchema}
+  pageClass="blog-page-root"
+>
+  <section class="blog-page content-container" aria-labelledby="blog-title">
+    <ConstellationMotif variant="blog" class="constellation-motif--blog" />
+    <header class="blog-hero">
+      <p class="blog-eyebrow" data-i18n="blog.eyebrow">DEVELOPMENT ARCHIVE</p>
+      <h1 id="blog-title" data-i18n="blog.title">作る過程を、言葉でも残す。</h1>
+      <p class="blog-intro" data-i18n="blog.description">ゲーム開発、設計、実装、学び。進行中の制作に残した記録を、新しい順にまとめています。</p>
+      <div class="blog-meta" aria-label="Blog details">
+        <span data-i18n="blog.order">LATEST → OLDEST</span>
+        <span aria-hidden="true">·</span>
+        <span>{posts.length} <span data-i18n="blog.count">RECORDS</span></span>
+      </div>
+    </header>
+
+    <nav class="blog-filters" aria-label="Blog category filters" data-i18n-aria="blog.filter.label">
+      <span class="blog-filters__label" data-i18n="blog.filter.label">FILTER BY CATEGORY</span>
+      <div class="blog-filters__controls">
+        <button class="is-active" type="button" data-blog-filter="all" aria-pressed="true" data-i18n="blog.filter.all">ALL</button>
+        {categories.map((category) => (
+          <button
+            type="button"
+            data-blog-filter={category.id}
+            aria-pressed="false"
+            data-locale-ja={category.label.ja}
+            data-locale-ko={category.label.ko}
+          >{category.label.ja}</button>
+        ))}
+      </div>
+    </nav>
+
+    {latestPost && (
+      <section class="blog-featured" data-blog-entry data-category={latestPost.data.category.ja} aria-labelledby="latest-entry-title">
+        <div class="blog-featured__header">
+          <p data-i18n="blog.latest">LATEST ENTRY</p>
+          <time datetime={latestPost.data.date.toISOString()} data-locale-ja={latestPost.dateJa} data-locale-ko={latestPost.dateKo}>{latestPost.dateJa}</time>
+        </div>
+        <article class="blog-featured__article">
+          <div class="blog-featured__signal" aria-hidden="true"><span></span><span></span><span></span></div>
+          <div class="blog-featured__copy">
+            <LocalizedText as="p" class="blog-featured__category" value={latestPost.data.category} />
+            <h2 id="latest-entry-title"><a href={`/posts/${latestPost.data.legacySlug}/`}><LocalizedText value={latestPost.data.title} /></a></h2>
+            {latestPost.data.description && <LocalizedText as="p" class="blog-featured__description" value={latestPost.data.description} />}
+            {latestPost.data.tags.length > 0 && (
+              <ul class="blog-tags" aria-label="Tags">
+                {latestPost.data.tags.slice(0, 4).map((tag) => <li><LocalizedText value={tag} /></li>)}
+              </ul>
+            )}
+            <a class="blog-read-link" href={`/posts/${latestPost.data.legacySlug}/`}>
+              <span data-i18n="blog.read">記録を読む</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </div>
+        </article>
+      </section>
+    )}
+
+    <section class="blog-records" aria-labelledby="all-records-title">
+      <div class="blog-records__heading">
+        <p data-i18n="blog.records">ALL RECORDS</p>
+        <div aria-live="polite"><span data-blog-visible-count>{posts.length}</span> / {posts.length}</div>
+      </div>
+      <h2 id="all-records-title" class="sr-only" data-i18n="blog.records">ALL RECORDS</h2>
+
+      <ol class="blog-record-list">
+        {remainingPosts.map((post, index) => (
+          <li data-blog-entry data-category={post.data.category.ja}>
+            <article class="blog-record">
+              <div class="blog-record__ordinal" aria-hidden="true">{String(index + 2).padStart(2, '0')}</div>
+              <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
+              <div class="blog-record__copy">
+                <LocalizedText as="p" class="blog-record__category" value={post.data.category} />
+                <h3><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h3>
+                {post.data.description && <LocalizedText as="p" class="blog-record__description" value={post.data.description} />}
+                {post.data.tags.length > 0 && (
+                  <ul class="blog-tags" aria-label="Tags">
+                    {post.data.tags.slice(0, 3).map((tag) => <li><LocalizedText value={tag} /></li>)}
+                  </ul>
+                )}
+              </div>
+              <a
+                class="blog-record__open"
+                href={`/posts/${post.data.legacySlug}/`}
+                aria-label={post.data.title.ja}
+                data-locale-aria-ja={post.data.title.ja}
+                data-locale-aria-ko={post.data.title.ko}
+              >
+                <span aria-hidden="true">↗</span>
+              </a>
+            </article>
+          </li>
+        ))}
+      </ol>
+
+      <p class="blog-records__empty" data-blog-empty hidden data-i18n="blog.empty">このカテゴリーの記事はまだありません。</p>
+    </section>
+  </section>
+
+  <script>
+    const filters = Array.from(document.querySelectorAll<HTMLButtonElement>('[data-blog-filter]'));
+    const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-entry]'));
+    const count = document.querySelector<HTMLElement>('[data-blog-visible-count]');
+    const empty = document.querySelector<HTMLElement>('[data-blog-empty]');
+
+    const applyFilter = (filter: string) => {
+      let visible = 0;
+
+      entries.forEach((entry) => {
+        const matches = filter === 'all' || entry.dataset.category === filter;
+        entry.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      filters.forEach((button) => {
+        const isActive = button.dataset.blogFilter === filter;
+        button.classList.toggle('is-active', isActive);
+        button.setAttribute('aria-pressed', String(isActive));
+      });
+
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+    };
+
+    filters.forEach((button) => {
+      button.addEventListener('click', () => applyFilter(button.dataset.blogFilter ?? 'all'));
+    });
+  </script>
+</BaseLayout>

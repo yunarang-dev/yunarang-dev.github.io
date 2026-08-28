@@ -1,0 +1,59 @@
+<button
+  class="locale-switcher"
+  type="button"
+  data-locale-toggle
+  aria-label="表示言語を変更"
+  title="表示言語を変更"
+>
+  <span class="locale-switcher__current" data-locale-current>JA</span>
+  <span class="locale-switcher__divider" aria-hidden="true">/</span>
+  <span class="locale-switcher__next" data-i18n="locale.next">한국어</span>
+</button>
+
+<style>
+  .locale-switcher {
+    display: inline-grid;
+    grid-template-columns: auto auto auto;
+    align-items: center;
+    gap: 0.3rem;
+    min-height: 2.25rem;
+    padding: 0.35rem 0.6rem;
+    border: 1px solid rgb(178 208 255 / 22%);
+    border-radius: 999px;
+    background: rgb(5 17 32 / 34%);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: 0.68rem;
+    letter-spacing: 0.08em;
+    line-height: 1;
+    transition:
+      border-color var(--transition-fast),
+      background-color var(--transition-fast),
+      color var(--transition-fast);
+  }
+
+  .locale-switcher:hover {
+    border-color: rgb(246 166 97 / 50%);
+    background: rgb(246 166 97 / 9%);
+    color: var(--color-text);
+  }
+
+  .locale-switcher__current {
+    display: block;
+    color: var(--color-dawn);
+    font-weight: 700;
+    line-height: 1;
+  }
+
+  .locale-switcher__divider {
+    display: block;
+    color: rgb(192 211 235 / 45%);
+    line-height: 1;
+  }
+
+  .locale-switcher__next {
+    display: block;
+    letter-spacing: 0;
+    line-height: 1;
+  }
+</style>

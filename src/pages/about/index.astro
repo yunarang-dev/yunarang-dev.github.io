@@ -1,0 +1,193 @@
+---
+import { getEntry } from 'astro:content';
+import ArrowLink from '../../components/ui/ArrowLink.astro';
+import LocalizedText from '../../components/ui/LocalizedText.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/about.css';
+
+const aboutEntry = await getEntry('pages', 'about');
+
+if (!aboutEntry) {
+  throw new Error('Missing src/content/pages/about.md');
+}
+
+const about = aboutEntry.data;
+const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => area.code === 'AD' || area.code === 'VX');
+const archiveCards = about.archiveAreas.filter((area: { code: string }) => area.code !== 'AD' && area.code !== 'VX');
+const site = Astro.site ?? Astro.url;
+const aboutUrl = new URL('/about/', site).href;
+const aboutSchema = {
+  '@type': 'ProfilePage',
+  '@id': `${aboutUrl}#profile`,
+  name: about.title.ja,
+  description: about.description.ja,
+  url: aboutUrl,
+  inLanguage: ['ja', 'ko'],
+  mainEntity: { '@id': `${new URL('/', site).href}#yunarang` },
+};
+---
+
+<BaseLayout
+  title={about.title.ja}
+  titleKo={about.title.ko}
+  description={about.description.ja}
+  descriptionKo={about.description.ko}
+  structuredData={aboutSchema}
+>
+  <div class="about-page">
+    <section class="about-hero" aria-labelledby="about-title">
+      <div class="about-hero-constellation" aria-hidden="true">
+        <svg viewBox="0 0 240 160" preserveAspectRatio="none">
+          <polyline points="8,122 54,88 98,106 142,54 192,72 226,20" />
+          <circle cx="8" cy="122" r="2.5" /><circle cx="54" cy="88" r="2" /><circle cx="98" cy="106" r="2.4" /><circle cx="142" cy="54" r="2" /><circle cx="192" cy="72" r="2.4" /><circle cx="226" cy="20" r="2" />
+        </svg>
+      </div>
+      <div class="container about-hero-grid">
+        <div class="about-hero-copy">
+          <LocalizedText as="p" class="eyebrow" value={about.hero.eyebrow} />
+          <LocalizedText as="p" class="about-quote" value={about.hero.quote} />
+          <h1 id="about-title"><LocalizedText class="about-hero-name" value={about.hero.name} /><br /><span>{about.hero.displayName}</span></h1>
+          <LocalizedText as="p" class="about-intro" value={about.hero.intro} />
+        </div>
+
+        <aside
+          class="about-focus-card"
+          aria-label={about.hero.focusLabel.ja}
+          data-locale-aria-ja={about.hero.focusLabel.ja}
+          data-locale-aria-ko={about.hero.focusLabel.ko}
+        >
+          <LocalizedText as="p" class="eyebrow" value={about.hero.focusLabel} />
+          <LocalizedText as="p" value={about.hero.focus} />
+          <LocalizedText as="span" value={about.hero.focusMeta} />
+        </aside>
+      </div>
+    </section>
+
+    <section class="about-section about-profile" aria-labelledby="profile-title">
+      <div class="content-container about-section-heading">
+        <div>
+          <LocalizedText as="p" class="eyebrow" value={about.sections.profile.number} />
+          <LocalizedText as="h2" id="profile-title" value={about.sections.profile.heading} />
+        </div>
+      </div>
+      <dl class="content-container profile-grid">
+        {about.profile.map((item: { label: any; value: any; note?: any }) => (
+          <div class="profile-row">
+            <LocalizedText as="dt" value={item.label} />
+            <dd>
+              <LocalizedText value={item.value} />
+              {item.note && <LocalizedText as="small" value={item.note} />}
+            </dd>
+          </div>
+        ))}
+      </dl>
+    </section>
+
+    <section class="about-section about-tools" aria-labelledby="tools-title">
+      <div class="content-container about-section-heading">
+        <div>
+          <LocalizedText as="p" class="eyebrow" value={about.sections.tools.number} />
+          <LocalizedText as="h2" id="tools-title" value={about.sections.tools.heading} />
+        </div>
+      </div>
+      <div class="content-container tools-layout">
+        <div class="tool-list glass-surface">
+          <LocalizedText as="h3" value={about.sections.tools.techHeading} />
+          <dl>
+            {about.tools.map((tool: { label: any; value: any }) => (
+              <div><LocalizedText as="dt" value={tool.label} /><LocalizedText as="dd" value={tool.value} /></div>
+            ))}
+          </dl>
+        </div>
+        <div class="tool-list glass-surface">
+          <LocalizedText as="h3" value={about.sections.tools.equipmentHeading} />
+          <dl>
+            {about.equipment.map((item: { label: any; value: any }) => (
+              <div><LocalizedText as="dt" value={item.label} /><LocalizedText as="dd" value={item.value} /></div>
+            ))}
+          </dl>
+        </div>
+      </div>
+    </section>
+
+    <section class="about-section about-archive" aria-labelledby="archive-title">
+      <div class="content-container about-section-heading about-archive-heading">
+        <div>
+          <LocalizedText as="p" class="eyebrow" value={about.sections.archive.number} />
+          <LocalizedText as="h2" id="archive-title" value={about.sections.archive.heading} />
+        </div>
+        <LocalizedText as="p" value={about.sections.archive.copy} />
+      </div>
+      <div class="container archive-feature-list">
+        {featuredArchiveAreas.map((area: any, index: number) => (
+          <article class:list={['archive-feature', `archive-feature--${area.code.toLowerCase()}`, { 'archive-feature--reverse': index % 2 === 1 }]}>
+            <div class="archive-feature-project">
+              <p class="archive-code">{area.code}</p>
+              <LocalizedText as="h3" value={area.title} />
+              <LocalizedText as="p" class="archive-motto" value={area.motto} />
+              {area.links && <div class="archive-links">{area.links.map((link: any) => <ArrowLink href={link.href} tone="warm"><LocalizedText value={link.label} /></ArrowLink>)}</div>}
+            </div>
+            <div class="archive-feature-detail">
+              <LocalizedText as="p" class="archive-feature-label" value={about.sections.archive.overview} />
+              <LocalizedText as="p" class="archive-description" value={area.description} />
+              {area.table && area.code === 'VX' && (
+                <div class="archive-table-wrap">
+                  <table>
+                    <thead><tr>{about.sections.archive.vxHeaders.map((header: any) => <LocalizedText as="th" value={header} />)}</tr></thead>
+                    <tbody>{area.table.map((row: any[]) => <tr>{row.map((cell: any) => <LocalizedText as="td" value={cell} />)}</tr>)}</tbody>
+                  </table>
+                </div>
+              )}
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="container archive-grid">
+        {archiveCards.map((area: any) => (
+          <article class="archive-card">
+            <p class="archive-code">{area.code}</p>
+            <LocalizedText as="h3" value={area.title} />
+            <LocalizedText as="p" class="archive-motto" value={area.motto} />
+            <LocalizedText as="p" class="archive-description" value={area.description} />
+            {area.table && area.code === 'CT' && (
+              <div class="archive-table-wrap">
+                <table>
+                  <thead><tr>{about.sections.archive.contestHeaders.map((header: any) => <LocalizedText as="th" value={header} />)}</tr></thead>
+                  <tbody>{area.table.map((row: any[]) => <tr>{row.map((cell: any) => <LocalizedText as="td" value={cell} />)}</tr>)}</tbody>
+                </table>
+              </div>
+            )}
+            {area.links && <div class="archive-links">{area.links.map((link: any) => <ArrowLink href={link.href} tone="warm"><LocalizedText value={link.label} /></ArrowLink>)}</div>}
+          </article>
+        ))}
+      </div>
+    </section>
+
+    <section class="about-section life-plan" aria-labelledby="life-plan-title">
+      <div class="content-container about-section-heading">
+        <div>
+          <LocalizedText as="p" class="eyebrow" value={about.sections.lifePlan.number} />
+          <LocalizedText as="h2" id="life-plan-title" value={about.sections.lifePlan.heading} />
+        </div>
+      </div>
+      <ol class="content-container plan-list">
+        {about.lifePlan.map((stage: any) => <li><LocalizedText as="p" value={stage.period} />{stage.items.length > 0 ? <ul>{stage.items.map((item: any) => <li><LocalizedText value={item} /></li>)}</ul> : <span aria-hidden="true"></span>}</li>)}
+      </ol>
+    </section>
+
+    <section class="about-contact" aria-labelledby="about-contact-title">
+      <div class="content-container about-contact-inner glass-surface">
+        <LocalizedText as="p" class="eyebrow" value={about.sections.contact.number} />
+        <LocalizedText as="h2" id="about-contact-title" value={about.sections.contact.heading} />
+        <nav
+          aria-label={about.sections.contact.linksLabel.ja}
+          data-locale-aria-ja={about.sections.contact.linksLabel.ja}
+          data-locale-aria-ko={about.sections.contact.linksLabel.ko}
+        >
+          <ul>{about.externalLinks.map((link: { label: string; href: string; external: boolean }) => <li><ArrowLink href={link.href} tone={link.label === 'GitHub' ? 'warm' : 'cool'} external={link.external}>{link.label}</ArrowLink></li>)}</ul>
+        </nav>
+      </div>
+    </section>
+  </div>
+</BaseLayout>

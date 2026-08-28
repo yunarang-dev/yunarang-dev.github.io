@@ -1,0 +1,31 @@
+<footer class="site-footer">
+  <div class="container footer-inner">
+    <p data-i18n="footer.copyright">© 2026 Yunarang. Built as a personal development archive.</p>
+    <p data-i18n="footer.tagline">ゲームとコード、制作過程を記録する個人アーカイブ。</p>
+  </div>
+</footer>
+
+<style>
+  .site-footer {
+    border-top: 1px solid var(--color-line);
+  }
+
+  .footer-inner {
+    min-height: 7rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: var(--space-5);
+    color: var(--color-muted);
+    font-family: var(--font-mono);
+    font-size: var(--step--1);
+  }
+
+  @media (max-width: 42rem) {
+    .footer-inner {
+      align-items: flex-start;
+      flex-direction: column;
+      justify-content: center;
+    }
+  }
+</style>

@@ -1,0 +1,46 @@
+name: Deploy Astro site to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out the repository
+        uses: actions/checkout@v7
+
+      - name: Install, check, build, and upload the Astro site
+        uses: withastro/action@v6
+        with:
+          node-version: 24
+          package-manager: npm
+          build-cmd: npm run build
+          out-dir: dist
+
+  deploy:
+    # A feature branch may run the build manually, but it must never replace
+    # the live Pages deployment before its changes are merged into main.
+    if: github.event_name != 'pull_request' && github.ref == 'refs/heads/main'
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v5

@@ -1,0 +1,177 @@
+---
+import { Image } from 'astro:assets';
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ArrowLink from '../../components/ui/ArrowLink.astro';
+import LocalizedText from '../../components/ui/LocalizedText.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/projects.css';
+
+export async function getStaticPaths() {
+  const projects = await getCollection('projects');
+  return projects.map((project) => ({
+    params: { slug: project.id },
+    props: { project },
+  }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const timeZone = 'Asia/Seoul';
+const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
+  new Intl.DateTimeFormat(locale, {
+    timeZone,
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+
+const { project } = Astro.props;
+const ProjectDocument = (await render(project)).Content;
+const posts = await getCollection('posts', ({ data }) => !data.draft);
+const developmentLogs = posts
+  .filter((post) => post.data.project?.id === project.id)
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((post) => ({
+    ...post,
+    dateJa: formatDate(post.data.date, 'ja-JP'),
+    dateKo: formatDate(post.data.date, 'ko-KR'),
+  }));
+const site = Astro.site ?? Astro.url;
+const projectUrl = new URL(`/projects/${project.id}/`, site).href;
+const projectSchema = {
+  '@type': 'CreativeWork',
+  '@id': `${projectUrl}#project`,
+  name: project.data.title.ja,
+  alternateName: project.data.title.ko,
+  description: project.data.overview.ja,
+  image: [new URL(`/social/${project.id}.png`, site).href],
+  url: projectUrl,
+  inLanguage: ['ja', 'ko'],
+  keywords: project.data.technologies.join(', '),
+  creator: { '@id': `${new URL('/', site).href}#yunarang` },
+};
+---
+
+<BaseLayout
+  title={`${project.data.title.ja} — Yunarang`}
+  titleKo={`${project.data.title.ko} — Yunarang`}
+  description={project.data.overview.ja}
+  descriptionKo={project.data.overview.ko}
+  image={`/social/${project.id}.png`}
+  imageAlt={project.data.heroAlt}
+  structuredData={projectSchema}
+  pageClass="projects-page-root"
+  overlayHeader
+>
+  <article class="project-page">
+    <header class="project-page__hero">
+      {project.data.heroImage && project.data.heroAlt && (
+        <Image
+          class="project-page__hero-image"
+          src={project.data.heroImage}
+          alt={project.data.heroAlt}
+          widths={[960, 1440, 1920]}
+          sizes="100vw"
+          format="webp"
+          quality={86}
+          loading="eager"
+        />
+      )}
+      <div class="project-page__hero-shade" aria-hidden="true"></div>
+      <div class="project-page__hero-content container">
+        <p class="project-page__eyebrow">
+          <span>{project.data.shortTitle}</span>
+          <span aria-hidden="true">/</span>
+          <span data-i18n="project-page.status.active">IN DEVELOPMENT</span>
+        </p>
+        <LocalizedText as="h1" value={project.data.title} />
+        <LocalizedText as="p" class="project-page__tagline" value={project.data.tagline} />
+
+        <dl class="project-page__meta">
+          <div>
+            <dt data-i18n="project-page.role">ROLE</dt>
+            <dd>{project.data.role}</dd>
+          </div>
+          <div>
+            <dt data-i18n="project-page.tools">TOOLS</dt>
+            <dd>{project.data.technologies.join(' · ')}</dd>
+          </div>
+        </dl>
+
+        {project.data.links?.board && (
+          <ArrowLink href={project.data.links.board} tone="warm" external>
+            <span data-i18n="project-page.board.open">GitHub Projects を開く</span>
+          </ArrowLink>
+        )}
+      </div>
+    </header>
+
+    <section class="project-page__brief content-container" aria-labelledby="project-brief-title">
+      <p class="project-page__section-label" data-i18n="project-page.brief">PROJECT BRIEF</p>
+      <LocalizedText as="h2" id="project-brief-title" value={project.data.overview} />
+    </section>
+
+    <section class="project-page__focus container" aria-labelledby="project-focus-title">
+      <div class="project-page__section-heading">
+        <p class="project-page__section-label" data-i18n="project-page.focus">DESIGN PILLARS</p>
+        <h2 id="project-focus-title">{project.data.shortTitle} / Focus</h2>
+      </div>
+      <ol class="project-focus-grid">
+        {project.data.focus.map((item, index) => (
+          <li class="project-focus-card">
+            <span class="project-focus-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+            <LocalizedText as="h3" value={item.title} />
+            <LocalizedText as="p" value={item.description} />
+          </li>
+        ))}
+      </ol>
+    </section>
+
+    <section
+      class="project-page__story"
+      aria-label={project.data.title.ja}
+      data-locale-aria-ja={project.data.title.ja}
+      data-locale-aria-ko={project.data.title.ko}
+    >
+      <div class="project-page__story-body markdown-content">
+        <ProjectDocument />
+      </div>
+    </section>
+
+    <!--
+      The project Markdown body is canonical. AD-00/VX-00 are legacy URLs
+      that now redirect here, rather than duplicate project documents.
+    -->
+
+    <section class="project-page__records content-container" aria-labelledby="project-records-title">
+      <div class="project-page__section-heading project-page__section-heading--records">
+        <div>
+          <p class="project-page__section-label" data-i18n="project-page.records">DEVELOPMENT LOGS</p>
+          <h2 id="project-records-title">{project.data.shortTitle} / Records</h2>
+        </div>
+        <p data-i18n="project-page.records.copy">このプロジェクトに紐づく開発記録を、新しい順に表示しています。</p>
+      </div>
+
+      {developmentLogs.length > 0 ? (
+        <ol class="project-record-list">
+          {developmentLogs.map((post) => (
+            <li>
+              <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
+              <div>
+                <h3><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h3>
+                {post.data.description && <LocalizedText as="p" value={post.data.description} />}
+              </div>
+              <a class="project-record-list__open" href={`/posts/${post.data.legacySlug}/`} aria-label={`${post.data.title.ja} を読む`}>
+                <span aria-hidden="true">↗</span>
+              </a>
+            </li>
+          ))}
+        </ol>
+      ) : (
+        <p class="project-page__records-empty" data-i18n="project-page.records.empty">開発記録は準備中です。</p>
+      )}
+    </section>
+  </article>
+</BaseLayout>

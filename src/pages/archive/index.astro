@@ -1,0 +1,82 @@
+---
+import { getCollection } from 'astro:content';
+import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
+import LocalizedText from '../../components/ui/LocalizedText.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/archive.css';
+
+const timeZone = 'Asia/Seoul';
+const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
+  new Intl.DateTimeFormat(locale, {
+    timeZone,
+    year: 'numeric',
+    month: 'short',
+    day: 'numeric',
+  }).format(date);
+
+const posts = (await getCollection('posts', ({ data }) => !data.draft))
+  .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  .map((post) => ({
+    ...post,
+    dateJa: formatDate(post.data.date, 'ja-JP'),
+    dateKo: formatDate(post.data.date, 'ko-KR'),
+    year: new Intl.DateTimeFormat('en-US', { timeZone, year: 'numeric' }).format(post.data.date),
+  }));
+const site = Astro.site ?? Astro.url;
+const archiveUrl = new URL('/archive/', site).href;
+const archiveSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${archiveUrl}#timeline`,
+  name: 'Yunarang Development Archive Timeline',
+  description: '現在から最初の記録まで、制作と開発の足跡を時系列で辿るアーカイブ。',
+  url: archiveUrl,
+  inLanguage: ['ja', 'ko'],
+  isPartOf: { '@id': `${new URL('/', site).href}#website` },
+};
+---
+
+<BaseLayout
+  title="Archive Timeline — Yunarang"
+  titleKo="아카이브 타임라인 — Yunarang"
+  description="現在から最初の記録まで、制作と開発の足跡を時系列で辿るアーカイブ。"
+  descriptionKo="현재에서 첫 기록까지, 제작과 개발의 흔적을 시간 순서대로 따라가는 아카이브입니다."
+  structuredData={archiveSchema}
+  pageClass="archive-page-root"
+>
+  <section class="archive-page content-container" aria-labelledby="archive-title">
+    <ConstellationMotif variant="archive" class="constellation-motif--archive" />
+    <header class="archive-hero">
+      <p class="archive-eyebrow" data-i18n="archive.eyebrow">ARCHIVE TIMELINE</p>
+      <h1 id="archive-title" data-i18n="archive.title">記録がつなぐ、制作の星座。</h1>
+      <p class="archive-intro" data-i18n="archive.description">現在から最初の記録まで。制作、実装、学びの足跡を時系列で辿れます。</p>
+      <div class="archive-meta" aria-label="Archive details">
+        <span data-i18n="archive.order">LATEST → OLDEST</span>
+        <span aria-hidden="true">·</span>
+        <span>{posts.length} <span data-i18n="archive.count">記事</span></span>
+      </div>
+    </header>
+
+    <ol class="archive-timeline" data-i18n-aria="archive.timeline.label" aria-label="投稿の時系列アーカイブ">
+      {posts.map((post, index) => (
+        <li class:list={['timeline-entry', { 'is-latest': index === 0 }]}>
+          <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
+          <span class="timeline-star" aria-hidden="true"><span></span></span>
+          <article class="timeline-record">
+            <div class="timeline-record__meta">
+              <LocalizedText value={post.data.category} />
+              <span aria-hidden="true">·</span>
+              <span>{post.year}</span>
+              {index === 0 && <span class="timeline-record__latest" data-i18n="archive.latest">LATEST RECORD</span>}
+            </div>
+            <h2><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h2>
+            {post.data.description && <LocalizedText as="p" class="timeline-record__description" value={post.data.description} />}
+            <a class="timeline-record__link" href={`/posts/${post.data.legacySlug}/`}>
+              <span data-i18n="archive.open">記事を読む</span>
+              <span aria-hidden="true">→</span>
+            </a>
+          </article>
+        </li>
+      ))}
+    </ol>
+  </section>
+</BaseLayout>

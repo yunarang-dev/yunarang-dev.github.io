@@ -1,0 +1,244 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import legacyRoutes from '../../../preflight/legacy-post-routes.json';
+import LocalizedText from '../../components/ui/LocalizedText.astro';
+import PlaceholderPage from '../../components/global/PlaceholderPage.astro';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import '../../styles/post.css';
+
+interface LegacyRoute {
+  legacySlug: string;
+  title: string;
+  date: string;
+}
+
+interface Props {
+  route?: LegacyRoute;
+  post?: CollectionEntry<'posts'>;
+  redirectTo?: string;
+}
+
+export async function getStaticPaths() {
+  const legacyRouteRedirects: Record<string, string> = {
+    'AD-00': '/projects/astral-days/',
+    'VX-00': '/projects/project-vx/',
+    'KR-01': '/posts/AD-01/',
+    'KR-02': '/projects/astral-days/',
+  };
+  const posts = await getCollection('posts', ({ data }) => !data.draft);
+  const contentSlugs = new Set(posts.map((post) => post.data.legacySlug));
+  const placeholders = legacyRoutes.routes.filter((route) => !contentSlugs.has(route.legacySlug));
+
+  return [
+    ...posts.map((post) => ({
+      params: { slug: post.data.legacySlug },
+      props: { post },
+    })),
+    ...placeholders.map((route) => ({
+      params: { slug: route.legacySlug },
+      props: { route, redirectTo: legacyRouteRedirects[route.legacySlug] },
+    })),
+  ];
+}
+
+const { route, post, redirectTo } = Astro.props as Props;
+
+if (!post && !route) {
+  throw new Error('A post route requires either a migrated post or a legacy placeholder route.');
+}
+
+const renderedPost = post ? await render(post) : undefined;
+const Content = renderedPost?.Content;
+const date = post?.data.date;
+const dateJa = date ? new Intl.DateTimeFormat('ja-JP', { dateStyle: 'long' }).format(date) : '';
+const dateKo = date ? new Intl.DateTimeFormat('ko-KR', { dateStyle: 'long' }).format(date) : '';
+const chronologicalPosts = post
+  ? (await getCollection('posts', ({ data }) => !data.draft)).sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
+  : [];
+const currentPostIndex = post ? chronologicalPosts.findIndex((candidate) => candidate.id === post.id) : -1;
+const newerPost = currentPostIndex > 0 ? chronologicalPosts[currentPostIndex - 1] : undefined;
+const olderPost = currentPostIndex >= 0 ? chronologicalPosts[currentPostIndex + 1] : undefined;
+const relatedPosts = post
+  ? chronologicalPosts
+      .filter((candidate) => candidate.id !== post.id)
+      .map((candidate) => ({
+        post: candidate,
+        score: Number(candidate.data.project?.id === post.data.project?.id && Boolean(post.data.project)) * 2
+          + Number(candidate.data.category.ja === post.data.category.ja),
+      }))
+      .filter((candidate) => candidate.score > 0)
+      .sort((a, b) => b.score - a.score || b.post.data.date.getTime() - a.post.data.date.getTime())
+      .slice(0, 3)
+      .map((candidate) => candidate.post)
+  : [];
+const formatDate = (value: Date, locale: 'ja-JP' | 'ko-KR') =>
+  new Intl.DateTimeFormat(locale, { timeZone: 'Asia/Seoul', year: 'numeric', month: 'short', day: 'numeric' }).format(value);
+const site = Astro.site ?? Astro.url;
+const postUrl = post ? new URL(`/posts/${post.data.legacySlug}/`, site).href : undefined;
+const postSchema = post && postUrl
+  ? {
+      '@type': 'BlogPosting',
+      '@id': `${postUrl}#article`,
+      headline: post.data.title.ja,
+      alternativeHeadline: post.data.title.ko,
+      description: post.data.description?.ja ?? 'ゲーム、物語、AIを用いた開発の過程を記録する個人開発アーカイブ。',
+      image: [new URL(post.data.image?.src ?? '/social/yunarang-archive.png', site).href],
+      datePublished: post.data.date.toISOString(),
+      dateModified: (post.data.updated ?? post.data.date).toISOString(),
+      inLanguage: ['ja', 'ko'],
+      articleSection: post.data.category.ja,
+      keywords: post.data.tags.map((tag) => tag.ja).join(', '),
+      mainEntityOfPage: { '@type': 'WebPage', '@id': postUrl },
+      author: { '@id': `${new URL('/', site).href}#yunarang` },
+      publisher: { '@id': `${new URL('/', site).href}#yunarang` },
+      isPartOf: { '@id': `${new URL('/', site).href}#website` },
+    }
+  : undefined;
+---
+
+{post && Content ? (
+  <BaseLayout
+    title={`${post.data.title.ja} — Yunarang`}
+    titleKo={`${post.data.title.ko} — Yunarang`}
+    description={post.data.description?.ja}
+    descriptionKo={post.data.description?.ko}
+    image={post.data.image?.src}
+    imageAlt={post.data.image?.alt}
+    type="article"
+    publishedTime={post.data.date}
+    modifiedTime={post.data.updated ?? post.data.date}
+    structuredData={postSchema}
+  >
+    <article class="post-page">
+      <header class="post-header content-container">
+        <a class="post-back" href="/blog/">
+          <span aria-hidden="true">←</span>
+          <span data-i18n="post.back">Blog に戻る</span>
+        </a>
+        <div class="post-kicker">
+          <LocalizedText value={post.data.category} />
+          <span aria-hidden="true">·</span>
+          <time datetime={post.data.date.toISOString()} data-locale-ja={dateJa} data-locale-ko={dateKo}>{dateJa}</time>
+        </div>
+        <LocalizedText as="h1" value={post.data.title} />
+        {post.data.description && <LocalizedText as="p" class="post-description" value={post.data.description} />}
+        {post.data.tags.length > 0 && <ul class="post-tags" aria-label="Tags">{post.data.tags.map((tag) => <li><LocalizedText value={tag} /></li>)}</ul>}
+      </header>
+
+      {post.data.image && (
+        <figure class="post-cover content-container">
+          <img src={post.data.image.src} alt={post.data.image.alt} loading="eager" />
+        </figure>
+      )}
+
+      <div class="post-layout content-container">
+        <div class="post-reading">
+          <div class="post-body markdown-content"><Content /></div>
+
+          {(newerPost || olderPost) && (
+            <nav class="post-navigation" aria-label="Post navigation" data-i18n-aria="post.navigation">
+              {newerPost ? (
+                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.legacySlug}/`}>
+                  <span class="post-navigation__label" data-i18n="post.newer">NEWER RECORD</span>
+                  <LocalizedText as="span" value={newerPost.data.title} />
+                </a>
+              ) : <span></span>}
+              {olderPost ? (
+                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.legacySlug}/`}>
+                  <span class="post-navigation__label" data-i18n="post.older">OLDER RECORD</span>
+                  <LocalizedText as="span" value={olderPost.data.title} />
+                </a>
+              ) : <span></span>}
+            </nav>
+          )}
+        </div>
+
+        <aside class="post-toc" data-post-toc hidden>
+          <p data-i18n="post.toc">CONTENTS</p>
+          <nav aria-label="Table of contents" data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
+        </aside>
+      </div>
+
+      <details class="post-toc-mobile content-container" data-post-toc hidden>
+        <summary data-i18n="post.toc">CONTENTS</summary>
+        <nav aria-label="Table of contents" data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
+      </details>
+
+      {relatedPosts.length > 0 && (
+        <section class="post-related content-container" aria-labelledby="related-records-title">
+          <div class="post-related__heading">
+            <p data-i18n="post.related">RELATED RECORDS</p>
+            <p data-i18n="post.related.copy">同じプロジェクト、または近いテーマの記録です。</p>
+          </div>
+          <h2 id="related-records-title" class="sr-only" data-i18n="post.related">RELATED RECORDS</h2>
+          <ol>
+            {relatedPosts.map((relatedPost) => {
+              const relatedDateJa = formatDate(relatedPost.data.date, 'ja-JP');
+              const relatedDateKo = formatDate(relatedPost.data.date, 'ko-KR');
+              return (
+                <li>
+                  <time datetime={relatedPost.data.date.toISOString()} data-locale-ja={relatedDateJa} data-locale-ko={relatedDateKo}>{relatedDateJa}</time>
+                  <div>
+                    <LocalizedText as="p" value={relatedPost.data.category} />
+                    <h3><a href={`/posts/${relatedPost.data.legacySlug}/`}><LocalizedText value={relatedPost.data.title} /></a></h3>
+                  </div>
+                  <a
+                    href={`/posts/${relatedPost.data.legacySlug}/`}
+                    aria-label={relatedPost.data.title.ja}
+                    data-locale-aria-ja={relatedPost.data.title.ja}
+                    data-locale-aria-ko={relatedPost.data.title.ko}
+                  ><span aria-hidden="true">↗</span></a>
+                </li>
+              );
+            })}
+          </ol>
+        </section>
+      )}
+    </article>
+
+    <script>
+      const root = document.documentElement;
+      const tocLists = Array.from(document.querySelectorAll<HTMLOListElement>('[data-post-toc-list]'));
+      const tocRegions = Array.from(document.querySelectorAll<HTMLElement>('[data-post-toc]'));
+
+      const updateTableOfContents = () => {
+        const headings = Array.from(document.querySelectorAll<HTMLElement>('.post-body :is(h2, h3)')).filter((heading) => {
+          const localeContent = heading.closest<HTMLElement>('[data-content-locale]');
+          return !localeContent || localeContent.dataset.contentLocale === root.dataset.locale;
+        });
+
+        tocRegions.forEach((region) => {
+          region.hidden = headings.length === 0;
+        });
+
+        tocLists.forEach((list) => {
+          list.replaceChildren();
+
+          headings.forEach((heading) => {
+            if (!heading.id) return;
+
+            const item = document.createElement('li');
+            item.className = heading.tagName === 'H3' ? 'is-subheading' : '';
+            const link = document.createElement('a');
+            link.href = `#${heading.id}`;
+            link.textContent = heading.textContent?.trim() ?? '';
+            item.append(link);
+            list.append(item);
+          });
+        });
+      };
+
+      updateTableOfContents();
+      document.addEventListener('site:localechange', updateTableOfContents);
+    </script>
+  </BaseLayout>
+) : (
+  <BaseLayout title={`${route!.title} — Yunarang`} redirectTo={redirectTo} noindex>
+    <PlaceholderPage
+      title={route!.title}
+      description={redirectTo
+        ? `${route!.date} · 이 프로젝트 문서는 전용 프로젝트 페이지로 이동했습니다.`
+        : `${route!.date} · 본문은 다음 콘텐츠 마이그레이션 단계에서 연결합니다. 현재는 기존 공유 URL을 보존하기 위한 placeholder입니다.`}
+    />
+  </BaseLayout>
+)}

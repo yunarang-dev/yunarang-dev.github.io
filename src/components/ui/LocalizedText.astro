@@ -1,0 +1,24 @@
+---
+import { renderLocalizedMarkup, type LocalizedTextValue } from '../../i18n/markup';
+
+interface Props {
+  value: LocalizedTextValue;
+  as?: 'span' | 'p' | 'h1' | 'h2' | 'h3' | 'dt' | 'dd' | 'small' | 'th' | 'td';
+  class?: string;
+  id?: string;
+}
+
+const { value, as: Tag = 'span', class: className, id } = Astro.props as Props;
+const markup = renderLocalizedMarkup(value.ja);
+---
+
+{Tag === 'p' && <p id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'h1' && <h1 id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'h2' && <h2 id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'h3' && <h3 id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'dt' && <dt id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'dd' && <dd id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'small' && <small id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'th' && <th id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'td' && <td id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}
+{Tag === 'span' && <span id={id} class={className} data-locale-ja={value.ja} data-locale-ko={value.ko} set:html={markup} />}

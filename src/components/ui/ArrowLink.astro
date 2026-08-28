@@ -1,0 +1,66 @@
+---
+interface Props {
+  href: string;
+  tone?: 'warm' | 'cool' | 'neutral';
+  external?: boolean;
+}
+
+const { href, tone = 'neutral', external = false } = Astro.props;
+---
+
+<a
+  class:list={['arrow-link', `arrow-link--${tone}`]}
+  href={href}
+  target={external ? '_blank' : undefined}
+  rel={external ? 'noreferrer' : undefined}
+>
+  <slot />
+  <svg viewBox="0 0 20 20" aria-hidden="true">
+    <path d="M3 10h13M11.5 5.5 16 10l-4.5 4.5" />
+  </svg>
+</a>
+
+<style>
+  .arrow-link {
+    width: fit-content;
+    display: inline-flex;
+    align-items: center;
+    gap: var(--space-3);
+    color: var(--color-text-soft);
+    font-family: var(--font-sans);
+    font-size: 0.9rem;
+    text-decoration: underline;
+    text-decoration-color: var(--color-line-strong);
+    transition:
+      color var(--transition-fast),
+      text-decoration-color var(--transition-fast);
+  }
+
+  .arrow-link--warm {
+    color: var(--color-dawn);
+  }
+
+  .arrow-link--cool {
+    color: var(--color-moon);
+  }
+
+  .arrow-link:hover {
+    color: var(--color-text);
+    text-decoration-color: currentColor;
+  }
+
+  svg {
+    width: 1.1rem;
+    height: 1.1rem;
+    fill: none;
+    stroke: currentColor;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    stroke-width: 1.25;
+    transition: transform var(--transition-fast);
+  }
+
+  .arrow-link:hover svg {
+    transform: translateX(0.2rem);
+  }
+</style>

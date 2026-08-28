@@ -1,0 +1,252 @@
+---
+import SiteFooter from '../components/global/SiteFooter.astro';
+import SiteHeader from '../components/global/SiteHeader.astro';
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  titleKo?: string;
+  description?: string;
+  descriptionKo?: string;
+  image?: string;
+  imageAlt?: string;
+  type?: 'website' | 'article';
+  publishedTime?: Date;
+  modifiedTime?: Date;
+  structuredData?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
+  lang?: 'ko' | 'ja' | 'en';
+  pageClass?: string;
+  overlayHeader?: boolean;
+  redirectTo?: string;
+}
+
+const {
+  title = 'Yunarang — Game Developer & Personal Archive',
+  titleKo,
+  description = 'Unity、AI、ナラティブゲーム開発の過程と試行錯誤を記録する、個人開発アーカイブ。',
+  descriptionKo,
+  image = '/social/yunarang-archive.png',
+  imageAlt = 'Yunarang development archive',
+  type = 'website',
+  publishedTime,
+  modifiedTime,
+  structuredData,
+  noindex = false,
+  lang = 'ja',
+  pageClass,
+  overlayHeader = false,
+  redirectTo,
+} = Astro.props;
+
+const koreanTitle = titleKo ?? title;
+const koreanDescription = descriptionKo ?? description;
+const site = Astro.site ?? Astro.url;
+const canonicalUrl = new URL(redirectTo ?? Astro.url.pathname, site).href;
+const socialImageUrl = new URL(image, site).href;
+const feedUrl = new URL('/rss.xml', site).href;
+const socialTitle = title;
+const pageSchemas = structuredData ? (Array.isArray(structuredData) ? structuredData : [structuredData]) : [];
+const jsonLd = JSON.stringify({
+  '@context': 'https://schema.org',
+  '@graph': [
+    {
+      '@type': 'WebSite',
+      '@id': `${new URL('/', site).href}#website`,
+      url: new URL('/', site).href,
+      name: 'Yunarang Development Archive',
+      inLanguage: ['ja', 'ko'],
+    },
+    {
+      '@type': 'Person',
+      '@id': `${new URL('/', site).href}#yunarang`,
+      name: 'Yunarang',
+      url: new URL('/', site).href,
+      sameAs: [
+        'https://github.com/yunarang-dev',
+        'https://x.com/yunarang_dev',
+      ],
+    },
+    ...pageSchemas,
+  ],
+}).replace(/</g, '\\u003c');
+---
+
+<!doctype html>
+<html lang={lang} class={pageClass} data-locale="ja">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <meta name="generator" content={Astro.generator} />
+    <meta name="description" content={description} data-page-description-ja={description} data-page-description-ko={koreanDescription} />
+    <meta name="theme-color" content="#06111f" />
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="canonical" href={canonicalUrl} />
+    <link rel="alternate" type="application/rss+xml" title="Yunarang Development Archive RSS" href={feedUrl} />
+    <meta property="og:site_name" content="Yunarang Development Archive" />
+    <meta property="og:locale" content="ja_JP" />
+    <meta property="og:locale:alternate" content="ko_KR" />
+    <meta property="og:type" content={type} />
+    <meta property="og:title" content={socialTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:url" content={canonicalUrl} />
+    <meta property="og:image" content={socialImageUrl} />
+    <meta property="og:image:alt" content={imageAlt} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={socialTitle} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={socialImageUrl} />
+    <meta name="twitter:image:alt" content={imageAlt} />
+    <meta name="twitter:site" content="@yunarang_dev" />
+    <meta name="twitter:creator" content="@yunarang_dev" />
+    {type === 'article' && publishedTime && <meta property="article:published_time" content={publishedTime.toISOString()} />}
+    {type === 'article' && modifiedTime && <meta property="article:modified_time" content={modifiedTime.toISOString()} />}
+    {type === 'article' && <meta property="article:author" content="Yunarang" />}
+    {(noindex || redirectTo) && <meta name="robots" content="noindex, follow" />}
+    {redirectTo && <meta http-equiv="refresh" content={`0; url=${redirectTo}`} />}
+    <title data-page-title-ja={title} data-page-title-ko={koreanTitle}>{title}</title>
+    <script type="application/ld+json" is:inline set:html={jsonLd}></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content" data-i18n="skip-link">本文へ移動</a>
+    <SiteHeader overlay={overlayHeader} />
+    <main id="main-content">
+      <slot />
+    </main>
+    <SiteFooter />
+    <script>
+      import {
+        defaultLocale,
+        isSiteLocale,
+        localeStorageKey,
+        messages,
+        type MessageKey,
+        type SiteLocale,
+      } from '../i18n/site';
+
+      const root = document.documentElement;
+      const rubyPattern = /<ruby>([^<>]+)<rt>([^<>]+)<\/rt><\/ruby>/g;
+
+      /**
+       * Localized site copy is kept as plain strings, but Japanese project copy
+       * can include the standard Markdown-compatible ruby form:
+       * <ruby>漢字<rt>かんじ</rt></ruby>.
+       *
+       * Build only that constrained element structure instead of assigning
+       * arbitrary string content with innerHTML.
+       */
+      const setLocalizedText = (element: HTMLElement, value: string) => {
+        rubyPattern.lastIndex = 0;
+        let matched = false;
+        let textStart = 0;
+        let match: RegExpExecArray | null;
+        const fragment = document.createDocumentFragment();
+
+        while ((match = rubyPattern.exec(value)) !== null) {
+          matched = true;
+          fragment.append(value.slice(textStart, match.index));
+
+          const ruby = document.createElement('ruby');
+          ruby.append(match[1]);
+
+          const reading = document.createElement('rt');
+          reading.textContent = match[2];
+          ruby.append(reading);
+          fragment.append(ruby);
+
+          textStart = match.index + match[0].length;
+        }
+
+        if (!matched) {
+          element.textContent = value;
+          return;
+        }
+
+        fragment.append(value.slice(textStart));
+        element.replaceChildren(fragment);
+      };
+
+      const translate = (locale: SiteLocale) => {
+        const localeMessages = messages[locale];
+
+        document.querySelectorAll<HTMLElement>('[data-i18n]').forEach((element) => {
+          const key = element.dataset.i18n as MessageKey | undefined;
+          if (key && key in localeMessages) {
+            setLocalizedText(element, localeMessages[key]);
+          }
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-i18n-aria]').forEach((element) => {
+          const key = element.dataset.i18nAria as MessageKey | undefined;
+          if (key && key in localeMessages) {
+            element.setAttribute('aria-label', localeMessages[key]);
+          }
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-locale-ja][data-locale-ko]').forEach((element) => {
+          setLocalizedText(element, locale === 'ja' ? element.dataset.localeJa ?? '' : element.dataset.localeKo ?? '');
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-locale-aria-ja][data-locale-aria-ko]').forEach((element) => {
+          element.setAttribute(
+            'aria-label',
+            locale === 'ja' ? element.dataset.localeAriaJa ?? '' : element.dataset.localeAriaKo ?? '',
+          );
+        });
+
+        const pageTitle = document.querySelector<HTMLTitleElement>('[data-page-title-ja][data-page-title-ko]');
+        if (pageTitle) {
+          pageTitle.textContent = locale === 'ja' ? pageTitle.dataset.pageTitleJa ?? '' : pageTitle.dataset.pageTitleKo ?? '';
+        }
+
+        const pageDescription = document.querySelector<HTMLMetaElement>('[data-page-description-ja][data-page-description-ko]');
+        if (pageDescription) {
+          pageDescription.content = locale === 'ja' ? pageDescription.dataset.pageDescriptionJa ?? '' : pageDescription.dataset.pageDescriptionKo ?? '';
+        }
+
+        document.querySelectorAll<HTMLElement>('[data-locale-current]').forEach((element) => {
+          element.textContent = locale.toUpperCase();
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-locale-toggle]').forEach((element) => {
+          element.setAttribute('aria-label', localeMessages['locale.switch']);
+          element.setAttribute('title', localeMessages['locale.switch']);
+        });
+      };
+
+      const applyLocale = (locale: SiteLocale, persist = true) => {
+        root.lang = locale;
+        root.dataset.locale = locale;
+        translate(locale);
+
+        if (persist) {
+          try {
+            window.localStorage.setItem(localeStorageKey, locale);
+          } catch {
+            // Storage can be unavailable in privacy-restricted browsing contexts.
+          }
+        }
+
+        document.dispatchEvent(new CustomEvent('site:localechange', { detail: { locale } }));
+      };
+
+      let initialLocale: SiteLocale = defaultLocale;
+      try {
+        const storedLocale = window.localStorage.getItem(localeStorageKey);
+        if (isSiteLocale(storedLocale)) {
+          initialLocale = storedLocale;
+        }
+      } catch {
+        // The Japanese default remains available without local storage.
+      }
+
+      applyLocale(initialLocale, false);
+
+      document.querySelectorAll<HTMLButtonElement>('[data-locale-toggle]').forEach((button) => {
+        button.addEventListener('click', () => {
+          applyLocale(root.dataset.locale === 'ko' ? 'ja' : 'ko');
+        });
+      });
+    </script>
+  </body>
+</html>

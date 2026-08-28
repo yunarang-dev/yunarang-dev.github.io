@@ -1,0 +1,220 @@
+{
+  "generatedAt": "2026-08-28T12:56:52+09:00",
+  "purpose": "Post-migration integrity check; checksum covers exact legacy Markdown bytes embedded in the primary locale block.",
+  "sourcePostCount": 28,
+  "excludedLegacyPosts": [
+    "_posts/2026-02-06-KR-01.md",
+    "_posts/2026-03-06-KR-02.md"
+  ],
+  "migratedPostCount": 26,
+  "entries": [
+    {
+      "source": "_posts/2026-01-14-AD-00.md",
+      "target": "src/content/posts/ad-00.md",
+      "slug": "AD-00",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "2e49bcfdd9953f0d63981da0c69873ca4c97ccae1aded9d0276ff9e99a5cd774",
+      "sourceBodyBytes": 14133
+    },
+    {
+      "source": "_posts/2026-01-25-AD-01.md",
+      "target": "src/content/posts/ad-01.md",
+      "slug": "AD-01",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "335eb2267c26cbbb9072542c14a9e626a30f0022430b9356f8c2f68564c8aada",
+      "sourceBodyBytes": 9649
+    },
+    {
+      "source": "_posts/2026-02-22-ET-01.md",
+      "target": "src/content/posts/et-01.md",
+      "slug": "ET-01",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "7d0022db7e01c609c054331a025b0fb9a7cdb96627874bc1be1bbe2b2d2c893c",
+      "sourceBodyBytes": 6791
+    },
+    {
+      "source": "_posts/2026-04-09-CS-01.md",
+      "target": "src/content/posts/cs-01.md",
+      "slug": "CS-01",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "fded1fcc1bac502c5e13e39869361d9bd84fc12f2ff66a3727a965700d1f4784",
+      "sourceBodyBytes": 111
+    },
+    {
+      "source": "_posts/2026-05-19-EV-01.md",
+      "target": "src/content/posts/ev-01.md",
+      "slug": "EV-01",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "a76250eb1a8b74ab2e8c59688bceb924b7c361b8a6dbcbae68f457147f41fc29",
+      "sourceBodyBytes": 18601
+    },
+    {
+      "source": "_posts/2026-06-29-AD-02.md",
+      "target": "src/content/posts/ad-02.md",
+      "slug": "AD-02",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "d101638f13e4e0b2ee66907be5eba47efe5a1de26c7222ff0103444d0931d3e1",
+      "sourceBodyBytes": 37
+    },
+    {
+      "source": "_posts/2026-07-06-CT-01.md",
+      "target": "src/content/posts/ct-01.md",
+      "slug": "CT-01",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "fd19da79304fbde1e1799d06fbb2868e789a78ab07a7b1d840b4133d792f7060",
+      "sourceBodyBytes": 12491
+    },
+    {
+      "source": "_posts/2026-07-12-CT-02.md",
+      "target": "src/content/posts/ct-02.md",
+      "slug": "CT-02",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "696bc2364fd8a46d116cdc80d2b49d65318481895f8692ecb9e8c2859cc4ab90",
+      "sourceBodyBytes": 24883
+    },
+    {
+      "source": "_posts/2026-07-21-CT-03.md",
+      "target": "src/content/posts/ct-03.md",
+      "slug": "CT-03",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "6451ab7e34c8cd8d2998d0fbed37d96c759d876d99202a8cadfe13e9f339224d",
+      "sourceBodyBytes": 28757
+    },
+    {
+      "source": "_posts/2026-07-28-CT-04.md",
+      "target": "src/content/posts/ct-04.md",
+      "slug": "CT-04",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "d2eaff5fa2525fbe87cc1cd0ab86513d87cd46a7c52983a2e9e8d7e21f45c056",
+      "sourceBodyBytes": 31940
+    },
+    {
+      "source": "_posts/2026-08-04-CT-05.md",
+      "target": "src/content/posts/ct-05.md",
+      "slug": "CT-05",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "7def9fcd2d357a744e852f878298440b1f0095694ae1d3db4a7cc5017635b3f1",
+      "sourceBodyBytes": 30283
+    },
+    {
+      "source": "_posts/2026-08-08-EV-02.md",
+      "target": "src/content/posts/ev-02.md",
+      "slug": "EV-02",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "102400b4328b866189307c3f4dc2bc959bae826b5032300b70c42884e467c141",
+      "sourceBodyBytes": 106
+    },
+    {
+      "source": "_posts/2026-08-12-CT-06.md",
+      "target": "src/content/posts/ct-06.md",
+      "slug": "CT-06",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "7777e83049dbc2efbb2ad32480d1f245ab4e200a38e429cad9b22c5fba6fe61c",
+      "sourceBodyBytes": 29490
+    },
+    {
+      "source": "_posts/2026-08-16-CT-07.md",
+      "target": "src/content/posts/ct-07.md",
+      "slug": "CT-07",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "074af60b1cca7c8e5a80df3bfb4ee59b2586e1033b8b88d057ca65fae7caa9bb",
+      "sourceBodyBytes": 27620
+    },
+    {
+      "source": "_posts/2026-08-17-CT-08.md",
+      "target": "src/content/posts/ct-08.md",
+      "slug": "CT-08",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "75a11da44c802486bc6f65640aa48a730f0f684c5c07a42ba3cd1735eb3fb070",
+      "sourceBodyBytes": 2
+    },
+    {
+      "source": "_posts/2026-08-18-VX-00.md",
+      "target": "src/content/posts/vx-00.md",
+      "slug": "VX-00",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "6a91660c0af323f6676d97620d5b10e5318b57f2a77159a5168033666bdfec18",
+      "sourceBodyBytes": 24848
+    },
+    {
+      "source": "_posts/2026-08-19-VX-01.md",
+      "target": "src/content/posts/vx-01.md",
+      "slug": "VX-01",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "61c8802bce314d908b38a61587fe6bddb8d7e3719de32011aa0f703c473a99e1",
+      "sourceBodyBytes": 12181
+    },
+    {
+      "source": "_posts/2026-08-20-VX-02.md",
+      "target": "src/content/posts/vx-02.md",
+      "slug": "VX-02",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "4dfb3136331fa4390a0645e54bc94691f0de09847413265a73ab079d76cf793c",
+      "sourceBodyBytes": 16571
+    },
+    {
+      "source": "_posts/2026-08-20-VX-03.md",
+      "target": "src/content/posts/vx-03.md",
+      "slug": "VX-03",
+      "primaryLocale": "ja",
+      "sourceBodyChecksum": "3a28711982f28111b3d77181af326747d3e3f67feeaa9b2119b5e3db720e36b9",
+      "sourceBodyBytes": 105
+    },
+    {
+      "source": "_posts/2026-08-20-VX-04.md",
+      "target": "src/content/posts/vx-04.md",
+      "slug": "VX-04",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "eae34ff45285659c4fa2d2e7ae21c76d7c5fa57b921365c457d1daf3780e81bf",
+      "sourceBodyBytes": 12463
+    },
+    {
+      "source": "_posts/2026-08-21-VX-05.md",
+      "target": "src/content/posts/vx-05.md",
+      "slug": "VX-05",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "920b63d2628a527f7de768488d3ddfa5be7c543054f7714a951143cb8cfded74",
+      "sourceBodyBytes": 20112
+    },
+    {
+      "source": "_posts/2026-08-21-VX-06.md",
+      "target": "src/content/posts/vx-06.md",
+      "slug": "VX-06",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "df98df7b94cc09038426bb9e543a3b27daa6d750d422de0b432ccd892257cafd",
+      "sourceBodyBytes": 22375
+    },
+    {
+      "source": "_posts/2026-08-23-VX-07.md",
+      "target": "src/content/posts/vx-07.md",
+      "slug": "VX-07",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "c5e97dc0fe0b25cd6b1a122f95faa2642a29345c4c9e5743cd8faa2197a3bb10",
+      "sourceBodyBytes": 24232
+    },
+    {
+      "source": "_posts/2026-08-25-VX-08.md",
+      "target": "src/content/posts/vx-08.md",
+      "slug": "VX-08",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "328662268420ec23fa7301809cd040c0119523ade67068751f8f225d99c9d701",
+      "sourceBodyBytes": 15089
+    },
+    {
+      "source": "_posts/2026-08-26-VX-09.md",
+      "target": "src/content/posts/vx-09.md",
+      "slug": "VX-09",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "ae2c9e79803f01904354fd8a3da0c352745f4995751f954c33d5bdb83c77d799",
+      "sourceBodyBytes": 16627
+    },
+    {
+      "source": "_posts/2026-08-28-VX-10.md",
+      "target": "src/content/posts/vx-10.md",
+      "slug": "VX-10",
+      "primaryLocale": "ko",
+      "sourceBodyChecksum": "17cfa0572f3b9fa292fb775ed3e17ffe9af17331517b78d578579124fcf6b8de",
+      "sourceBodyBytes": 14594
+    }
+  ]
+}
