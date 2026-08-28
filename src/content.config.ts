@@ -38,6 +38,19 @@ const projects = defineCollection({
     }),
 });
 
+const projectWikis = defineCollection({
+  loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/wiki' }),
+  schema: () =>
+    z.object({
+      project: reference('projects'),
+      title: localizedText,
+      description: localizedText,
+      category: z.enum(['story', 'world', 'characters', 'systems', 'development', 'reference']),
+      order: z.number().int().default(0),
+      draft: z.boolean().default(false),
+    }),
+});
+
 const posts = defineCollection({
   loader: glob({ pattern: '**/*.{md,mdx}', base: './src/content/posts' }),
   schema: () =>
@@ -79,4 +92,4 @@ const pages = defineCollection({
   }),
 });
 
-export const collections = { posts, projects, pages };
+export const collections = { posts, projects, projectWikis, pages };

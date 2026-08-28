@@ -30,6 +30,8 @@ const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
 const { project } = Astro.props;
 const ProjectDocument = (await render(project)).Content;
 const posts = await getCollection('posts', ({ data }) => !data.draft);
+const wikiEntries = await getCollection('projectWikis', ({ data }) => !data.draft);
+const hasWiki = wikiEntries.some((entry) => entry.data.project.id === project.id);
 const developmentLogs = posts
   .filter((post) => post.data.project?.id === project.id)
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
@@ -99,6 +101,12 @@ const projectSchema = {
             <dd>{project.data.technologies.join(' · ')}</dd>
           </div>
         </dl>
+
+        {hasWiki && (
+          <ArrowLink href={`/projects/${project.id}/wiki/`} tone="cool">
+            <span>PROJECT WIKI</span>
+          </ArrowLink>
+        )}
 
         {project.data.links?.board && (
           <ArrowLink href={project.data.links.board} tone="warm" external>

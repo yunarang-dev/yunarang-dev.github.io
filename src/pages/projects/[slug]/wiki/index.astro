@@ -1,0 +1,111 @@
+---
+import { getCollection, type CollectionEntry } from 'astro:content';
+import ConstellationMotif from '../../../../components/ui/ConstellationMotif.astro';
+import LocalizedText from '../../../../components/ui/LocalizedText.astro';
+import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { wikiCategoryLabel, wikiCopy, type WikiCategory } from '../../../../data/project-wiki';
+import '../../../../styles/wiki.css';
+
+export async function getStaticPaths() {
+  const [projects, wikiEntries] = await Promise.all([
+    getCollection('projects'),
+    getCollection('projectWikis', ({ data }) => !data.draft),
+  ]);
+  const projectIds = new Set(wikiEntries.map((entry) => entry.data.project.id));
+
+  return projects
+    .filter((project) => projectIds.has(project.id))
+    .map((project) => ({ params: { slug: project.id }, props: { project } }));
+}
+
+interface Props {
+  project: CollectionEntry<'projects'>;
+}
+
+const { project } = Astro.props as Props;
+const wikiEntries = (await getCollection('projectWikis', ({ data }) => !data.draft))
+  .filter((entry) => entry.data.project.id === project.id)
+  .sort((a, b) => a.data.order - b.data.order);
+const articles = wikiEntries.map((entry) => ({
+  slug: entry.id.split('/').at(-1)!,
+  title: entry.data.title,
+  description: entry.data.description,
+  category: entry.data.category as WikiCategory,
+}));
+const site = Astro.site ?? Astro.url;
+const wikiUrl = new URL(`/projects/${project.id}/wiki/`, site).href;
+const wikiSchema = {
+  '@type': 'CollectionPage',
+  '@id': `${wikiUrl}#wiki`,
+  name: `${project.data.title.ja} Project Wiki`,
+  description: wikiCopy.indexLead.ja,
+  url: wikiUrl,
+  inLanguage: ['ja', 'ko'],
+  isPartOf: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
+  about: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
+};
+---
+
+<BaseLayout
+  title={`${project.data.title.ja} Wiki — Yunarang`}
+  titleKo={`${project.data.title.ko} 위키 — Yunarang`}
+  description={wikiCopy.indexLead.ja}
+  descriptionKo={wikiCopy.indexLead.ko}
+  image={`/social/${project.id}.png`}
+  imageAlt={project.data.heroAlt}
+  structuredData={wikiSchema}
+  pageClass="project-wiki-root"
+>
+  <section class="project-wiki project-wiki--index" aria-labelledby="wiki-title">
+    <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
+    <header class="project-wiki__hero content-container">
+      <a class="project-wiki__back" href={`/projects/${project.id}/`}>
+        <span aria-hidden="true">←</span>
+        <LocalizedText value={wikiCopy.backToProject} />
+      </a>
+      <p class="project-wiki__eyebrow">{project.data.shortTitle} / <LocalizedText value={wikiCopy.indexEyebrow} /></p>
+      <h1 id="wiki-title"><LocalizedText value={project.data.title} /><span> / Wiki</span></h1>
+      <LocalizedText as="p" class="project-wiki__lead" value={wikiCopy.indexLead} />
+    </header>
+
+    <div class="project-wiki__layout content-container">
+      <aside class="project-wiki__aside">
+        <ProjectWikiNavigation projectSlug={project.id} articles={articles} />
+      </aside>
+
+      <section class="project-wiki__library" aria-labelledby="wiki-library-title">
+        <div class="project-wiki__library-heading">
+          <div>
+            <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.library} /></p>
+            <h2 id="wiki-library-title">{project.data.shortTitle} / Notes</h2>
+          </div>
+          <LocalizedText as="p" value={wikiCopy.libraryLead} />
+        </div>
+
+        {articles.length > 0 ? (
+          <ol class="project-wiki__grid">
+            {articles.map((article, index) => (
+              <li>
+                <article class="project-wiki-card">
+                  <div class="project-wiki-card__topline">
+                    <span>{String(index + 1).padStart(2, '0')}</span>
+                    <span>{wikiCategoryLabel[article.category]}</span>
+                  </div>
+                  <LocalizedText as="h3" value={article.title} />
+                  <LocalizedText as="p" value={article.description} />
+                  <a href={`/projects/${project.id}/wiki/${article.slug}/`}>
+                    <LocalizedText value={wikiCopy.readEntry} />
+                    <span aria-hidden="true">→</span>
+                  </a>
+                </article>
+              </li>
+            ))}
+          </ol>
+        ) : (
+          <LocalizedText as="p" class="project-wiki__empty" value={wikiCopy.noEntries} />
+        )}
+      </section>
+    </div>
+  </section>
+</BaseLayout>

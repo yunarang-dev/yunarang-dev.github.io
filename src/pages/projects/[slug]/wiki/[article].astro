@@ -1,0 +1,96 @@
+---
+import { getCollection, render, type CollectionEntry } from 'astro:content';
+import ConstellationMotif from '../../../../components/ui/ConstellationMotif.astro';
+import LocalizedText from '../../../../components/ui/LocalizedText.astro';
+import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
+import BaseLayout from '../../../../layouts/BaseLayout.astro';
+import { wikiCategoryLabel, wikiCopy, type WikiCategory } from '../../../../data/project-wiki';
+import '../../../../styles/wiki.css';
+
+export async function getStaticPaths() {
+  const wikiEntries = await getCollection('projectWikis', ({ data }) => !data.draft);
+  return wikiEntries.map((entry) => ({
+    params: {
+      slug: entry.data.project.id,
+      article: entry.id.split('/').at(-1)!,
+    },
+    props: { entry },
+  }));
+}
+
+interface Props {
+  entry: CollectionEntry<'projectWikis'>;
+}
+
+const { entry } = Astro.props as Props;
+const project = (await getCollection('projects')).find((item) => item.id === entry.data.project.id);
+if (!project) {
+  throw new Error(`Missing project for wiki entry "${entry.id}".`);
+}
+
+const wikiEntries = (await getCollection('projectWikis', ({ data }) => !data.draft))
+  .filter((item) => item.data.project.id === project.id)
+  .sort((a, b) => a.data.order - b.data.order);
+const articleSlug = entry.id.split('/').at(-1)!;
+const articles = wikiEntries.map((item) => ({
+  slug: item.id.split('/').at(-1)!,
+  title: item.data.title,
+  category: item.data.category as WikiCategory,
+}));
+const ArticleDocument = (await render(entry)).Content;
+const site = Astro.site ?? Astro.url;
+const articleUrl = new URL(`/projects/${project.id}/wiki/${articleSlug}/`, site).href;
+const articleSchema = {
+  '@type': 'Article',
+  '@id': `${articleUrl}#article`,
+  headline: entry.data.title.ja,
+  alternativeHeadline: entry.data.title.ko,
+  description: entry.data.description.ja,
+  url: articleUrl,
+  inLanguage: ['ja', 'ko'],
+  isPartOf: { '@id': `${new URL(`/projects/${project.id}/wiki/`, site).href}#wiki` },
+  about: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
+  author: { '@id': `${new URL('/', site).href}#yunarang` },
+};
+---
+
+<BaseLayout
+  title={`${entry.data.title.ja} — ${project.data.title.ja} Wiki`}
+  titleKo={`${entry.data.title.ko} — ${project.data.title.ko} 위키`}
+  description={entry.data.description.ja}
+  descriptionKo={entry.data.description.ko}
+  image={`/social/${project.id}.png`}
+  imageAlt={project.data.heroAlt}
+  type="article"
+  structuredData={articleSchema}
+  pageClass="project-wiki-root"
+>
+  <article class="project-wiki project-wiki--article" aria-labelledby="wiki-article-title">
+    <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
+    <header class="project-wiki__hero project-wiki__hero--article content-container">
+      <a class="project-wiki__back" href={`/projects/${project.id}/wiki/`}>
+        <span aria-hidden="true">←</span>
+        <span>{project.data.shortTitle} / <LocalizedText value={wikiCopy.indexEyebrow} /></span>
+      </a>
+      <p class="project-wiki__eyebrow">{wikiCategoryLabel[entry.data.category as WikiCategory]}</p>
+      <LocalizedText as="h1" id="wiki-article-title" value={entry.data.title} />
+      <LocalizedText as="p" class="project-wiki__lead" value={entry.data.description} />
+    </header>
+
+    <div class="project-wiki__layout project-wiki__layout--article content-container">
+      <aside class="project-wiki__aside">
+        <ProjectWikiNavigation
+          projectSlug={project.id}
+          articles={articles}
+          currentArticle={articleSlug}
+        />
+      </aside>
+
+      <section class="project-wiki__document" aria-label={entry.data.title.ja} data-locale-aria-ja={entry.data.title.ja} data-locale-aria-ko={entry.data.title.ko}>
+        <div class="project-wiki__document-inner markdown-content">
+          <ArticleDocument />
+        </div>
+      </section>
+    </div>
+  </article>
+</BaseLayout>

@@ -1,4 +1,5 @@
 .blog-page-root {
+  overflow-x: clip;
   background:
     radial-gradient(ellipse 46rem 30rem at 91% 3%, rgb(48 107 167 / 18%), transparent 74%),
     radial-gradient(ellipse 36rem 34rem at 2% 58%, rgb(255 138 61 / 6%), transparent 72%),
@@ -7,6 +8,7 @@
 
 .blog-page {
   position: relative;
+  overflow-x: clip;
   padding-block: clamp(7rem, 13vw, 11rem);
 }
 

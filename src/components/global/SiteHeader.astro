@@ -11,12 +11,17 @@ const links = [
   { href: '/', label: 'Home', key: 'nav.home' },
   { href: '/blog/', label: 'Blog', key: 'nav.blog' },
   { href: '/projects/', label: 'Projects', key: 'nav.projects' },
+  { href: '/wiki/', label: 'Wiki' },
   { href: '/archive/', label: 'Archive', key: 'nav.archive' },
   { href: '/about/', label: 'About', key: 'nav.about' },
 ];
 
-const isCurrent = (href: string) =>
-  href === '/' ? pathname === href : pathname.startsWith(href);
+const isCurrent = (href: string) => {
+  if (href === '/') return pathname === href;
+  if (href === '/wiki/') return pathname === href || pathname.includes('/wiki/');
+  if (href === '/projects/') return pathname.startsWith(href) && !pathname.includes('/wiki/');
+  return pathname.startsWith(href);
+};
 ---
 
 <header class:list={['site-header', { 'site-header--overlay': overlay }]}>
@@ -145,7 +150,7 @@ const isCurrent = (href: string) =>
     display: none;
   }
 
-  @media (max-width: 46rem) {
+  @media (max-width: 56rem) {
     .desktop-nav {
       display: none;
     }

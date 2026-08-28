@@ -1,4 +1,5 @@
 .archive-page-root {
+  overflow-x: clip;
   background:
     radial-gradient(ellipse 48rem 32rem at 90% 4%, rgb(48 107 167 / 19%), transparent 74%),
     radial-gradient(ellipse 34rem 42rem at 3% 79%, rgb(255 138 61 / 7%), transparent 72%),
@@ -7,6 +8,7 @@
 
 .archive-page {
   position: relative;
+  overflow-x: clip;
   padding-block: clamp(7rem, 13vw, 11rem);
 }
 
