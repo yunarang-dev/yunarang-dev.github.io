@@ -17,7 +17,7 @@
 
 .archive-hero {
   position: relative;
-  max-width: 46rem;
+  max-width: 58rem;
   padding-bottom: var(--space-8);
 }
 
@@ -35,7 +35,7 @@
 }
 
 .archive-hero h1 {
-  max-width: 15ch;
+  max-width: 19ch;
   margin-top: var(--space-4);
   font-size: clamp(2.25rem, 1.62rem + 2.55vw, 3.75rem);
   line-height: 1.1;
