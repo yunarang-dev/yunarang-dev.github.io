@@ -2,34 +2,64 @@ html.home-scroll {
   --glass-shift-x: 0px;
   --glass-shift-y: 0px;
   --glass-refraction: 50%;
-  --refraction-light: 3.2%;
+  --refraction-light: 4.6%;
+  --refraction-soft: 1.55%;
   --refraction-visibility: 0;
-  --panel-reflection-light: 4.32%;
-  --panel-reflection-soft: 2.62%;
+  --panel-reflection-light: 8.05%;
+  --panel-reflection-soft: 5.43%;
   --panel-reflection-soft-drift: 0%;
   --panel-reflection-light-drift: 0%;
+  --glass-edge-top-progress: 0%;
+  --glass-edge-bottom-progress: 0%;
+  --glass-edge-right-progress: 0%;
+  --glass-edge-top-light: 76%;
+  --glass-edge-bottom-light: 0%;
+  --glass-edge-right-light: 0%;
   --halo-x: 50vw;
   --halo-y: 50svh;
   --home-halo: radial-gradient(circle 19rem at var(--halo-x) var(--halo-y), rgb(130 174 255 / 5%), transparent 68%);
   --home-refraction: linear-gradient(
     112deg,
-    transparent calc(var(--glass-refraction) - 1%),
+    transparent calc(var(--glass-refraction) - 5%),
+    rgb(135 190 246 / var(--refraction-soft)) calc(var(--glass-refraction) - 1.8%),
     rgb(220 233 255 / var(--refraction-light)) var(--glass-refraction),
-    transparent calc(var(--glass-refraction) + 1%)
+    rgb(135 190 246 / var(--refraction-soft)) calc(var(--glass-refraction) + 2.4%),
+    transparent calc(var(--glass-refraction) + 5.6%)
   );
   --home-panel-reflection:
     linear-gradient(
       112deg,
-      transparent calc(var(--glass-refraction) - 6% + var(--panel-reflection-soft-drift)),
-      rgb(220 233 255 / var(--panel-reflection-soft)) calc(var(--glass-refraction) - 2% + var(--panel-reflection-soft-drift)),
-      transparent calc(var(--glass-refraction) + 2% + var(--panel-reflection-soft-drift))
+      transparent calc(var(--glass-refraction) - 8% + var(--panel-reflection-soft-drift)),
+      rgb(168 210 255 / var(--panel-reflection-soft)) calc(var(--glass-refraction) - 2.4% + var(--panel-reflection-soft-drift)),
+      rgb(203 229 255 / var(--panel-reflection-soft)) calc(var(--glass-refraction) + 0.8% + var(--panel-reflection-soft-drift)),
+      transparent calc(var(--glass-refraction) + 5.2% + var(--panel-reflection-soft-drift))
     ),
     linear-gradient(
       112deg,
-      transparent calc(var(--glass-refraction) - 1% + var(--panel-reflection-light-drift)),
-      rgb(220 233 255 / var(--panel-reflection-light)) calc(var(--glass-refraction) + 2% + var(--panel-reflection-light-drift)),
-      transparent calc(var(--glass-refraction) + 5% + var(--panel-reflection-light-drift))
+      transparent calc(var(--glass-refraction) - 2% + var(--panel-reflection-light-drift)),
+      rgb(233 243 255 / var(--panel-reflection-light)) calc(var(--glass-refraction) + 0.7% + var(--panel-reflection-light-drift)),
+      transparent calc(var(--glass-refraction) + 3.8% + var(--panel-reflection-light-drift))
     );
+  --home-glass-surface:
+    linear-gradient(
+      90deg,
+      transparent calc(var(--glass-edge-top-progress) - 14%),
+      rgb(232 244 255 / var(--glass-edge-top-light)) var(--glass-edge-top-progress),
+      transparent calc(var(--glass-edge-top-progress) + 14%)
+    ) top / 100% 2px no-repeat,
+    linear-gradient(
+      90deg,
+      transparent calc(var(--glass-edge-bottom-progress) - 14%),
+      rgb(185 220 255 / var(--glass-edge-bottom-light)) var(--glass-edge-bottom-progress),
+      transparent calc(var(--glass-edge-bottom-progress) + 14%)
+    ) bottom / 100% 2px no-repeat,
+    linear-gradient(
+      180deg,
+      transparent calc(var(--glass-edge-right-progress) - 14%),
+      rgb(219 237 255 / var(--glass-edge-right-light)) var(--glass-edge-right-progress),
+      transparent calc(var(--glass-edge-right-progress) + 14%)
+    ) right / 2px 100% no-repeat,
+    linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
 }
@@ -109,8 +139,9 @@ html.home-scroll .snap-section {
 
 .glass-pane::before {
   position: absolute;
+  z-index: 1;
   inset: 0;
-  background: linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
+  background: var(--home-glass-surface);
   content: '';
   pointer-events: none;
 }
