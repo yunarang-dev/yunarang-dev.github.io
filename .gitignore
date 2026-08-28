@@ -1,52 +1,15 @@
-# Bundler cache
-.bundle
-vendor
-Gemfile.lock
+# Dependencies and Astro output
+node_modules/
+.astro/
+dist/
 
-# Jekyll cache
-.jekyll-cache
-.jekyll-metadata
-_site
-
-# RubyGems
-*.gem
-
-# Mac
-*.DS_Store
-
-# NPM dependencies
-node_modules
-
-# Astro output
-.astro
-dist
-
-# IDE configurations
-.idea
+# Editors
+.idea/
 .vscode/*
 !.vscode/settings.json
 !.vscode/extensions.json
 !.vscode/tasks.json
 
-# Misc
-_sass/vendors
-assets/js/dist
+# Operating system files
 .DS_Store
-_data/.DS_Store
-assets/.DS_Store
-.DS_Store
-assets/.DS_Store
-assets/img/.DS_Store
-assets/img/posts/.DS_Store
-.DS_Store
-_posts/.DS_Store
-assets/img/posts/.DS_Store
-assets/img/posts/.DS_Store
-.DS_Store
-_posts/.DS_Store
-_posts/.DS_Store
-.DS_Store
-_posts/.DS_Store
-.DS_Store
-.DS_Store
-.DS_Store
+**/.DS_Store

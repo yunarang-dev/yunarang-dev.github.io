@@ -52,11 +52,11 @@ links:
 
 
 <!--
-![Astral Days! Concept Art](/assets/img/posts/2026-02-16/1.jpeg){: width="800" }
+![Astral Days! Concept Art](/images/posts/2026-02-16/1.jpeg)
 _[Astral Days! Concept Art]_
 -->
 
-[この投稿の韓国語バージョンはこちらです。]({{ site.baseurl }}/posts/KR-02/)
+[この投稿の韓国語バージョンはこちらです。](/posts/KR-02/)
 
 > 「<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。」
 
@@ -75,8 +75,8 @@ _[Astral Days! Concept Art]_
 
 さらに、この特性を活かし、『Astral Days!』ならではの独自の**好感度システム**、そして**感情共鳴システム**を構築している。これらのシステムは、単なる数値変化にとどまらず、本当にキャラクター同士が心を通わせているような感覚を与えるために設計されており、実際のゲームプレイにも有意な影響をもたらす。つまり、キャラクターの感情やシステムはゲーム内ストーリーで完結せず、ゲームプレイそのもの、さらにはプレイヤー自身にまで影響を及ぼすように設計されているのである。
 
-> [📖 ストーリーと感情システムについて詳しく見る]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysのストーリー){: .btn .btn-outline-primary }
-{: .py-3 }
+> [📖 ストーリーと感情システムについて詳しく見る](/posts/AD-00/#-アスデイastral-daysのストーリー)
+
 
 
 ### 🗺️ オープンフィールド
@@ -99,12 +99,12 @@ _[Astral Days! Concept Art]_
 
 まず、プレイヤーはスキルを活用して敵に「デバフ」を付与する。この種類や持続時間に応じて、プレイヤー横のUIに円形で表示される**「デバフゲージ」**が溜まっていく。
 
-![UI Prototype 1](/assets/img/posts/2026-02-14/2.jpeg){: .w-75 .rounded-10 }
+![UI Prototype 1](/images/posts/2026-02-14/2.jpeg)
 _(初期UIの企画案です。最終版ではありません。)_
 
 このゲージが100％に達すると、キャラクターは**「リンクアクティング」**を発動できる。各キャラクターは4つの固有スキルを持っているが、一度に装備できるのは1つだけである。しかし「リンクアクティング」を使用すると、**`Tab`キー**を押すことで時間がスローになり、装備中のスキルを含む4つの固有スキルの中から、クールタイムなしで即座に好きなスキルを発動できるようになる。
 
-![UI Prototype 2](/assets/img/posts/2026-02-14/3.jpeg){: .w-75 .rounded-10 }
+![UI Prototype 2](/images/posts/2026-02-14/3.jpeg)
 _(初期UIの企画案です。最終版ではありません。)_
 
 これにより、プレイヤーは毎回異なるスキル構成で、流れる水のように滑らか、かつダイナミックな戦闘へと「リンク」していく。「デバフゲージ」は最大300％（3回分）までチャージ可能で、テンポの速いプレイスタイルを実現する。
@@ -122,8 +122,8 @@ _(初期UIの企画案です。最終版ではありません。)_
 このようなディテールの一つ一つが、プレイヤーの没入感を一層高めるのだ。
 
 
-> [🎮 ゲームプレイとシステムについて詳しく見る]({{ site.baseurl }}/posts/AD-00/#-アスデイastral-daysのゲームプレイ){: .btn .btn-outline-primary }
-{: .py-3 }
+> [🎮 ゲームプレイとシステムについて詳しく見る](/posts/AD-00/#-アスデイastral-daysのゲームプレイ)
+
 
 
 ---
@@ -201,16 +201,16 @@ x = 1：開発完了
 
 ## 📼 『アスデイ：Astral Days!』のテスト記録
 
-{% include embed/youtube.html id='임시' %}
+
 
 > 最新のバージョンのテスト動画 (Ver 0.0.0)
 
 <br>
 
-[すべてのテスト記録はこちらです。](https://www.youtube.com/playlist?list=PLDVZJy7TZ4670f7bcZFWjDfSob_T0YOwl){:target="_blank" .btn .btn-outline-primary }
+[すべてのテスト記録はこちらです。](https://www.youtube.com/playlist?list=PLDVZJy7TZ4670f7bcZFWjDfSob_T0YOwl)
 <br>
 <br>
-[廃棄された旧バージョンの記録はこちらです。](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud){:target="_blank" .btn .btn-outline-primary }
+[廃棄された旧バージョンの記録はこちらです。](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud)
 
 
 
@@ -221,7 +221,7 @@ x = 1：開発完了
 :::locale ko
 
 <!--
-![Astral Days! Concept Art](/assets/img/posts/2026-02-16/1.jpeg){: width="800" }
+![Astral Days! Concept Art](/images/posts/2026-02-16/1.jpeg)
 _[Astral Days! Concept Art]_
 -->
 
@@ -246,8 +246,8 @@ _[Astral Days! Concept Art]_
 또한 이러한 작품적 특성을 적극 활용하여, 『Astral Days!』만의 독특한 **호감도 시스템**, 그리고 **감정 공명 시스템**을 구축하였다. 이러한 시스템은 단순히 수치에 따라 변하는 기계적인 모습이 아닌, 정말 실제로 캐릭터들끼리 상호작용하는 듯한 모습을 보여주기 위해, 실제 게임 플레이에도 유의미한 영향을 주도록 설계하였다. 즉, 캐릭터의 감정 및 시스템은 게임 내 스토리에서 끝나는 것이 아니라, 게임 플레이 자체, 그리고 더 나아가 이를 플레이하는 플레이어에게까지 영향을 주도록 설계되었다.
 
 
-> [📖 스토리와 감정 시스템에 대해 자세히 보기](#-아스데이-astral-days의-스토리){: .btn .btn-outline-primary }
-{: .py-3 }
+> [📖 스토리와 감정 시스템에 대해 자세히 보기](#-아스데이-astral-days의-스토리)
+
 
 
 ### 🗺️ 오픈필드
@@ -271,12 +271,12 @@ _[Astral Days! Concept Art]_
  가장 먼저, 플레이어는 각 캐릭터의 스킬 등을 활용하여 적에게 다양한 종류의 「디버프」를 부여하게 된다. 이렇게 부여한 「디버프」의 종류와 지속 시간 등에 따라, 플레이어가 사용할 수 있는 「디버프 게이지」가 차오르게 된다. 「디버프 게이지」는 UI상 플레이어 바로 옆에 원형으로 표시하여 직관적으로 현재 게이지 상태를 확인할 수 있도록 하였다. 
 
 
-![UI Prototype 1](/assets/img/posts/2026-02-14/2.jpeg){: .w-75 .rounded-10 }
+![UI Prototype 1](/images/posts/2026-02-14/2.jpeg)
 _(초기 UI 기획안입니다. 최종본이 아닙니다.)_
 
 이 게이지가 100%에 도달하면, 캐릭터는 **「링크액팅」**을 발동할 수 있게 된다. 모든 캐릭터는 각각 4개의 고유 스킬을 가지고 있지만, 한 번에 1개만 장착할 수 있다. 하지만 **「링크액팅」**을 사용하면, **`Tab`**키를 눌러 시간의 흐름이 느리게 만들고, 장착 중인 스킬을 포함한 4개의 고유 스킬 중에서, 쿨타임 없이 즉시 원하는 스킬을 발동할 수 있게 된다.
 
-![UI Prototype 2](/assets/img/posts/2026-02-14/3.jpeg){: .w-75 .rounded-10 }
+![UI Prototype 2](/images/posts/2026-02-14/3.jpeg)
 _(초기 UI 기획안입니다. 최종본이 아닙니다.)_
 
 이를 통해 플레이어는 매번 같은 플레이, 스킬 구성이 아닌, 매번 새로운 플레이와 스킬 구성을 통해 역동적인 전투로 「링크」되게 된다. 이러한 「링크액팅」을 위해 필요한 「디버프 게이지」는 최대 300% (3회 사용)까지 충전할 수 있도록 하여, 더욱 템포 높은 플레이 스타일을 만들어 내면서, 「디버프」라는 직관적인 속성 부여를 통한 직관적이고 더 재미있는 플레이로 이어지도록 설계하였다. 
@@ -297,8 +297,8 @@ _(초기 UI 기획안입니다. 최종본이 아닙니다.)_
 
 
 
-> [🎮 게임 플레이 및 시스템에 대해 자세히 보기](#-아스데이-astral-days의-게임플레이){: .btn .btn-outline-primary }
-{: .py-3 }
+> [🎮 게임 플레이 및 시스템에 대해 자세히 보기](#-아스데이-astral-days의-게임플레이)
+
 
 
 ---
@@ -383,16 +383,16 @@ x = 1：개발 완료
 
 ## 📼 『아스데이: Astral Days!』의 테스트 기록
 
-{% include embed/youtube.html id='임시' %}
+
 
 > 최신 버전의 테스트 동영상 (Ver 0.0.0)
 
 <br>
 
-[모든 테스트 기록은 여기에서 확인할 수 있습니다.](https://www.youtube.com/playlist?list=PLDVZJy7TZ4670f7bcZFWjDfSob_T0YOwl){:target="_blank" .btn .btn-outline-primary }
+[모든 테스트 기록은 여기에서 확인할 수 있습니다.](https://www.youtube.com/playlist?list=PLDVZJy7TZ4670f7bcZFWjDfSob_T0YOwl)
 <br>
 <br>
-[폐기된 이전 버전의 기록은 여기에서 확인할 수 있습니다.](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud){:target="_blank" .btn .btn-outline-primary }
+[폐기된 이전 버전의 기록은 여기에서 확인할 수 있습니다.](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud)
 
 
 

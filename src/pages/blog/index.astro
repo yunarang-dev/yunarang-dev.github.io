@@ -139,14 +139,14 @@ const blogSchema = {
           <div class="blog-featured__signal" aria-hidden="true"><span></span><span></span><span></span></div>
           <div class="blog-featured__copy">
             <LocalizedText as="p" class="blog-featured__category" value={latestPost.data.category} />
-            <h2 id="latest-entry-title"><a href={`/posts/${latestPost.data.legacySlug}/`}><LocalizedText value={latestPost.data.title} /></a></h2>
+            <h2 id="latest-entry-title"><a href={`/posts/${latestPost.data.slug}/`}><LocalizedText value={latestPost.data.title} /></a></h2>
             {latestPost.data.description && <LocalizedText as="p" class="blog-featured__description" value={latestPost.data.description} />}
             {latestPost.data.tags.length > 0 && (
               <ul class="blog-tags" aria-label="Tags">
                 {latestPost.data.tags.slice(0, 4).map((tag) => <li><LocalizedText value={tag} /></li>)}
               </ul>
             )}
-            <a class="blog-read-link" href={`/posts/${latestPost.data.legacySlug}/`}>
+            <a class="blog-read-link" href={`/posts/${latestPost.data.slug}/`}>
               <span data-i18n="blog.read">記録を読む</span>
               <span aria-hidden="true">→</span>
             </a>
@@ -170,7 +170,7 @@ const blogSchema = {
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
               <div class="blog-record__copy">
                 <LocalizedText as="p" class="blog-record__category" value={post.data.category} />
-                <h3><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h3>
+                <h3><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h3>
                 {post.data.description && <LocalizedText as="p" class="blog-record__description" value={post.data.description} />}
                 {post.data.tags.length > 0 && (
                   <ul class="blog-tags" aria-label="Tags">
@@ -180,7 +180,7 @@ const blogSchema = {
               </div>
               <a
                 class="blog-record__open"
-                href={`/posts/${post.data.legacySlug}/`}
+                href={`/posts/${post.data.slug}/`}
                 aria-label={post.data.title.ja}
                 data-locale-aria-ja={post.data.title.ja}
                 data-locale-aria-ko={post.data.title.ko}

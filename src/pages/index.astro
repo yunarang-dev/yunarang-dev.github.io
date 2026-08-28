@@ -201,7 +201,7 @@ const githubActivity = await fetchGitHubActivity();
             <li>
               <span class="timeline-point" aria-hidden="true"></span>
               <time datetime={log.data.date.toISOString()} data-locale-ja={log.dateJa} data-locale-ko={log.dateKo}>{log.dateJa}</time>
-              <a href={`/posts/${log.data.legacySlug}/`}><LocalizedText value={log.data.title} /></a>
+              <a href={`/posts/${log.data.slug}/`}><LocalizedText value={log.data.title} /></a>
             </li>
           ))}
         </ol>
@@ -218,7 +218,7 @@ const githubActivity = await fetchGitHubActivity();
           {recentPosts.map((post) => (
             <li>
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
-              <a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a>
+              <a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a>
             </li>
           ))}
         </ol>

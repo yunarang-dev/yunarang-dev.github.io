@@ -198,7 +198,7 @@ Project VXでは、一つのAI Modelだけですべてを処理する構成に�
 
 最初にこの構造を整理したときは、おおよそ次のような形で考えていた。
 
-![Project VX 開発構造の初期ラフスケッチ](/assets/img/posts/2026-08-18/1.jpg){: .w-75 .rounded-10 }
+![Project VX 開発構造の初期ラフスケッチ](/images/posts/2026-08-18/1.jpg)
 _Project VX 開発構造の初期ラフスケッチ_
 
 ルミは「一人ですべてを行うAI」ではない。必要な作業をAgentやToolへ渡し、その結果を確認し、再びProject Stateへ反映する。
@@ -365,7 +365,7 @@ Project VXでは、**「失敗しないAI」ではなく、「失敗しても開
 
 ここまで説明した仕組みを実際の作業順序として整理すると、現在のProject VXではおおむね次のような流れになる。
 
-![Project VX 開発Workflow](/assets/img/posts/2026-08-18/2.jpg){: .w-75 .rounded-10 }
+![Project VX 開発Workflow](/images/posts/2026-08-18/2.jpg)
 _Project VX 開発Workflow_
 
 **Planning Document**

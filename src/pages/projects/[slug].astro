@@ -168,10 +168,10 @@ const projectSchema = {
             <li>
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
               <div>
-                <h3><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h3>
+                <h3><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h3>
                 {post.data.description && <LocalizedText as="p" value={post.data.description} />}
               </div>
-              <a class="project-record-list__open" href={`/posts/${post.data.legacySlug}/`} aria-label={`${post.data.title.ja} を読む`}>
+              <a class="project-record-list__open" href={`/posts/${post.data.slug}/`} aria-label={`${post.data.title.ja} を読む`}>
                 <span aria-hidden="true">↗</span>
               </a>
             </li>

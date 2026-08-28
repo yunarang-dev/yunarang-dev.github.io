@@ -25,7 +25,7 @@ motto:
 ## Posts
 
 Create one Markdown file in `src/content/posts/`. Its file name is only for
-organization; `legacySlug` controls the published URL so an existing shared
+organization; `slug` controls the published URL so an existing shared
 link can keep working.
 
 ```markdown
@@ -45,9 +45,7 @@ tags:
     ko: "Unity"
   - ja: "ゲーム開発"
     ko: "게임 개발"
-legacySlug: "VX-11"
-legacyPaths:
-  - "/posts/VX-11/"
+slug: "VX-11"
 ---
 
 :::locale ja
@@ -78,5 +76,8 @@ Rules for the locale markers:
 - Keep both language blocks in the same order for every post: Japanese first,
   Korean second.
 
-When a content file with a matching `legacySlug` exists, it renders at that
-legacy route. Until then, the route remains the existing migration placeholder.
+The `slug` is the stable public identifier. Keep it unchanged after publishing
+so links that have already been shared continue to work.
+
+Store post images in `public/images/posts/YYYY-MM-DD/` and reference them from
+Markdown with an absolute site path such as `/images/posts/2026-08-28/1.png`.

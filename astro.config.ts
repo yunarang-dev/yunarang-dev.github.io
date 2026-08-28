@@ -1,11 +1,10 @@
 import { defineConfig } from 'astro/config';
 import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
-import { legacyJekyllRemarkPlugin } from './src/remark/legacy-jekyll';
 import { localeContentRemarkPlugin } from './src/remark/locale-content';
 import { youtubeEmbedRemarkPlugin } from './src/remark/youtube-embed';
 
-const legacyRedirectPaths = new Set([
+const redirectPaths = new Set([
   '/posts/AD-00/',
   '/posts/VX-00/',
   '/posts/KR-01/',
@@ -18,9 +17,9 @@ export default defineConfig({
   trailingSlash: 'always',
   integrations: [
     sitemap({
-      // Legacy URLs remain as client-friendly redirect pages, but their
-      // canonical targets are the pages search engines should index.
-      filter: (page) => !legacyRedirectPaths.has(new URL(page).pathname),
+      // Redirect pages preserve shared URLs; only their canonical targets
+      // should appear in the sitemap.
+      filter: (page) => !redirectPaths.has(new URL(page).pathname),
     }),
   ],
   build: {
@@ -31,6 +30,6 @@ export default defineConfig({
     responsiveStyles: true,
   },
   markdown: {
-    processor: unified({ remarkPlugins: [youtubeEmbedRemarkPlugin, legacyJekyllRemarkPlugin, localeContentRemarkPlugin] }),
+    processor: unified({ remarkPlugins: [youtubeEmbedRemarkPlugin, localeContentRemarkPlugin] }),
   },
 });

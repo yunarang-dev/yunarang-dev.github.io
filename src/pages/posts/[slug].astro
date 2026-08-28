@@ -1,42 +1,30 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import legacyRoutes from '../../../preflight/legacy-post-routes.json';
+import { postRedirects, type PostRedirect } from '../../data/post-redirects';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import PlaceholderPage from '../../components/global/PlaceholderPage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/post.css';
 
-interface LegacyRoute {
-  legacySlug: string;
-  title: string;
-  date: string;
-}
-
 interface Props {
-  route?: LegacyRoute;
+  route?: PostRedirect;
   post?: CollectionEntry<'posts'>;
   redirectTo?: string;
 }
 
 export async function getStaticPaths() {
-  const legacyRouteRedirects: Record<string, string> = {
-    'AD-00': '/projects/astral-days/',
-    'VX-00': '/projects/project-vx/',
-    'KR-01': '/posts/AD-01/',
-    'KR-02': '/projects/astral-days/',
-  };
   const posts = await getCollection('posts', ({ data }) => !data.draft);
-  const contentSlugs = new Set(posts.map((post) => post.data.legacySlug));
-  const placeholders = legacyRoutes.routes.filter((route) => !contentSlugs.has(route.legacySlug));
+  const contentSlugs = new Set(posts.map((post) => post.data.slug));
+  const redirects = postRedirects.filter((route) => !contentSlugs.has(route.slug));
 
   return [
     ...posts.map((post) => ({
-      params: { slug: post.data.legacySlug },
+      params: { slug: post.data.slug },
       props: { post },
     })),
-    ...placeholders.map((route) => ({
-      params: { slug: route.legacySlug },
-      props: { route, redirectTo: legacyRouteRedirects[route.legacySlug] },
+    ...redirects.map((route) => ({
+      params: { slug: route.slug },
+      props: { route, redirectTo: route.redirectTo },
     })),
   ];
 }
@@ -44,7 +32,7 @@ export async function getStaticPaths() {
 const { route, post, redirectTo } = Astro.props as Props;
 
 if (!post && !route) {
-  throw new Error('A post route requires either a migrated post or a legacy placeholder route.');
+  throw new Error('A post route requires either a post or a redirect record.');
 }
 
 const renderedPost = post ? await render(post) : undefined;
@@ -74,7 +62,7 @@ const relatedPosts = post
 const formatDate = (value: Date, locale: 'ja-JP' | 'ko-KR') =>
   new Intl.DateTimeFormat(locale, { timeZone: 'Asia/Seoul', year: 'numeric', month: 'short', day: 'numeric' }).format(value);
 const site = Astro.site ?? Astro.url;
-const postUrl = post ? new URL(`/posts/${post.data.legacySlug}/`, site).href : undefined;
+const postUrl = post ? new URL(`/posts/${post.data.slug}/`, site).href : undefined;
 const postSchema = post && postUrl
   ? {
       '@type': 'BlogPosting',
@@ -138,13 +126,13 @@ const postSchema = post && postUrl
           {(newerPost || olderPost) && (
             <nav class="post-navigation" aria-label="Post navigation" data-i18n-aria="post.navigation">
               {newerPost ? (
-                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.legacySlug}/`}>
+                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.slug}/`}>
                   <span class="post-navigation__label" data-i18n="post.newer">NEWER RECORD</span>
                   <LocalizedText as="span" value={newerPost.data.title} />
                 </a>
               ) : <span></span>}
               {olderPost ? (
-                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.legacySlug}/`}>
+                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.slug}/`}>
                   <span class="post-navigation__label" data-i18n="post.older">OLDER RECORD</span>
                   <LocalizedText as="span" value={olderPost.data.title} />
                 </a>
@@ -180,10 +168,10 @@ const postSchema = post && postUrl
                   <time datetime={relatedPost.data.date.toISOString()} data-locale-ja={relatedDateJa} data-locale-ko={relatedDateKo}>{relatedDateJa}</time>
                   <div>
                     <LocalizedText as="p" value={relatedPost.data.category} />
-                    <h3><a href={`/posts/${relatedPost.data.legacySlug}/`}><LocalizedText value={relatedPost.data.title} /></a></h3>
+                    <h3><a href={`/posts/${relatedPost.data.slug}/`}><LocalizedText value={relatedPost.data.title} /></a></h3>
                   </div>
                   <a
-                    href={`/posts/${relatedPost.data.legacySlug}/`}
+                    href={`/posts/${relatedPost.data.slug}/`}
                     aria-label={relatedPost.data.title.ja}
                     data-locale-aria-ja={relatedPost.data.title.ja}
                     data-locale-aria-ko={relatedPost.data.title.ko}
@@ -238,7 +226,7 @@ const postSchema = post && postUrl
       title={route!.title}
       description={redirectTo
         ? `${route!.date} · 이 프로젝트 문서는 전용 프로젝트 페이지로 이동했습니다.`
-        : `${route!.date} · 본문은 다음 콘텐츠 마이그레이션 단계에서 연결합니다. 현재는 기존 공유 URL을 보존하기 위한 placeholder입니다.`}
+        : `${route!.date} · 이 게시물은 다른 페이지로 이동했습니다.`}
     />
   </BaseLayout>
 )}

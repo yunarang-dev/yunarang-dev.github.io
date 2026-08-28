@@ -5,10 +5,6 @@ interface MarkdownNode {
 }
 
 const youtubeDirectivePattern = /^\s*:::youtube(?:\s+(.+?))?\s*$/;
-// The Markdown parser converts straight quotes in legacy Liquid snippets to
-// typographic quotes before Remark plugins run, so accept both forms here.
-const legacyYoutubeIncludePattern = /^\s*\{%\s*include\s+embed\/youtube\.html\s+id=(?:'|"|‘|“)([A-Za-z0-9_-]{11})(?:'|"|’|”)\s*%\}\s*$/;
-const legacyYoutubeIncludeLinePattern = /(?:^|\n)[\t ]*\{%\s*include\s+embed\/youtube\.html\s+id=(?:'|"|‘|“)([A-Za-z0-9_-]{11})(?:'|"|’|”)\s*%\}[\t ]*(?=\n|$)/g;
 const youtubeIdPattern = /^[A-Za-z0-9_-]{11}$/;
 
 function paragraphText(node: MarkdownNode) {
@@ -29,49 +25,12 @@ function youtubeEmbedHtml(videoId: string) {
   ].join('\n');
 }
 
-function splitLegacyYoutubeIncludes(node: MarkdownNode) {
-  const value = paragraphText(node);
-
-  if (!value) return undefined;
-
-  const output: MarkdownNode[] = [];
-  let cursor = 0;
-  let match: RegExpExecArray | null;
-
-  legacyYoutubeIncludeLinePattern.lastIndex = 0;
-  while ((match = legacyYoutubeIncludeLinePattern.exec(value)) !== null) {
-    const prose = value.slice(cursor, match.index).trim();
-    if (prose) {
-      output.push({ type: 'paragraph', children: [{ type: 'text', value: prose }] });
-    }
-
-    output.push({ type: 'html', value: youtubeEmbedHtml(match[1]) });
-    cursor = match.index + match[0].length;
-  }
-
-  if (output.length === 0) return undefined;
-
-  const prose = value.slice(cursor).trim();
-  if (prose) {
-    output.push({ type: 'paragraph', children: [{ type: 'text', value: prose }] });
-  }
-
-  return output;
-}
-
 function transformChildren(nodes: MarkdownNode[]) {
   const output: MarkdownNode[] = [];
 
   for (const node of nodes) {
-    const splitLegacyIncludes = splitLegacyYoutubeIncludes(node);
-    if (splitLegacyIncludes) {
-      output.push(...splitLegacyIncludes);
-      continue;
-    }
-
     const value = paragraphText(node)?.trim();
     const directive = value?.match(youtubeDirectivePattern);
-    const legacyInclude = value?.match(legacyYoutubeIncludePattern);
 
     if (directive) {
       const videoId = directive[1]?.trim() ?? '';
@@ -81,11 +40,6 @@ function transformChildren(nodes: MarkdownNode[]) {
       }
 
       output.push({ type: 'html', value: youtubeEmbedHtml(videoId) });
-      continue;
-    }
-
-    if (legacyInclude) {
-      output.push({ type: 'html', value: youtubeEmbedHtml(legacyInclude[1]) });
       continue;
     }
 
@@ -102,8 +56,7 @@ function transformChildren(nodes: MarkdownNode[]) {
 /**
  * Lets ordinary Markdown files render responsive YouTube videos without MDX.
  *
- * New posts use: :::youtube ZCAR2RRWAXE
- * Existing valid Jekyll YouTube includes are rendered with the same markup.
+ * Use: :::youtube ZCAR2RRWAXE
  */
 export function youtubeEmbedRemarkPlugin() {
   return (tree: MarkdownNode) => {

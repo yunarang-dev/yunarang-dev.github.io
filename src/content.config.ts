@@ -71,8 +71,7 @@ const posts = defineCollection({
         .optional(),
       featured: z.boolean().default(false),
       draft: z.boolean().default(false),
-      legacySlug: z.string(),
-      legacyPaths: z.array(z.string()).default([]),
+      slug: z.string(),
     }),
 });
 

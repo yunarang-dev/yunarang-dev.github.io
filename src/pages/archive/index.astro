@@ -96,9 +96,9 @@ const archiveSchema = {
               <span>{post.year}</span>
               {index === 0 && <span class="timeline-record__latest" data-i18n="archive.latest">LATEST RECORD</span>}
             </div>
-            <h2><a href={`/posts/${post.data.legacySlug}/`}><LocalizedText value={post.data.title} /></a></h2>
+            <h2><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h2>
             {post.data.description && <LocalizedText as="p" class="timeline-record__description" value={post.data.description} />}
-            <a class="timeline-record__link" href={`/posts/${post.data.legacySlug}/`}>
+            <a class="timeline-record__link" href={`/posts/${post.data.slug}/`}>
               <span data-i18n="archive.open">記事を読む</span>
               <span aria-hidden="true">→</span>
             </a>

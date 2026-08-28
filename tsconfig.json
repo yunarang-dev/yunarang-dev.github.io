@@ -1,5 +1,5 @@
 {
   "extends": "astro/tsconfigs/strict",
   "include": [".astro/types.d.ts", "src/**/*", "astro.config.ts"],
-  "exclude": ["assets", "_posts", "_site", ".jekyll-cache", "dist", "node_modules"]
+  "exclude": ["dist", "node_modules"]
 }
