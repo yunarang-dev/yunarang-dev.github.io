@@ -98,7 +98,7 @@ const postSchema = post && postUrl
     structuredData={postSchema}
   >
     <article class="post-page">
-      <header class="post-header content-container">
+      <header class="post-header content-container" data-scroll-reveal>
         <a class="post-back" href="/blog/">
           <span aria-hidden="true">←</span>
           <span data-i18n="post.back">Blog に戻る</span>
@@ -121,18 +121,18 @@ const postSchema = post && postUrl
 
       <div class="post-layout content-container">
         <div class="post-reading">
-          <div class="post-body markdown-content"><Content /></div>
+          <div class="post-body markdown-content" data-scroll-reveal-prose><Content /></div>
 
           {(newerPost || olderPost) && (
             <nav class="post-navigation" aria-label="Post navigation" data-i18n-aria="post.navigation">
               {newerPost ? (
-                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.slug}/`}>
+                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.slug}/`} data-scroll-reveal>
                   <span class="post-navigation__label" data-i18n="post.newer">NEWER RECORD</span>
                   <LocalizedText as="span" value={newerPost.data.title} />
                 </a>
               ) : <span></span>}
               {olderPost ? (
-                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.slug}/`}>
+                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.slug}/`} data-scroll-reveal>
                   <span class="post-navigation__label" data-i18n="post.older">OLDER RECORD</span>
                   <LocalizedText as="span" value={olderPost.data.title} />
                 </a>
@@ -154,7 +154,7 @@ const postSchema = post && postUrl
 
       {relatedPosts.length > 0 && (
         <section class="post-related content-container" aria-labelledby="related-records-title">
-          <div class="post-related__heading">
+          <div class="post-related__heading" data-scroll-reveal>
             <p data-i18n="post.related">RELATED RECORDS</p>
             <p data-i18n="post.related.copy">同じプロジェクト、または近いテーマの記録です。</p>
           </div>
@@ -164,7 +164,7 @@ const postSchema = post && postUrl
               const relatedDateJa = formatDate(relatedPost.data.date, 'ja-JP');
               const relatedDateKo = formatDate(relatedPost.data.date, 'ko-KR');
               return (
-                <li>
+                <li data-scroll-reveal>
                   <time datetime={relatedPost.data.date.toISOString()} data-locale-ja={relatedDateJa} data-locale-ko={relatedDateKo}>{relatedDateJa}</time>
                   <div>
                     <LocalizedText as="p" value={relatedPost.data.category} />

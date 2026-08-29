@@ -1,0 +1,42 @@
+---
+const points = [
+  { href: '#featured-projects', depth: 0, label: 'Surface' },
+  { href: '#main-projects', depth: 80, label: 'Projects' },
+  { href: '#recent-records', depth: 240, label: 'Records' },
+  { href: '#github-activity', depth: 480, label: 'Signals' },
+  { href: '#contact', depth: 720, label: 'Connection' },
+];
+---
+
+<nav
+  class="depth-indicator"
+  aria-label="ページ深度"
+  data-locale-aria-ja="ページ深度"
+  data-locale-aria-ko="페이지 깊이"
+  data-depth-indicator
+>
+  <div class="depth-indicator__readout" aria-live="off">
+    <span class="depth-indicator__label" data-depth-label>Surface</span>
+    <span class="depth-indicator__value"><strong data-depth-value>0</strong><small>m</small></span>
+  </div>
+
+  <ol class="depth-indicator__track">
+    {points.map((point, index) => (
+      <li>
+        <a
+          href={point.href}
+          class:list={{ 'is-active': index === 0 }}
+          aria-current={index === 0 ? 'location' : undefined}
+          data-depth-point={point.depth}
+          data-depth-label-value={point.label}
+        >
+          <span class="depth-indicator__node" aria-hidden="true"></span>
+          <span class="depth-indicator__point-copy">
+            <span>{point.label}</span>
+            <small>{point.depth}m</small>
+          </span>
+        </a>
+      </li>
+    ))}
+  </ol>
+</nav>

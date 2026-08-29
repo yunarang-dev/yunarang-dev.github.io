@@ -1,0 +1,42 @@
+---
+interface Props {
+  projectId: string;
+  class?: string;
+}
+
+const { projectId, class: className } = Astro.props;
+const isAstralDays = projectId === 'astral-days';
+---
+
+<div
+  class:list={['project-identity-motif', `project-identity-motif--${projectId}`, className]}
+  aria-hidden="true"
+>
+  {isAstralDays ? (
+    <svg viewBox="0 0 420 300" role="presentation">
+      <path class="project-identity-motif__orbit" d="M-24 262C68 150 133 94 225 83c72-8 132 15 219 91" />
+      <path class="project-identity-motif__orbit project-identity-motif__orbit--soft" d="M17 309c64-91 126-136 205-144 78-8 145 24 213 94" />
+      <path class="project-identity-motif__line" d="m74 219 54-74 70 22 62-82 74 40" />
+      <circle cx="74" cy="219" r="3.5" />
+      <circle cx="128" cy="145" r="2.5" />
+      <circle cx="198" cy="167" r="4" />
+      <circle cx="260" cy="85" r="3" />
+      <circle cx="334" cy="125" r="2.5" />
+    </svg>
+  ) : (
+    <svg viewBox="0 0 420 300" role="presentation">
+      <g class="project-identity-motif__grid">
+        <path d="M38 0v300M112 0v300M186 0v300M260 0v300M334 0v300M408 0v300" />
+        <path d="M0 38h420M0 112h420M0 186h420M0 260h420" />
+      </g>
+      <path class="project-identity-motif__line" d="m38 225 74-77 74 29 74-103 74 49 74-57" />
+      <path class="project-identity-motif__line project-identity-motif__line--signal" d="M112 148h74v29h74V74" />
+      <rect x="33" y="220" width="10" height="10" rx="1" />
+      <rect x="107" y="143" width="10" height="10" rx="1" />
+      <rect x="181" y="172" width="10" height="10" rx="1" />
+      <rect x="255" y="69" width="10" height="10" rx="1" />
+      <rect x="329" y="118" width="10" height="10" rx="1" />
+      <rect x="403" y="61" width="10" height="10" rx="1" />
+    </svg>
+  )}
+</div>

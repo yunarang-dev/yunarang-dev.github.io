@@ -14,9 +14,47 @@ interface Props {
 }
 
 const { projects } = Astro.props;
+
+const projectMotifs = {
+  'astral-days': {
+    main: '4,72 18,53 34,60 49,35 66,45 82,22 95,32',
+    branch: '49,35 53,76 71,69 88,86',
+    points: [
+      [4, 72, 2.1, 'warm'],
+      [18, 53, 1.6, 'cool'],
+      [34, 60, 2.4, 'cool'],
+      [49, 35, 2, 'warm'],
+      [66, 45, 1.7, 'cool'],
+      [82, 22, 2.2, 'cool'],
+      [95, 32, 1.5, 'cool'],
+      [53, 76, 1.5, 'cool'],
+      [71, 69, 1.35, 'cool'],
+      [88, 86, 1.8, 'warm'],
+    ],
+  },
+  'project-vx': {
+    main: '7,76 22,54 41,61 58,29 76,46 93,19',
+    branch: '22,54 22,28 58,28 76,13',
+    signal: '41,61 41,82 68,82 84,67',
+    points: [
+      [7, 76, 1.8, 'cool'],
+      [22, 54, 2.4, 'warm'],
+      [41, 61, 1.7, 'cool'],
+      [58, 29, 2.2, 'cool'],
+      [76, 46, 1.65, 'cool'],
+      [93, 19, 2.1, 'cool'],
+      [22, 28, 1.4, 'cool'],
+      [76, 13, 1.35, 'warm'],
+      [41, 82, 1.35, 'cool'],
+      [68, 82, 1.6, 'cool'],
+      [84, 67, 1.5, 'cool'],
+    ],
+  },
+} as const;
 ---
 
 <section
+  id="featured-projects"
   class="project-slider snap-section"
   aria-roledescription="carousel"
   aria-label="メインプロジェクト"
@@ -27,11 +65,13 @@ const { projects } = Astro.props;
   <div class="slides" aria-live="off">
     {projects.map((project, index) => {
       const copy = getProjectCopy(project.id);
+      const motif = projectMotifs[project.id as keyof typeof projectMotifs] ?? projectMotifs['astral-days'];
       return (
       <article
         class:list={['slide', { 'is-active': index === 0 }]}
         aria-hidden={index === 0 ? 'false' : 'true'}
         data-slide
+        data-project-id={project.id}
       >
         <Image
           class="slide-image"
@@ -47,12 +87,24 @@ const { projects } = Astro.props;
         <div class="slide-shade" aria-hidden="true"></div>
         <div class="container slide-content">
           <div class="slide-copy">
-            <div class="oled-constellation" aria-hidden="true">
+            <div class:list={['oled-constellation', `oled-constellation--${project.id}`]} aria-hidden="true">
               <svg class="oled-constellation-lines" viewBox="0 0 100 100" preserveAspectRatio="none">
-                <polyline points="7,68 23,47 42,55 59,27 77,38 92,17" />
-                <polyline class="oled-constellation-branch" points="42,55 53,79 70,67 84,84" />
+                {project.id === 'project-vx' && (
+                  <g class="oled-constellation-grid">
+                    <path d="M22 10v80M41 10v80M58 10v80M76 10v80" />
+                    <path d="M5 28h90M5 54h90M5 82h90" />
+                  </g>
+                )}
+                <polyline class="oled-constellation-main" points={motif.main} />
+                <polyline class="oled-constellation-branch" points={motif.branch} />
+                {'signal' in motif && <polyline class="oled-constellation-signal" points={motif.signal} />}
               </svg>
-              <span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span>
+              {motif.points.map(([x, y, radius, tone]) => (
+                <span
+                  class:list={['oled-star', `oled-star--${tone}`]}
+                  style={`--star-x: ${x}%; --star-y: ${y}%; --star-scale: ${radius / 1.8};`}
+                ></span>
+              ))}
             </div>
             <h1 data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</h1>
             <p data-locale-ja={copy.ja.summary} data-locale-ko={copy.ko.summary}>{copy.ja.summary}</p>
@@ -64,6 +116,11 @@ const { projects } = Astro.props;
       </article>
       );
     })}
+  </div>
+
+  <div class="slide-refraction" aria-hidden="true">
+    <span class="slide-refraction__beam slide-refraction__beam--wide"></span>
+    <span class="slide-refraction__beam slide-refraction__beam--fine"></span>
   </div>
 
   <div class="container slider-ui">
@@ -88,7 +145,7 @@ const { projects } = Astro.props;
             data-locale-aria-ko={copy.ko.title + ' 표시'}
             data-slide-selector={index}
           >
-            <span class="selector-line"></span>
+            <span class="selector-line" aria-hidden="true"><span class="selector-progress"></span></span>
             <span data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</span>
           </button>
           );
@@ -104,6 +161,8 @@ const { projects } = Astro.props;
   const sliders = document.querySelectorAll<HTMLElement>('[data-project-slider]');
 
   sliders.forEach((slider) => {
+    const cycleDuration = 10000;
+    const transitionDuration = 920;
     const slides = [...slider.querySelectorAll<HTMLElement>('[data-slide]')];
     const selectors = [...slider.querySelectorAll<HTMLButtonElement>('[data-slide-selector]')];
     const currentCount = slider.querySelector<HTMLElement>('[data-current-count]');
@@ -111,10 +170,44 @@ const { projects } = Astro.props;
     const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
     let activeIndex = 0;
     let timer: number | undefined;
+    let transitionTimer: number | undefined;
     let pointerStartX: number | undefined;
+    let cycleStartedAt = 0;
+    let cycleRemaining = cycleDuration;
+    const pauseReasons = new Set<string>();
 
-    const selectSlide = (index: number, announce = true) => {
-      activeIndex = (index + slides.length) % slides.length;
+    const restartProgress = () => {
+      slider.classList.remove('is-cycle-running');
+      void slider.offsetWidth;
+      slider.classList.add('is-cycle-running');
+    };
+
+    const playRefraction = () => {
+      if (reduceMotion) return;
+      if (transitionTimer !== undefined) window.clearTimeout(transitionTimer);
+      slider.classList.remove('is-transitioning');
+      void slider.offsetWidth;
+      slider.classList.add('is-transitioning');
+      transitionTimer = window.setTimeout(() => {
+        slider.classList.remove('is-transitioning');
+        transitionTimer = undefined;
+      }, transitionDuration);
+    };
+
+    const selectSlide = (index: number, announce = true, withTransition = true) => {
+      const previousIndex = activeIndex;
+      const nextIndex = (index + slides.length) % slides.length;
+      if (nextIndex === previousIndex && slider.classList.contains('is-ready')) return;
+      const previousSlide = slides[previousIndex];
+      const nextSlide = slides[nextIndex];
+
+      activeIndex = nextIndex;
+
+      if (withTransition && previousSlide && nextSlide) {
+        previousSlide.classList.add('is-leaving');
+        playRefraction();
+        window.setTimeout(() => previousSlide.classList.remove('is-leaving'), reduceMotion ? 0 : transitionDuration);
+      }
 
       slides.forEach((slide, slideIndex) => {
         const active = slideIndex === activeIndex;
@@ -135,22 +228,52 @@ const { projects } = Astro.props;
       }
     };
 
-    const stopTimer = () => {
-      if (timer) window.clearInterval(timer);
+    const clearTimer = () => {
+      if (timer !== undefined) window.clearTimeout(timer);
       timer = undefined;
     };
 
-    const startTimer = () => {
-      stopTimer();
-      if (!reduceMotion && !document.hidden) {
-        timer = window.setInterval(() => selectSlide(activeIndex + 1, false), 10000);
+    const pauseCycle = () => {
+      if (timer !== undefined) {
+        cycleRemaining = Math.max(cycleRemaining - (performance.now() - cycleStartedAt), 0);
       }
+      clearTimer();
+      slider.classList.add('is-autoplay-paused');
+    };
+
+    const resumeCycle = () => {
+      if (reduceMotion || document.hidden || pauseReasons.size > 0 || timer !== undefined) return;
+      slider.classList.remove('is-autoplay-paused');
+      cycleStartedAt = performance.now();
+      timer = window.setTimeout(() => {
+        selectSlide(activeIndex + 1, false);
+        resetCycle();
+      }, cycleRemaining);
+    };
+
+    const resetCycle = () => {
+      clearTimer();
+      cycleRemaining = cycleDuration;
+      restartProgress();
+      if (reduceMotion || document.hidden || pauseReasons.size > 0) {
+        slider.classList.add('is-autoplay-paused');
+        return;
+      }
+      resumeCycle();
+    };
+
+    const setPauseReason = (reason: string, paused: boolean) => {
+      if (paused) pauseReasons.add(reason);
+      else pauseReasons.delete(reason);
+
+      if (pauseReasons.size > 0 || document.hidden) pauseCycle();
+      else resumeCycle();
     };
 
     selectors.forEach((selector, index) => {
       selector.addEventListener('click', () => {
         selectSlide(index);
-        startTimer();
+        resetCycle();
       });
     });
 
@@ -158,12 +281,12 @@ const { projects } = Astro.props;
       if (event.key === 'ArrowLeft') {
         event.preventDefault();
         selectSlide(activeIndex - 1);
-        startTimer();
+        resetCycle();
       }
       if (event.key === 'ArrowRight') {
         event.preventDefault();
         selectSlide(activeIndex + 1);
-        startTimer();
+        resetCycle();
       }
     });
 
@@ -173,17 +296,31 @@ const { projects } = Astro.props;
     slider.addEventListener('pointerup', (event) => {
       if (pointerStartX === undefined) return;
       const distance = event.clientX - pointerStartX;
-      if (Math.abs(distance) > 56) selectSlide(activeIndex + (distance < 0 ? 1 : -1));
+      if (Math.abs(distance) > 56) {
+        const direction = distance < 0 ? 1 : -1;
+        selectSlide(activeIndex + direction);
+      }
       pointerStartX = undefined;
-      startTimer();
+      resetCycle();
     });
 
-    slider.addEventListener('mouseenter', stopTimer);
-    slider.addEventListener('mouseleave', startTimer);
-    slider.addEventListener('focusin', stopTimer);
-    slider.addEventListener('focusout', startTimer);
-    document.addEventListener('visibilitychange', startTimer);
-    startTimer();
+    slider.addEventListener('focusin', (event) => {
+      const target = event.target;
+      setPauseReason('focus', target instanceof HTMLElement && target.matches(':focus-visible'));
+    });
+    slider.addEventListener('focusout', (event) => {
+      if (event.relatedTarget instanceof Node && slider.contains(event.relatedTarget)) return;
+      setPauseReason('focus', false);
+    });
+    document.addEventListener('visibilitychange', () => {
+      if (document.hidden) pauseCycle();
+      else if (pauseReasons.size === 0) resumeCycle();
+    });
+
+    window.requestAnimationFrame(() => {
+      slider.classList.add('is-ready');
+      resetCycle();
+    });
   });
 </script>
 
@@ -207,15 +344,33 @@ const { projects } = Astro.props;
   }
 
   .slide {
+    z-index: 0;
     visibility: hidden;
     opacity: 0;
-    transition: opacity 700ms ease, visibility 700ms step-end;
+    clip-path: polygon(-18% 0, -18% 0, -34% 100%, -34% 100%);
+    transition:
+      clip-path 900ms cubic-bezier(0.46, 0, 0.2, 1),
+      opacity 440ms ease,
+      visibility 900ms step-end;
   }
 
   .slide.is-active {
+    z-index: 2;
     visibility: visible;
     opacity: 1;
-    transition: opacity 700ms ease, visibility 0ms step-start;
+    clip-path: polygon(0 0, 118% 0, 102% 100%, -16% 100%);
+    transition:
+      clip-path 900ms cubic-bezier(0.46, 0, 0.2, 1),
+      opacity 440ms ease,
+      visibility 0ms step-start;
+  }
+
+  .slide.is-leaving {
+    z-index: 1;
+    visibility: visible;
+    opacity: 1;
+    clip-path: inset(0);
+    transition: none;
   }
 
   .slide-image {
@@ -271,6 +426,40 @@ const { projects } = Astro.props;
     content: '';
   }
 
+  .slide-copy > h1,
+  .slide-copy > p,
+  .slide-copy > .project-cta {
+    opacity: 0.08;
+    transform: translate3d(0, 0.72rem, 0);
+    transition:
+      opacity 620ms ease,
+      transform 700ms cubic-bezier(0.22, 0.76, 0.25, 1);
+  }
+
+  .project-slider.is-ready .slide.is-active .slide-copy > h1,
+  .project-slider.is-ready .slide.is-active .slide-copy > p,
+  .project-slider.is-ready .slide.is-active .slide-copy > .project-cta {
+    opacity: 1;
+    transform: translate3d(0, 0, 0);
+  }
+
+  .project-slider.is-ready .slide.is-active .slide-copy > p {
+    transition-delay: 90ms;
+  }
+
+  .project-slider.is-ready .slide.is-active .slide-copy > .project-cta {
+    transition-delay: 170ms;
+  }
+
+  .slide.is-leaving .slide-copy > h1,
+  .slide.is-leaving .slide-copy > p,
+  .slide.is-leaving .slide-copy > .project-cta {
+    opacity: 0.04;
+    transform: translate3d(0, -0.45rem, 0);
+    transition-delay: 0ms;
+    transition-duration: 300ms;
+  }
+
   .slide-copy h1 {
     max-width: 16ch;
     font-size: clamp(1.88rem, 4vw, 4rem);
@@ -318,6 +507,58 @@ const { projects } = Astro.props;
     pointer-events: none;
   }
 
+  .slide-refraction {
+    position: absolute;
+    z-index: 3;
+    inset: 0;
+    overflow: hidden;
+    opacity: 0;
+    pointer-events: none;
+  }
+
+  .slide-refraction::before {
+    position: absolute;
+    inset: 0;
+    background:
+      linear-gradient(112deg, transparent 38%, rgb(197 226 255 / 8%) 48%, rgb(255 177 118 / 7%) 52%, transparent 62%);
+    content: '';
+    opacity: 0;
+  }
+
+  .slide-refraction__beam {
+    position: absolute;
+    top: -18%;
+    left: -38%;
+    width: 34%;
+    height: 145%;
+    background: linear-gradient(90deg, transparent, rgb(214 235 255 / 30%), transparent);
+    filter: blur(1px);
+    transform: skewX(-14deg) translateX(0);
+  }
+
+  .slide-refraction__beam--fine {
+    left: -48%;
+    width: 24%;
+    background: linear-gradient(90deg, transparent, rgb(255 182 127 / 24%), transparent);
+  }
+
+  .project-slider.is-transitioning .slide-refraction {
+    opacity: 1;
+    animation: slide-refraction-visibility 920ms ease both;
+  }
+
+  .project-slider.is-transitioning .slide-refraction::before {
+    animation: slide-refraction-plane 920ms ease both;
+  }
+
+  .project-slider.is-transitioning .slide-refraction__beam--wide {
+    animation: slide-refraction-wide 920ms cubic-bezier(0.36, 0, 0.26, 1) both;
+  }
+
+  .project-slider.is-transitioning .slide-refraction__beam--fine {
+    animation: slide-refraction-fine 920ms cubic-bezier(0.39, 0, 0.22, 1) 45ms both;
+  }
+
   .slide-count,
   .slider-actions {
     padding: 0.75rem 1rem;
@@ -349,9 +590,20 @@ const { projects } = Astro.props;
   }
 
   .count-rule {
+    position: relative;
+    overflow: hidden;
     width: 2.5rem;
     height: 1px;
     background: var(--color-line-strong);
+  }
+
+  .count-rule::after {
+    position: absolute;
+    inset: 0;
+    background: var(--color-dawn);
+    content: '';
+    transform: scaleX(0);
+    transform-origin: left;
   }
 
   .slider-actions {
@@ -379,10 +631,22 @@ const { projects } = Astro.props;
   }
 
   .selector-line {
+    position: relative;
+    display: block;
+    overflow: hidden;
     width: 2.4rem;
     height: 2px;
     background: var(--color-line-strong);
     transition: width var(--transition-base), background var(--transition-base);
+  }
+
+  .selector-progress {
+    position: absolute;
+    inset: 0;
+    background: var(--color-dawn);
+    box-shadow: 0 0 0.55rem rgb(255 138 61 / 48%);
+    transform: scaleX(0);
+    transform-origin: left;
   }
 
   .slide-selectors button.is-active {
@@ -391,7 +655,17 @@ const { projects } = Astro.props;
 
   .slide-selectors button.is-active .selector-line {
     width: 4rem;
-    background: var(--color-dawn);
+    background: rgb(255 138 61 / 22%);
+  }
+
+  .project-slider.is-cycle-running .slide-selectors button.is-active .selector-progress,
+  .project-slider.is-cycle-running .count-rule::after {
+    animation: slider-cycle-progress 10s linear both;
+  }
+
+  .project-slider.is-autoplay-paused .selector-progress,
+  .project-slider.is-autoplay-paused .count-rule::after {
+    animation-play-state: paused !important;
   }
 
   .oled-constellation {
@@ -421,7 +695,8 @@ const { projects } = Astro.props;
     overflow: visible;
   }
 
-  .oled-constellation-lines polyline {
+  .oled-constellation-lines polyline,
+  .oled-constellation-grid path {
     fill: none;
     stroke: var(--color-moon);
     stroke-linecap: round;
@@ -429,14 +704,43 @@ const { projects } = Astro.props;
     stroke-width: 0.34;
   }
 
+  .oled-constellation--astral-days .oled-constellation-main {
+    stroke: rgb(176 211 255 / 78%);
+  }
+
+  .oled-constellation--astral-days .oled-constellation-branch {
+    stroke: rgb(255 177 125 / 64%);
+    stroke-dasharray: 1.4 1.2;
+  }
+
+  .oled-constellation--project-vx .oled-constellation-main {
+    stroke: rgb(147 193 255 / 78%);
+  }
+
+  .oled-constellation--project-vx .oled-constellation-branch,
+  .oled-constellation--project-vx .oled-constellation-signal {
+    stroke: rgb(130 174 255 / 60%);
+    stroke-dasharray: 1 1.8;
+  }
+
+  .oled-constellation-grid {
+    opacity: 0.13;
+  }
+
+  .oled-constellation-grid path {
+    stroke-width: 0.22;
+  }
+
   .oled-constellation-lines .oled-constellation-branch {
     stroke: rgb(167 201 245 / 72%);
     stroke-dasharray: 1.2 1.1;
   }
 
-  .oled-constellation span {
+  .oled-star {
     position: absolute;
-    width: 0.32rem;
+    top: var(--star-y);
+    left: var(--star-x);
+    width: calc(0.31rem * var(--star-scale));
     aspect-ratio: 1;
     border-radius: 50%;
     background: var(--color-moon);
@@ -444,15 +748,38 @@ const { projects } = Astro.props;
     transform: translate(-50%, -50%);
   }
 
-  .oled-constellation span:nth-child(2) { top: 68%; left: 7%; }
-  .oled-constellation span:nth-child(3) { top: 47%; left: 23%; background: var(--color-dawn); }
-  .oled-constellation span:nth-child(4) { top: 55%; left: 42%; width: 0.42rem; }
-  .oled-constellation span:nth-child(5) { top: 27%; left: 59%; }
-  .oled-constellation span:nth-child(6) { top: 38%; left: 77%; background: var(--color-dawn); }
-  .oled-constellation span:nth-child(7) { top: 17%; left: 92%; }
-  .oled-constellation span:nth-child(8) { top: 79%; left: 53%; }
-  .oled-constellation span:nth-child(9) { top: 67%; left: 70%; width: 0.26rem; }
-  .oled-constellation span:nth-child(10) { top: 84%; left: 84%; }
+  .oled-star--warm {
+    background: var(--color-dawn);
+    box-shadow: 0 0 0.65rem rgb(255 138 61 / 74%);
+  }
+
+  @keyframes slider-cycle-progress {
+    to { transform: scaleX(1); }
+  }
+
+  @keyframes slide-refraction-visibility {
+    0%, 100% { opacity: 0; }
+    18%, 70% { opacity: 1; }
+  }
+
+  @keyframes slide-refraction-plane {
+    0%, 100% { opacity: 0; transform: translateX(-22%); }
+    42% { opacity: 1; }
+    76% { opacity: 0.28; transform: translateX(19%); }
+  }
+
+  @keyframes slide-refraction-wide {
+    0% { opacity: 0; transform: skewX(-14deg) translateX(0); }
+    16% { opacity: 0.68; }
+    76% { opacity: 0.42; }
+    100% { opacity: 0; transform: skewX(-14deg) translateX(410%); }
+  }
+
+  @keyframes slide-refraction-fine {
+    0% { opacity: 0; transform: skewX(-14deg) translateX(0); }
+    18% { opacity: 0.62; }
+    100% { opacity: 0; transform: skewX(-14deg) translateX(590%); }
+  }
 
   @keyframes hero-constellation-drift {
     0% {
@@ -541,6 +868,33 @@ const { projects } = Astro.props;
   }
 
   @media (prefers-reduced-motion: reduce) {
+    .slide,
+    .slide.is-active,
+    .slide.is-leaving {
+      clip-path: none;
+      transition: none;
+    }
+
+    .slide-refraction {
+      display: none;
+    }
+
+    .slide-copy > h1,
+    .slide-copy > p,
+    .slide-copy > .project-cta,
+    .project-slider.is-ready .slide.is-active .slide-copy > h1,
+    .project-slider.is-ready .slide.is-active .slide-copy > p,
+    .project-slider.is-ready .slide.is-active .slide-copy > .project-cta {
+      opacity: 1;
+      transform: none;
+      transition: none;
+    }
+
+    .selector-progress,
+    .count-rule::after {
+      display: none;
+    }
+
     .oled-constellation {
       animation: none !important;
       transform: none;

@@ -43,14 +43,14 @@ const wikiSchema = {
 >
   <section class="project-wiki project-wiki--hub" aria-labelledby="wiki-hub-title">
     <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
-    <header class="project-wiki__hero project-wiki__hero--hub content-container">
+    <header class="project-wiki__hero project-wiki__hero--hub content-container" data-scroll-reveal>
       <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.indexEyebrow} /></p>
       <LocalizedText as="h1" id="wiki-hub-title" value={wikiCopy.indexTitle} />
       <LocalizedText as="p" class="project-wiki__lead" value={wikiCopy.indexLead} />
     </header>
 
     <section class="project-wiki__hub-library content-container" aria-labelledby="wiki-projects-title">
-      <div class="project-wiki__library-heading">
+      <div class="project-wiki__library-heading" data-scroll-reveal>
         <div>
           <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.library} /></p>
           <LocalizedText as="h2" id="wiki-projects-title" value={wikiCopy.libraryTitle} />
@@ -61,7 +61,7 @@ const wikiSchema = {
       <ol class="project-wiki__project-grid">
         {wikiProjects.map((project) => (
           <li>
-            <article class="project-wiki-project-card">
+            <article class="project-wiki-project-card" data-scroll-reveal>
               <HeroBorderTrace />
               <div class="project-wiki-project-card__topline">
                 <span>{project.data.shortTitle}</span>

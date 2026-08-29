@@ -69,7 +69,7 @@ const archiveSchema = {
 >
   <section class="archive-page content-container" aria-labelledby="archive-title">
     <ConstellationMotif variant="archive" class="constellation-motif--archive" />
-    <header class="archive-hero">
+    <header class="archive-hero" data-scroll-reveal>
       <p class="archive-eyebrow" data-i18n="archive.eyebrow">ARCHIVE TIMELINE</p>
       <h1 id="archive-title" data-i18n="archive.title">記録がつなぐ、制作の星座。</h1>
       <p class="archive-intro" data-i18n="archive.description">現在から最初の記録まで。制作、実装、学びの足跡を時系列で辿れます。</p>
@@ -87,21 +87,23 @@ const archiveSchema = {
           data-constellation-group={group}
           style={`--constellation-accent: ${tone.accent}; --constellation-glow: ${tone.glow};`}
         >
-          <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
+          <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo} data-scroll-reveal>{post.dateJa}</time>
           <span class="timeline-star" aria-hidden="true"><span></span></span>
           <article class="timeline-record">
-            <div class="timeline-record__meta">
+            <div class="timeline-record__meta" data-scroll-reveal>
               <LocalizedText value={post.data.category} />
               <span aria-hidden="true">·</span>
               <span>{post.year}</span>
               {index === 0 && <span class="timeline-record__latest" data-i18n="archive.latest">LATEST RECORD</span>}
             </div>
-            <h2><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h2>
-            {post.data.description && <LocalizedText as="p" class="timeline-record__description" value={post.data.description} />}
-            <a class="timeline-record__link" href={`/posts/${post.data.slug}/`}>
-              <span data-i18n="archive.open">記事を読む</span>
-              <span aria-hidden="true">→</span>
-            </a>
+            <div class="timeline-record__copy" data-scroll-reveal>
+              <h2><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h2>
+              {post.data.description && <LocalizedText as="p" class="timeline-record__description" value={post.data.description} />}
+              <a class="timeline-record__link" href={`/posts/${post.data.slug}/`}>
+                <span data-i18n="archive.open">記事を読む</span>
+                <span aria-hidden="true">→</span>
+              </a>
+            </div>
           </article>
         </li>
       ))}

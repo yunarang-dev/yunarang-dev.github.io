@@ -5,6 +5,7 @@ import projectVxHero from '../assets/projects/project-vx-workflow.png';
 import DeepSeaField from '../components/home/DeepSeaField.astro';
 import MainProjectNavigator from '../components/home/MainProjectNavigator.astro';
 import ProjectSlider from '../components/home/ProjectSlider.astro';
+import DepthIndicator from '../components/home/DepthIndicator.astro';
 import HeroBorderTrace from '../components/ui/HeroBorderTrace.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
 import LocalizedText from '../components/ui/LocalizedText.astro';
@@ -176,6 +177,7 @@ const githubActivity = await fetchGitHubActivity();
   overlayHeader
 >
   <div class="home-refraction-layer" aria-hidden="true"></div>
+  <DepthIndicator />
   <ProjectSlider projects={homeProjects} />
   <div class="deep-sea-journey">
     <DeepSeaField />
@@ -227,7 +229,7 @@ const githubActivity = await fetchGitHubActivity();
     </div>
     </section>
 
-    <section class="github-section snap-section" aria-labelledby="github-title">
+    <section class="github-section snap-section" id="github-activity" aria-labelledby="github-title">
     <div class="container github-pane glass-pane">
       <HeroBorderTrace />
       <div class="constellation constellation-github" aria-hidden="true">
@@ -279,7 +281,7 @@ const githubActivity = await fetchGitHubActivity();
     </div>
     </section>
 
-    <section class="contact-section snap-section" aria-labelledby="contact-title">
+    <section class="contact-section snap-section" id="contact" aria-labelledby="contact-title">
     <div class="container contact-pane glass-pane">
       <HeroBorderTrace />
       <div class="constellation constellation-contact" aria-hidden="true">
@@ -311,6 +313,18 @@ const githubActivity = await fetchGitHubActivity();
   let haloY = window.innerHeight * 0.5;
   let haloTargetX = haloX;
   let haloTargetY = haloY;
+  const revealTargets = [
+    ...document.querySelectorAll<HTMLElement>('.main-projects .project-rail > h2, .main-projects .project-tabs, .main-projects .project-panel.is-active > *'),
+    ...document.querySelectorAll<HTMLElement>('.records-section .column-heading, .records-section .timeline-list, .records-section .post-list, .records-section .arrow-link'),
+    ...document.querySelectorAll<HTMLElement>('.github-section .github-heading, .github-section .activity-list, .github-section .project-board-link'),
+    ...document.querySelectorAll<HTMLElement>('.contact-pane > .contact-label, .contact-pane > h2, .contact-pane > p, .contact-pane > ul'),
+  ];
+  const depthIndicator = document.querySelector<HTMLElement>('[data-depth-indicator]');
+  const depthValue = depthIndicator?.querySelector<HTMLElement>('[data-depth-value]');
+  const depthLabel = depthIndicator?.querySelector<HTMLElement>('[data-depth-label]');
+  const depthPoints = depthIndicator
+    ? [...depthIndicator.querySelectorAll<HTMLAnchorElement>('[data-depth-point]')]
+    : [];
 
   const updateGlassRefraction = () => {
     const position = window.scrollY;
@@ -327,7 +341,15 @@ const githubActivity = await fetchGitHubActivity();
       { element: document.querySelector<HTMLElement>('.github-section'), strength: 0.6 },
       { element: document.querySelector<HTMLElement>('.contact-section'), strength: 0.4 },
     ].filter((anchor): anchor is { element: HTMLElement; strength: number } => anchor.element !== null);
+    const depthAnchors = [
+      { element: document.querySelector<HTMLElement>('#featured-projects'), depth: 0 },
+      { element: document.querySelector<HTMLElement>('#main-projects'), depth: 80 },
+      { element: document.querySelector<HTMLElement>('#recent-records'), depth: 240 },
+      { element: document.querySelector<HTMLElement>('#github-activity'), depth: 480 },
+      { element: document.querySelector<HTMLElement>('#contact'), depth: 720 },
+    ].filter((anchor): anchor is { element: HTMLElement; depth: number } => anchor.element !== null);
     let borderTraceStrength = traceAnchors[0]?.strength ?? 1;
+    let currentDepth = depthAnchors[0]?.depth ?? 0;
 
     for (let index = 0; index < traceAnchors.length - 1; index += 1) {
       const current = traceAnchors[index];
@@ -345,6 +367,43 @@ const githubActivity = await fetchGitHubActivity();
       }
 
       borderTraceStrength = next.strength;
+    }
+
+    for (let index = 0; index < depthAnchors.length - 1; index += 1) {
+      const current = depthAnchors[index];
+      const next = depthAnchors[index + 1];
+      // These sections live in different nested layout contexts. Resolve every
+      // anchor against the document instead of mixing parent-relative offsets.
+      const currentTop = current.element.getBoundingClientRect().top + position;
+      const nextTop = next.element.getBoundingClientRect().top + position;
+
+      if (position < currentTop) break;
+
+      if (position <= nextTop) {
+        const interval = Math.max(nextTop - currentTop, 1);
+        const intervalProgress = Math.min(Math.max((position - currentTop) / interval, 0), 1);
+        currentDepth = current.depth + (next.depth - current.depth) * intervalProgress;
+        break;
+      }
+
+      currentDepth = next.depth;
+    }
+
+    if (depthValue && depthLabel && depthPoints.length > 0) {
+      const nearestPoint = depthPoints.reduce((nearest, point) => {
+        const pointDepth = Number(point.dataset.depthPoint ?? 0);
+        const nearestDepth = Number(nearest.dataset.depthPoint ?? 0);
+        return Math.abs(pointDepth - currentDepth) < Math.abs(nearestDepth - currentDepth) ? point : nearest;
+      });
+
+      depthValue.textContent = String(Math.round(currentDepth));
+      depthLabel.textContent = nearestPoint.dataset.depthLabelValue ?? '';
+      depthPoints.forEach((point) => {
+        const active = point === nearestPoint;
+        point.classList.toggle('is-active', active);
+        if (active) point.setAttribute('aria-current', 'location');
+        else point.removeAttribute('aria-current');
+      });
     }
     // The central beam and the two panel reflections remain readable through
     // the journey, then dim only in the final deep-water section. The broad
@@ -422,8 +481,47 @@ const githubActivity = await fetchGitHubActivity();
     requestHaloUpdate();
   };
 
+  if (reducedMotion.matches || !('IntersectionObserver' in window)) {
+    revealTargets.forEach((target) => target.classList.add('is-home-copy-visible'));
+  } else {
+    revealTargets.forEach((target, index) => {
+      target.classList.add('home-copy-reveal');
+      target.style.setProperty('--home-reveal-delay', `${Math.min(index % 4, 3) * 55}ms`);
+    });
+
+    let previousRevealScrollY = window.scrollY;
+    const revealObserver = new IntersectionObserver((entries) => {
+      const currentRevealScrollY = window.scrollY;
+      const isScrollingUp = currentRevealScrollY < previousRevealScrollY;
+
+      entries.forEach((entry) => {
+        const target = entry.target as HTMLElement;
+
+        if (entry.isIntersecting) {
+          target.classList.add('is-home-copy-visible');
+          return;
+        }
+
+        const lowerViewportEdge = entry.rootBounds?.bottom ?? window.innerHeight;
+        const exitedBelowViewport = entry.boundingClientRect.top >= lowerViewportEdge;
+
+        // Keep completed sections visible while travelling deeper. Reset them
+        // only after an upward scroll carries them below the viewport, so the
+        // next downward visit can reveal the copy again.
+        if (isScrollingUp && exitedBelowViewport) {
+          target.classList.remove('is-home-copy-visible');
+        }
+      });
+
+      previousRevealScrollY = currentRevealScrollY;
+    }, { threshold: 0.18, rootMargin: '0px 0px -8% 0px' });
+
+    revealTargets.forEach((target) => revealObserver.observe(target));
+  }
+
   updateGlassRefraction();
   window.addEventListener('scroll', requestRefractionUpdate, { passive: true });
+  window.addEventListener('resize', requestRefractionUpdate, { passive: true });
   window.addEventListener('pointermove', updateHaloTarget, { passive: true });
   reducedMotion.addEventListener('change', () => {
     if (reducedMotion.matches) {

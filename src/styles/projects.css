@@ -60,6 +60,8 @@
 }
 
 .project-index-card {
+  --project-accent: var(--color-moon);
+  --project-accent-soft: rgb(130 174 255 / 12%);
   position: relative;
   display: grid;
   grid-template-columns: minmax(0, 1.06fr) minmax(20rem, 0.94fr);
@@ -68,6 +70,18 @@
   border: 1px solid var(--color-line);
   background: rgb(5 16 29 / 44%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), var(--shadow-soft);
+}
+
+.project-index-card--astral-days,
+.project-page--astral-days {
+  --project-accent: var(--color-dawn-soft);
+  --project-accent-soft: rgb(255 138 61 / 12%);
+}
+
+.project-index-card--project-vx,
+.project-page--project-vx {
+  --project-accent: var(--color-moon);
+  --project-accent-soft: rgb(130 174 255 / 12%);
 }
 
 .project-index-card > :not(.hero-border-trace) {
@@ -135,11 +149,86 @@
 }
 
 .project-index-card__copy {
+  position: relative;
+  overflow: hidden;
   display: flex;
   align-items: flex-start;
   flex-direction: column;
   justify-content: center;
   padding: clamp(2rem, 5vw, 5rem);
+}
+
+.project-index-card__copy > :not(.project-identity-motif) {
+  position: relative;
+  z-index: 1;
+}
+
+.project-identity-motif {
+  position: absolute;
+  z-index: 0;
+  inset: auto -5rem -2rem auto;
+  width: min(27rem, 80%);
+  color: var(--project-accent);
+  opacity: 0.13;
+  pointer-events: none;
+}
+
+.project-identity-motif svg {
+  display: block;
+  width: 100%;
+  overflow: visible;
+  fill: currentColor;
+  filter: drop-shadow(0 0 0.55rem var(--project-accent-soft));
+}
+
+.project-identity-motif__orbit,
+.project-identity-motif__line,
+.project-identity-motif__grid path {
+  fill: none;
+  stroke: currentColor;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+  vector-effect: non-scaling-stroke;
+}
+
+.project-identity-motif__orbit {
+  stroke-width: 1.2;
+}
+
+.project-identity-motif__orbit--soft {
+  opacity: 0.5;
+  stroke-dasharray: 3 7;
+}
+
+.project-identity-motif__line {
+  stroke-width: 1;
+}
+
+.project-identity-motif__grid {
+  opacity: 0.25;
+}
+
+.project-identity-motif__grid path {
+  stroke-width: 0.65;
+}
+
+.project-identity-motif__line--signal {
+  opacity: 0.52;
+  stroke-dasharray: 4 5;
+}
+
+.project-index-card--astral-days .project-index-card__media-shade {
+  background:
+    radial-gradient(ellipse at 74% 18%, rgb(255 153 89 / 17%), transparent 43%),
+    linear-gradient(120deg, rgb(3 10 19 / 58%), transparent 56%),
+    linear-gradient(0deg, rgb(3 10 19 / 50%), transparent 42%);
+}
+
+.project-index-card--project-vx .project-index-card__media-shade {
+  background:
+    linear-gradient(90deg, transparent 72%, rgb(113 169 255 / 10%)),
+    linear-gradient(120deg, rgb(3 10 19 / 58%), transparent 56%),
+    linear-gradient(0deg, rgb(3 10 19 / 50%), transparent 42%);
 }
 
 .project-index-card__heading {
@@ -156,7 +245,7 @@
 }
 
 .project-index-card__status {
-  color: var(--color-dawn-soft);
+  color: var(--project-accent);
 }
 
 .project-index-card__copy h2 {
@@ -228,6 +317,8 @@
 }
 
 .project-page {
+  --project-accent: var(--color-moon);
+  --project-accent-soft: rgb(130 174 255 / 12%);
   overflow: clip;
   padding-bottom: clamp(5rem, 10vw, 9rem);
 }
@@ -240,6 +331,34 @@
   overflow: hidden;
   color: var(--color-text);
   background: var(--color-canvas);
+}
+
+.project-page__hero > .project-page__hero-motif {
+  z-index: 0;
+  right: -2rem;
+  bottom: -3rem;
+  left: auto;
+  width: min(48rem, 58vw);
+  opacity: 0.18;
+}
+
+.project-page__hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.project-page--astral-days .project-page__hero-shade {
+  background:
+    radial-gradient(ellipse at 82% 19%, rgb(255 143 75 / 14%), transparent 42%),
+    linear-gradient(90deg, rgb(3 10 19 / 88%) 0%, rgb(3 10 19 / 68%) 46%, rgb(3 10 19 / 22%) 100%),
+    linear-gradient(0deg, rgb(3 10 19 / 85%) 0%, transparent 48%);
+}
+
+.project-page--project-vx .project-page__hero-shade {
+  background:
+    linear-gradient(135deg, transparent 58%, rgb(105 164 255 / 10%)),
+    linear-gradient(90deg, rgb(3 10 19 / 88%) 0%, rgb(3 10 19 / 68%) 46%, rgb(3 10 19 / 22%) 100%),
+    linear-gradient(0deg, rgb(3 10 19 / 85%) 0%, transparent 48%);
 }
 
 .project-page__hero-image {
@@ -275,7 +394,7 @@
 .project-page__eyebrow {
   display: flex;
   gap: var(--space-3);
-  color: var(--color-dawn-soft);
+  color: var(--project-accent);
 }
 
 .project-page__hero h1 {

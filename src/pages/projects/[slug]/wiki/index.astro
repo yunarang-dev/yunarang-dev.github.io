@@ -61,7 +61,7 @@ const wikiSchema = {
 >
   <section class="project-wiki project-wiki--index" aria-labelledby="wiki-title">
     <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
-    <header class="project-wiki__hero content-container" data-hero-border-target>
+    <header class="project-wiki__hero content-container" data-hero-border-target data-scroll-reveal>
       <HeroBorderTrace />
       <a class="project-wiki__back" href={`/projects/${project.id}/`}>
         <span aria-hidden="true">←</span>
@@ -73,12 +73,12 @@ const wikiSchema = {
     </header>
 
     <div class="project-wiki__layout content-container">
-      <aside class="project-wiki__aside">
+      <aside class="project-wiki__aside" data-scroll-reveal>
         <ProjectWikiNavigation projectSlug={project.id} articles={articles} />
       </aside>
 
       <section class="project-wiki__library" aria-labelledby="wiki-library-title">
-        <div class="project-wiki__library-heading">
+        <div class="project-wiki__library-heading" data-scroll-reveal>
           <div>
             <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.library} /></p>
             <h2 id="wiki-library-title">{project.data.shortTitle} / Notes</h2>
@@ -90,7 +90,7 @@ const wikiSchema = {
           <ol class="project-wiki__grid">
             {articles.map((article, index) => (
               <li>
-                <article class="project-wiki-card">
+                <article class="project-wiki-card" data-scroll-reveal>
                   <HeroBorderTrace />
                   <div class="project-wiki-card__topline">
                     <span>{String(index + 1).padStart(2, '0')}</span>
@@ -107,7 +107,7 @@ const wikiSchema = {
             ))}
           </ol>
         ) : (
-          <LocalizedText as="p" class="project-wiki__empty" value={wikiCopy.noEntries} />
+          <div data-scroll-reveal><LocalizedText as="p" class="project-wiki__empty" value={wikiCopy.noEntries} /></div>
         )}
       </section>
     </div>

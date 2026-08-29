@@ -95,6 +95,10 @@ export const messages = {
     "home.contact.eyebrow": "Connection",
     "home.contact.title": "いつでも、あなたとつながれるように。",
     "home.contact.description": "ゲーム開発、技術、ポートフォリオに関するご連絡は、メールからどうぞ。",
+    "not-found.eyebrow": "SIGNAL LOST",
+    "not-found.title": "この星は、まだ記録されていません。",
+    "not-found.description": "座標を見失いました。Home、Blog、Wikiから記録へ戻れます。",
+    "not-found.navigation": "記録へ戻る",
   },
   ko: {
     "skip-link": "본문으로 이동",
@@ -185,6 +189,10 @@ export const messages = {
     "home.contact.eyebrow": "Connection",
     "home.contact.title": "언제든, 당신과 닿을 수 있도록.",
     "home.contact.description": "게임 개발, 기술, 포트폴리오에 관한 연락은 이메일로 보내 주세요.",
+    "not-found.eyebrow": "SIGNAL LOST",
+    "not-found.title": "이 별은 아직 기록되지 않았습니다.",
+    "not-found.description": "좌표를 잃었습니다. Home, Blog, Wiki에서 기록으로 돌아갈 수 있습니다.",
+    "not-found.navigation": "기록으로 돌아가기",
   },
 } as const;
 

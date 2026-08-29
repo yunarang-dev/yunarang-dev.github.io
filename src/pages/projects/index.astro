@@ -4,6 +4,7 @@ import { getCollection } from 'astro:content';
 import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
 import HeroBorderTrace from '../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
+import ProjectIdentityMotif from '../../components/projects/ProjectIdentityMotif.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/projects.css';
 
@@ -40,7 +41,7 @@ const projectsSchema = {
 >
   <main class="projects-index">
     <ConstellationMotif variant="projects" class="constellation-motif--projects" />
-    <header class="projects-index__hero content-container">
+    <header class="projects-index__hero content-container" data-scroll-reveal>
       <p class="projects-index__eyebrow" data-i18n="projects.eyebrow">SELECTED WORK</p>
       <h1 data-i18n="projects.title">Projects in progress.</h1>
       <p class="projects-index__intro" data-i18n="projects.description">
@@ -50,7 +51,11 @@ const projectsSchema = {
 
     <section class="projects-index__list container" aria-label="Projects">
       {projects.map((project, index) => (
-        <article class:list={['project-index-card', { 'project-index-card--reverse': index % 2 === 1 }]}>
+        <article class:list={[
+          'project-index-card',
+          `project-index-card--${project.id}`,
+          { 'project-index-card--reverse': index % 2 === 1 },
+        ]}>
           <HeroBorderTrace />
           <div class="project-index-card__media">
             {project.data.heroImage && project.data.heroAlt && (
@@ -67,7 +72,8 @@ const projectsSchema = {
             <span class="project-index-card__code" aria-hidden="true">{project.data.shortTitle}</span>
           </div>
 
-          <div class="project-index-card__copy">
+          <div class="project-index-card__copy" data-scroll-reveal>
+            <ProjectIdentityMotif projectId={project.id} />
             <div class="project-index-card__heading">
               <span class="project-index-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
               <span class="project-index-card__status" data-i18n="project-page.status.active">IN DEVELOPMENT</span>

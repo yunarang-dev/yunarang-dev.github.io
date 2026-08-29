@@ -109,6 +109,10 @@ const jsonLd = JSON.stringify({
   </head>
   <body>
     <a class="skip-link" href="#main-content" data-i18n="skip-link">本文へ移動</a>
+    <div class="page-transition" aria-hidden="true" data-page-transition>
+      <span class="page-transition__ray page-transition__ray--wide"></span>
+      <span class="page-transition__ray page-transition__ray--fine"></span>
+    </div>
     <SiteHeader overlay={overlayHeader} />
     <main id="main-content">
       <slot />
@@ -246,6 +250,102 @@ const jsonLd = JSON.stringify({
         button.addEventListener('click', () => {
           applyLocale(root.dataset.locale === 'ko' ? 'ja' : 'ko');
         });
+      });
+
+      const pageRevealTargets = Array.from(new Set([
+        ...document.querySelectorAll<HTMLElement>('[data-scroll-reveal]'),
+        ...document.querySelectorAll<HTMLElement>('[data-scroll-reveal-prose] > :is(h2, h3, h4, p, ul, ol, blockquote, pre, table, hr)'),
+        ...document.querySelectorAll<HTMLElement>('[data-scroll-reveal-prose] > [data-content-locale] > :is(h2, h3, h4, p, ul, ol, blockquote, pre, table, hr)'),
+      ]));
+      const revealMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+
+      if (!revealMotion.matches && 'IntersectionObserver' in window && pageRevealTargets.length > 0) {
+        pageRevealTargets.forEach((target, index) => {
+          target.classList.add('page-copy-reveal');
+          target.style.setProperty('--page-reveal-delay', `${Math.min(index % 4, 3) * 55}ms`);
+        });
+        document.body.classList.add('is-page-reveal-ready');
+
+        let previousRevealScrollY = window.scrollY;
+        const pageRevealObserver = new IntersectionObserver((entries) => {
+          const currentRevealScrollY = window.scrollY;
+          const isScrollingUp = currentRevealScrollY < previousRevealScrollY;
+
+          entries.forEach((entry) => {
+            const target = entry.target as HTMLElement;
+
+            if (entry.isIntersecting) {
+              target.classList.add('is-page-copy-visible');
+              return;
+            }
+
+            const lowerViewportEdge = entry.rootBounds?.bottom ?? window.innerHeight;
+            const exitedBelowViewport = entry.boundingClientRect.top >= lowerViewportEdge;
+
+            if (isScrollingUp && exitedBelowViewport) {
+              target.classList.remove('is-page-copy-visible');
+            }
+          });
+
+          previousRevealScrollY = currentRevealScrollY;
+        }, { threshold: 0.14, rootMargin: '0px 0px -7% 0px' });
+
+        const revealVisibleLocaleContent = () => {
+          pageRevealTargets.forEach((target) => {
+            const bounds = target.getBoundingClientRect();
+            const isRendered = bounds.width > 0 && bounds.height > 0;
+            const isInViewport = bounds.bottom > 0 && bounds.top < window.innerHeight * 0.93;
+
+            if (isRendered && isInViewport) {
+              target.classList.add('is-page-copy-visible');
+            }
+          });
+        };
+
+        window.requestAnimationFrame(() => {
+          pageRevealTargets.forEach((target) => pageRevealObserver.observe(target));
+        });
+        document.addEventListener('site:localechange', () => {
+          window.requestAnimationFrame(revealVisibleLocaleContent);
+        });
+      }
+
+      const navigateWithTransition = (href: string) => {
+        document.body.classList.add('is-page-leaving');
+        window.setTimeout(() => {
+          window.location.href = href;
+        }, window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 0 : 450);
+      };
+
+      document.addEventListener('click', (event) => {
+        if (
+          event.defaultPrevented ||
+          event.button !== 0 ||
+          event.metaKey ||
+          event.ctrlKey ||
+          event.shiftKey ||
+          event.altKey
+        ) return;
+
+        const target = event.target;
+        if (!(target instanceof Element)) return;
+        const link = target.closest<HTMLAnchorElement>('a[href]');
+        if (!link || link.target || link.hasAttribute('download')) return;
+
+        const destination = new URL(link.href, window.location.href);
+        if (destination.origin !== window.location.origin) return;
+        if (
+          destination.pathname === window.location.pathname &&
+          destination.search === window.location.search &&
+          destination.hash
+        ) return;
+
+        event.preventDefault();
+        navigateWithTransition(destination.href);
+      });
+
+      window.addEventListener('pageshow', () => {
+        document.body.classList.remove('is-page-leaving');
       });
     </script>
   </body>

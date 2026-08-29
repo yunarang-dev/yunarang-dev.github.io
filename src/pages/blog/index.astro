@@ -69,7 +69,7 @@ const blogSchema = {
 >
   <section class="blog-page content-container" aria-labelledby="blog-title">
     <ConstellationMotif variant="blog" class="constellation-motif--blog" />
-    <header class="blog-hero">
+    <header class="blog-hero" data-scroll-reveal>
       <p class="blog-eyebrow" data-i18n="blog.eyebrow">DEVELOPMENT ARCHIVE</p>
       <h1 id="blog-title" data-i18n="blog.title">作る過程を、言葉でも残す。</h1>
       <p class="blog-intro" data-i18n="blog.description">ゲーム開発、設計、実装、学び。進行中の制作に残した記録を、新しい順にまとめています。</p>
@@ -80,7 +80,7 @@ const blogSchema = {
       </div>
     </header>
 
-    <nav class="blog-filters" aria-label="Blog category filters" data-i18n-aria="blog.filter.label">
+    <nav class="blog-filters" aria-label="Blog category filters" data-i18n-aria="blog.filter.label" data-scroll-reveal>
       <span class="blog-filters__label" data-i18n="blog.filter.label">FILTER BY CATEGORY</span>
       <div class="blog-filter-network">
         <div class="blog-filter-map" role="group" aria-label="Category constellation" data-i18n-aria="blog.filter.label">
@@ -130,7 +130,7 @@ const blogSchema = {
     </nav>
 
     {latestPost && (
-      <section class="blog-featured" data-blog-entry data-category={latestPost.data.category.ja} aria-labelledby="latest-entry-title">
+      <section class="blog-featured" data-blog-entry data-category={latestPost.data.category.ja} aria-labelledby="latest-entry-title" data-scroll-reveal>
         <div class="blog-featured__header">
           <p data-i18n="blog.latest">LATEST ENTRY</p>
           <time datetime={latestPost.data.date.toISOString()} data-locale-ja={latestPost.dateJa} data-locale-ko={latestPost.dateKo}>{latestPost.dateJa}</time>
@@ -156,7 +156,7 @@ const blogSchema = {
     )}
 
     <section class="blog-records" aria-labelledby="all-records-title">
-      <div class="blog-records__heading">
+      <div class="blog-records__heading" data-scroll-reveal>
         <p data-i18n="blog.records">ALL RECORDS</p>
         <div aria-live="polite"><span data-blog-visible-count>{posts.length}</span> / {posts.length}</div>
       </div>
@@ -164,7 +164,7 @@ const blogSchema = {
 
       <ol class="blog-record-list">
         {remainingPosts.map((post, index) => (
-          <li data-blog-entry data-category={post.data.category.ja}>
+          <li data-blog-entry data-category={post.data.category.ja} data-scroll-reveal>
             <article class="blog-record">
               <div class="blog-record__ordinal" aria-hidden="true">{String(index + 2).padStart(2, '0')}</div>
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
