@@ -34,3 +34,8 @@ npm run preview
 
 `main` 브랜치에 반영된 변경은 GitHub Actions가 정적 Astro 사이트로 빌드하여
 GitHub Pages에 배포합니다. 빌드 결과물인 `dist/`는 저장소에 커밋하지 않습니다.
+
+## Font
+
+Astral Days Nocturne is based on Noto Serif CJK JP and is distributed under the SIL Open Font License 1.1.
+See LICENSE.txt for the full license text.
