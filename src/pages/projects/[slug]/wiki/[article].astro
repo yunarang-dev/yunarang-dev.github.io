@@ -5,7 +5,8 @@ import HeroBorderTrace from '../../../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../../../components/ui/LocalizedText.astro';
 import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
-import { wikiCategoryLabel, wikiCopy, type WikiCategory } from '../../../../data/project-wiki';
+import { wikiCategoryLabel, type WikiCategory } from '../../../../data/project-wiki';
+import { wikiCopy } from '../../../../i18n/site';
 import '../../../../styles/wiki.css';
 
 export async function getStaticPaths() {

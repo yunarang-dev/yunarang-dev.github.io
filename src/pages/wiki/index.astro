@@ -4,7 +4,7 @@ import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
 import HeroBorderTrace from '../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { wikiCopy } from '../../data/project-wiki';
+import { wikiCopy } from '../../i18n/site';
 import '../../styles/wiki.css';
 
 const [projects, wikiEntries] = await Promise.all([
@@ -34,8 +34,8 @@ const wikiSchema = {
 ---
 
 <BaseLayout
-  title="Project Wiki — Yunarang"
-  titleKo="프로젝트 위키 — Yunarang"
+  title={wikiCopy.metaTitle.ja}
+  titleKo={wikiCopy.metaTitle.ko}
   description={wikiCopy.indexLead.ja}
   descriptionKo={wikiCopy.indexLead.ko}
   structuredData={wikiSchema}
@@ -45,7 +45,7 @@ const wikiSchema = {
     <ConstellationMotif variant="projects" class="constellation-motif--wiki" />
     <header class="project-wiki__hero project-wiki__hero--hub content-container">
       <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.indexEyebrow} /></p>
-      <h1 id="wiki-hub-title">Project Wiki</h1>
+      <LocalizedText as="h1" id="wiki-hub-title" value={wikiCopy.indexTitle} />
       <LocalizedText as="p" class="project-wiki__lead" value={wikiCopy.indexLead} />
     </header>
 
@@ -53,7 +53,7 @@ const wikiSchema = {
       <div class="project-wiki__library-heading">
         <div>
           <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.library} /></p>
-          <h2 id="wiki-projects-title">Project / Libraries</h2>
+          <LocalizedText as="h2" id="wiki-projects-title" value={wikiCopy.libraryTitle} />
         </div>
         <LocalizedText as="p" value={wikiCopy.libraryLead} />
       </div>
@@ -65,7 +65,7 @@ const wikiSchema = {
               <HeroBorderTrace />
               <div class="project-wiki-project-card__topline">
                 <span>{project.data.shortTitle}</span>
-                <span>{project.entries.length} ENTRIES</span>
+                <span>{project.entries.length} <span data-i18n="wiki.entries">ENTRIES</span></span>
               </div>
               <LocalizedText as="h3" value={project.data.title} />
               <LocalizedText as="p" value={project.data.overview} />

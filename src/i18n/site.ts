@@ -13,6 +13,7 @@ export const messages = {
     "nav.home": "Home",
     "nav.blog": "Blog",
     "nav.projects": "Projects",
+    "nav.wiki": "Wiki",
     "nav.archive": "Archive",
     "nav.about": "About",
     "locale.switch": "表示言語を変更",
@@ -49,6 +50,19 @@ export const messages = {
     "projects.eyebrow": "LONG TERM PROJECTS",
     "projects.title": "夢を形にする。",
     "projects.description": "想像を形に。夢を広げていく。",
+    "wiki.meta.title": "Project Wiki — Yunarang",
+    "wiki.index.eyebrow": "PROJECT WIKI",
+    "wiki.index.title": "新しい世界、その世界のルール。",
+    "wiki.index.lead": "ストーリー、キャラクター、そして世界観を片付けた設定ノートです。",
+    "wiki.library.eyebrow": "WIKI LIBRARY",
+    "wiki.library.title": "Project / Libraries",
+    "wiki.library.lead": "公開済みの設定と、これから育てていく制作ノート。",
+    "wiki.back-to-project": "プロジェクトへ戻る",
+    "wiki.navigation": "WIKI CONTENTS",
+    "wiki.project-home": "PROJECT HOME",
+    "wiki.read-entry": "項目を読む",
+    "wiki.empty": "このプロジェクトのWikiは準備中です。",
+    "wiki.entries": "ENTRIES",
     "project-page.status.active": "IN DEVELOPMENT",
     "project-page.role": "Genre",
     "project-page.tools": "TOOLS",
@@ -89,6 +103,7 @@ export const messages = {
     "nav.home": "Home",
     "nav.blog": "Blog",
     "nav.projects": "Projects",
+    "nav.wiki": "Wiki",
     "nav.archive": "Archive",
     "nav.about": "About",
     "locale.switch": "표시 언어 변경",
@@ -116,7 +131,7 @@ export const messages = {
     "post.related.copy": "같은 프로젝트 또는 가까운 주제의 기록입니다.",
     "archive.eyebrow": "ARCHIVE TIMELINE",
     "archive.title": "기록으로 이어진, 기억의 발자취",
-    "archive.description": "지금까지 이어져 온 기억들, 그 기억을 거슬러 오르다.",
+    "archive.description": "지금까지 이어져 온 기억, 그 기억을 거슬러 오르다.",
     "archive.order": "LATEST → OLDEST",
     "archive.count": "RECORDS",
     "archive.timeline.label": "게시글 시간순 아카이브",
@@ -125,6 +140,19 @@ export const messages = {
     "projects.eyebrow": "LONG TERM PROJECTS",
     "projects.title": "꿈을 일구다.",
     "projects.description": "상상을 실현하다. 꿈을 펼쳐나가다.",
+    "wiki.meta.title": "프로젝트 위키 — Yunarang",
+    "wiki.index.eyebrow": "PROJECT WIKI",
+    "wiki.index.title": "새로운 세계, 그 세계의 규칙.",
+    "wiki.index.lead": "스토리, 인물, 그리고 세계관을 정리한 설정 노트입니다.",
+    "wiki.library.eyebrow": "WIKI LIBRARY",
+    "wiki.library.title": "Project / Libraries",
+    "wiki.library.lead": "공개된 설정과 앞으로 채워갈 제작 노트입니다.",
+    "wiki.back-to-project": "프로젝트로 돌아가기",
+    "wiki.navigation": "WIKI CONTENTS",
+    "wiki.project-home": "PROJECT HOME",
+    "wiki.read-entry": "항목 읽기",
+    "wiki.empty": "이 프로젝트의 위키는 준비 중입니다.",
+    "wiki.entries": "ENTRIES",
     "project-page.status.active": "IN DEVELOPMENT",
     "project-page.role": "GENRE",
     "project-page.tools": "TOOLS",
@@ -161,6 +189,28 @@ export const messages = {
 } as const;
 
 export type MessageKey = keyof (typeof messages)[typeof defaultLocale];
+
+export function getMessagePair(key: MessageKey) {
+  return {
+    ja: messages.ja[key],
+    ko: messages.ko[key],
+  };
+}
+
+export const wikiCopy = {
+  metaTitle: getMessagePair("wiki.meta.title"),
+  indexEyebrow: getMessagePair("wiki.index.eyebrow"),
+  indexTitle: getMessagePair("wiki.index.title"),
+  indexLead: getMessagePair("wiki.index.lead"),
+  library: getMessagePair("wiki.library.eyebrow"),
+  libraryTitle: getMessagePair("wiki.library.title"),
+  libraryLead: getMessagePair("wiki.library.lead"),
+  backToProject: getMessagePair("wiki.back-to-project"),
+  navigation: getMessagePair("wiki.navigation"),
+  projectHome: getMessagePair("wiki.project-home"),
+  readEntry: getMessagePair("wiki.read-entry"),
+  noEntries: getMessagePair("wiki.empty"),
+} as const;
 
 export function isSiteLocale(value: unknown): value is SiteLocale {
   return typeof value === "string" && (supportedLocales as readonly string[]).includes(value);

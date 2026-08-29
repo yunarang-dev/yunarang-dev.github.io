@@ -9,6 +9,7 @@ html.home-scroll {
   --panel-reflection-soft: 5.43%;
   --panel-reflection-soft-drift: 0%;
   --panel-reflection-light-drift: 0%;
+  --home-border-trace-strength: 1;
   --journey-progress: 0;
   --journey-depth: 0;
   --journey-current-x: 0vw;

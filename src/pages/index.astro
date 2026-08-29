@@ -321,6 +321,31 @@ const githubActivity = await fetchGitHubActivity();
     const journeyProgress = Math.min(Math.max((position - heroHeight) / Math.max(scrollableHeight - heroHeight, 1), 0), 1);
     const deepWaterProgress = Math.min(Math.max((depthProgress - 0.52) / 0.28, 0), 1);
     const easedDepth = deepWaterProgress * deepWaterProgress * (3 - 2 * deepWaterProgress);
+    const traceAnchors = [
+      { element: document.querySelector<HTMLElement>('.main-projects'), strength: 1 },
+      { element: document.querySelector<HTMLElement>('.records-section'), strength: 0.8 },
+      { element: document.querySelector<HTMLElement>('.github-section'), strength: 0.6 },
+      { element: document.querySelector<HTMLElement>('.contact-section'), strength: 0.4 },
+    ].filter((anchor): anchor is { element: HTMLElement; strength: number } => anchor.element !== null);
+    let borderTraceStrength = traceAnchors[0]?.strength ?? 1;
+
+    for (let index = 0; index < traceAnchors.length - 1; index += 1) {
+      const current = traceAnchors[index];
+      const next = traceAnchors[index + 1];
+      const currentTop = Math.min(current.element.getBoundingClientRect().top + position, scrollableHeight);
+      const nextTop = Math.min(next.element.getBoundingClientRect().top + position, scrollableHeight);
+
+      if (position < currentTop) break;
+
+      if (position <= nextTop) {
+        const interval = Math.max(nextTop - currentTop, 1);
+        const intervalProgress = Math.min(Math.max((position - currentTop) / interval, 0), 1);
+        borderTraceStrength = current.strength + (next.strength - current.strength) * intervalProgress;
+        break;
+      }
+
+      borderTraceStrength = next.strength;
+    }
     // The central beam and the two panel reflections remain readable through
     // the journey, then dim only in the final deep-water section. The broad
     // and narrow streaks use independent drift values below.
@@ -331,6 +356,7 @@ const githubActivity = await fetchGitHubActivity();
     root.style.setProperty('--refraction-visibility', String(afterHeroProgress.toFixed(2)));
     root.style.setProperty('--panel-reflection-light', String((refractionLight * 1.75).toFixed(2)) + '%');
     root.style.setProperty('--panel-reflection-soft', String((refractionLight * 1.18).toFixed(2)) + '%');
+    root.style.setProperty('--home-border-trace-strength', borderTraceStrength.toFixed(4));
     root.style.setProperty('--journey-progress', journeyProgress.toFixed(3));
     root.style.setProperty('--journey-depth', easedDepth.toFixed(3));
     root.style.setProperty('--journey-current-opacity', String((0.36 - easedDepth * 0.17).toFixed(3)));
