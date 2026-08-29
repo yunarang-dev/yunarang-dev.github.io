@@ -1,22 +1,24 @@
 ---
+import { pageCopy } from '../../i18n/site';
+
 const points = [
-  { href: '#featured-projects', depth: 0, label: 'Surface' },
-  { href: '#main-projects', depth: 80, label: 'Projects' },
-  { href: '#recent-records', depth: 240, label: 'Records' },
-  { href: '#github-activity', depth: 480, label: 'Signals' },
-  { href: '#contact', depth: 720, label: 'Connection' },
+  { href: '#featured-projects', depth: 0, label: pageCopy.home.depth.surface },
+  { href: '#main-projects', depth: 80, label: pageCopy.home.depth.projects },
+  { href: '#recent-records', depth: 240, label: pageCopy.home.depth.records },
+  { href: '#github-activity', depth: 480, label: pageCopy.home.depth.signals },
+  { href: '#contact', depth: 720, label: pageCopy.home.depth.connection },
 ];
 ---
 
 <nav
   class="depth-indicator"
-  aria-label="ページ深度"
-  data-locale-aria-ja="ページ深度"
-  data-locale-aria-ko="페이지 깊이"
+  aria-label={pageCopy.home.depthAria.ja}
+  data-locale-aria-ja={pageCopy.home.depthAria.ja}
+  data-locale-aria-ko={pageCopy.home.depthAria.ko}
   data-depth-indicator
 >
   <div class="depth-indicator__readout" aria-live="off">
-    <span class="depth-indicator__label" data-depth-label>Surface</span>
+    <span class="depth-indicator__label" data-depth-label>{points[0].label.ja}</span>
     <span class="depth-indicator__value"><strong data-depth-value>0</strong><small>m</small></span>
   </div>
 
@@ -28,11 +30,12 @@ const points = [
           class:list={{ 'is-active': index === 0 }}
           aria-current={index === 0 ? 'location' : undefined}
           data-depth-point={point.depth}
-          data-depth-label-value={point.label}
+          data-depth-label-ja={point.label.ja}
+          data-depth-label-ko={point.label.ko}
         >
           <span class="depth-indicator__node" aria-hidden="true"></span>
           <span class="depth-indicator__point-copy">
-            <span>{point.label}</span>
+            <span data-locale-ja={point.label.ja} data-locale-ko={point.label.ko}>{point.label.ja}</span>
             <small>{point.depth}m</small>
           </span>
         </a>

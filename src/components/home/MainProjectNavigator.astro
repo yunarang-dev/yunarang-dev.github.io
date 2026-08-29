@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getProjectCopy } from '../../i18n/projects';
+import { messages } from '../../i18n/site';
 import HeroBorderTrace from '../ui/HeroBorderTrace.astro';
 
 interface MainProject {
@@ -31,8 +32,8 @@ const { projects } = Astro.props;
   <div class="container project-layout">
     <div class="project-rail glass-pane">
       <HeroBorderTrace />
-      <h2 id="main-projects-title" data-i18n="home.projects.title">Main Projects</h2>
-      <div class="project-tabs" role="tablist" aria-label="メインプロジェクト" data-i18n-aria="home.slider.label">
+      <h2 id="main-projects-title" data-i18n="home.projects.title">{messages.ja['home.projects.title']}</h2>
+      <div class="project-tabs" role="tablist" aria-label={messages.ja['home.slider.label']} data-i18n-aria="home.slider.label">
         {projects.map((project, index) => {
           const copy = getProjectCopy(project.id);
           return (
@@ -85,11 +86,11 @@ const { projects } = Astro.props;
 
           <dl class="project-meta">
             <div>
-              <dt data-i18n="home.projects.role">Role</dt>
+              <dt data-i18n="home.projects.role">{messages.ja['home.projects.role']}</dt>
               <dd>{project.role}</dd>
             </div>
             <div>
-              <dt data-i18n="home.projects.tools">Tools</dt>
+              <dt data-i18n="home.projects.tools">{messages.ja['home.projects.tools']}</dt>
               <dd>{project.technologies.join(' / ')}</dd>
             </div>
           </dl>
@@ -107,7 +108,7 @@ const { projects } = Astro.props;
           </div>
 
           <a class="detail-link" href={'/projects/' + project.id + '/'}>
-            <span data-i18n="home.projects.open">プロジェクトページへ</span>
+            <span data-i18n="home.projects.open">{messages.ja['home.projects.open']}</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" />
             </svg>

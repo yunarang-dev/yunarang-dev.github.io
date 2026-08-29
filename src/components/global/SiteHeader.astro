@@ -1,5 +1,6 @@
 ---
 import LanguageSwitcher from './LanguageSwitcher.astro';
+import { messages, pageCopy, type MessageKey } from '../../i18n/site';
 
 const pathname = Astro.url.pathname;
 interface Props {
@@ -8,13 +9,13 @@ interface Props {
 
 const { overlay = false } = Astro.props;
 const links = [
-  { href: '/', label: 'Home', key: 'nav.home' },
-  { href: '/blog/', label: 'Blog', key: 'nav.blog' },
-  { href: '/projects/', label: 'Projects', key: 'nav.projects' },
-  { href: '/wiki/', label: 'Wiki', key: 'nav.wiki' },
-  { href: '/archive/', label: 'Archive', key: 'nav.archive' },
-  { href: '/about/', label: 'About', key: 'nav.about' },
-];
+  { href: '/', key: 'nav.home' },
+  { href: '/blog/', key: 'nav.blog' },
+  { href: '/projects/', key: 'nav.projects' },
+  { href: '/wiki/', key: 'nav.wiki' },
+  { href: '/archive/', key: 'nav.archive' },
+  { href: '/about/', key: 'nav.about' },
+] satisfies Array<{ href: string; key: MessageKey }>;
 
 const isCurrent = (href: string) => {
   if (href === '/') return pathname === href;
@@ -26,10 +27,16 @@ const isCurrent = (href: string) => {
 
 <header class:list={['site-header', { 'site-header--overlay': overlay }]}>
   <div class="container header-inner">
-    <a class="wordmark" href="/" aria-label="Yunarang home">YUNARANG</a>
+    <a
+      class="wordmark"
+      href="/"
+      aria-label={pageCopy.site.homeAria.ja}
+      data-locale-aria-ja={pageCopy.site.homeAria.ja}
+      data-locale-aria-ko={pageCopy.site.homeAria.ko}
+    >{pageCopy.site.wordmark.ja}</a>
 
     <div class="header-actions">
-      <nav class="desktop-nav" aria-label="メインナビゲーション" data-i18n-aria="nav.label">
+      <nav class="desktop-nav" aria-label={messages.ja['nav.label']} data-i18n-aria="nav.label">
         <ul>
           {links.map((link) => (
             <li>
@@ -38,7 +45,7 @@ const isCurrent = (href: string) => {
                 aria-current={isCurrent(link.href) ? 'page' : undefined}
                 data-i18n={link.key}
               >
-                {link.label}
+                {messages.ja[link.key]}
               </a>
             </li>
           ))}
@@ -48,8 +55,8 @@ const isCurrent = (href: string) => {
       <LanguageSwitcher />
 
       <details class="mobile-nav">
-        <summary data-i18n="nav.mobile-label">メニュー</summary>
-        <nav aria-label="モバイルナビゲーション" data-i18n-aria="nav.label">
+        <summary data-i18n="nav.mobile-label">{messages.ja['nav.mobile-label']}</summary>
+        <nav aria-label={messages.ja['nav.label']} data-i18n-aria="nav.label">
           <ul>
             {links.map((link) => (
               <li>
@@ -58,7 +65,7 @@ const isCurrent = (href: string) => {
                   aria-current={isCurrent(link.href) ? 'page' : undefined}
                   data-i18n={link.key}
                 >
-                  {link.label}
+                  {messages.ja[link.key]}
                 </a>
               </li>
             ))}

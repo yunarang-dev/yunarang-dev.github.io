@@ -1,13 +1,17 @@
+---
+import { messages } from '../../i18n/site';
+---
+
 <button
   class="locale-switcher"
   type="button"
   data-locale-toggle
-  aria-label="表示言語を変更"
-  title="表示言語を変更"
+  aria-label={messages.ja['locale.switch']}
+  title={messages.ja['locale.switch']}
 >
   <span class="locale-switcher__current" data-locale-current>JA</span>
   <span class="locale-switcher__divider" aria-hidden="true">/</span>
-  <span class="locale-switcher__next" data-i18n="locale.next">한국어</span>
+  <span class="locale-switcher__next" data-i18n="locale.next">{messages.ja['locale.next']}</span>
 </button>
 
 <style>

@@ -6,7 +6,7 @@ import LocalizedText from '../../../../components/ui/LocalizedText.astro';
 import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { wikiCategoryLabel, type WikiCategory } from '../../../../data/project-wiki';
-import { wikiCopy } from '../../../../i18n/site';
+import { formatMessagePair, wikiCopy } from '../../../../i18n/site';
 import '../../../../styles/wiki.css';
 
 export async function getStaticPaths() {
@@ -47,11 +47,14 @@ const wikiSchema = {
   isPartOf: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
   about: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
 };
+const metaTitleJa = formatMessagePair('wiki.project.meta-title', { title: project.data.title.ja });
+const metaTitleKo = formatMessagePair('wiki.project.meta-title', { title: project.data.title.ko });
+const notesTitle = formatMessagePair('wiki.notes-title', { shortTitle: project.data.shortTitle });
 ---
 
 <BaseLayout
-  title={`${project.data.title.ja} Wiki — Yunarang`}
-  titleKo={`${project.data.title.ko} 위키 — Yunarang`}
+  title={metaTitleJa.ja}
+  titleKo={metaTitleKo.ko}
   description={wikiCopy.indexLead.ja}
   descriptionKo={wikiCopy.indexLead.ko}
   image={`/social/${project.id}.png`}
@@ -68,7 +71,7 @@ const wikiSchema = {
         <LocalizedText value={wikiCopy.backToProject} />
       </a>
       <p class="project-wiki__eyebrow">{project.data.shortTitle} / <LocalizedText value={wikiCopy.indexEyebrow} /></p>
-      <h1 id="wiki-title"><LocalizedText value={project.data.title} /><span> / Wiki</span></h1>
+      <h1 id="wiki-title"><LocalizedText value={project.data.title} /><span> / <LocalizedText value={wikiCopy.titleSuffix} /></span></h1>
       <LocalizedText as="p" class="project-wiki__lead" value={wikiCopy.indexLead} />
     </header>
 
@@ -81,7 +84,7 @@ const wikiSchema = {
         <div class="project-wiki__library-heading" data-scroll-reveal>
           <div>
             <p class="project-wiki__eyebrow"><LocalizedText value={wikiCopy.library} /></p>
-            <h2 id="wiki-library-title">{project.data.shortTitle} / Notes</h2>
+            <LocalizedText as="h2" id="wiki-library-title" value={notesTitle} />
           </div>
           <LocalizedText as="p" value={wikiCopy.libraryLead} />
         </div>

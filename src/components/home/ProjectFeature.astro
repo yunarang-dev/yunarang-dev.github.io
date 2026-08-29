@@ -1,4 +1,5 @@
 ---
+import { messages } from '../../i18n/site';
 import ArrowLink from '../ui/ArrowLink.astro';
 
 interface Props {
@@ -28,15 +29,15 @@ const { slug, shortTitle, title, summary, role, technologies, index, tone } = As
     <p class="project-summary">{summary}</p>
     <dl>
       <div>
-        <dt>Role</dt>
+        <dt data-i18n="home.projects.role">{messages.ja['home.projects.role']}</dt>
         <dd>{role}</dd>
       </div>
       <div>
-        <dt>Tools</dt>
+        <dt data-i18n="home.projects.tools">{messages.ja['home.projects.tools']}</dt>
         <dd>{technologies.join(' · ')}</dd>
       </div>
     </dl>
-    <ArrowLink href={`/projects/${slug}/`} tone={tone}>프로젝트 보기</ArrowLink>
+    <ArrowLink href={`/projects/${slug}/`} tone={tone}><span data-i18n="project.open">{messages.ja['project.open']}</span></ArrowLink>
   </div>
 </article>
 

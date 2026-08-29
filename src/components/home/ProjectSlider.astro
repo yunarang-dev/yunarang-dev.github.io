@@ -2,6 +2,7 @@
 import { Image } from 'astro:assets';
 import type { ImageMetadata } from 'astro';
 import { getProjectCopy } from '../../i18n/projects';
+import { formatMessagePair, messages } from '../../i18n/site';
 
 interface ProjectSlide {
   id: string;
@@ -56,8 +57,9 @@ const projectMotifs = {
 <section
   id="featured-projects"
   class="project-slider snap-section"
-  aria-roledescription="carousel"
-  aria-label="メインプロジェクト"
+  aria-roledescription={messages.ja['home.slider.roledescription']}
+  data-i18n-aria-roledescription="home.slider.roledescription"
+  aria-label={messages.ja['home.slider.label']}
   data-i18n-aria="home.slider.label"
   data-project-slider
   tabindex="0"
@@ -109,7 +111,7 @@ const projectMotifs = {
             <h1 data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</h1>
             <p data-locale-ja={copy.ja.summary} data-locale-ko={copy.ko.summary}>{copy.ja.summary}</p>
             <a class="project-cta" href={'/projects/' + project.id + '/'}>
-              <span data-i18n="project.open">プロジェクトを見る</span>
+              <span data-i18n="project.open">{messages.ja['project.open']}</span>
             </a>
           </div>
         </div>
@@ -131,18 +133,24 @@ const projectMotifs = {
     </div>
 
     <div class="slider-actions">
-      <div class="slide-selectors" role="tablist" aria-label="プロジェクトを選択" data-i18n-aria="home.slider.selector">
+      <div class="slide-selectors" role="tablist" aria-label={messages.ja['home.slider.selector']} data-i18n-aria="home.slider.selector">
         {projects.map((project, index) => {
           const copy = getProjectCopy(project.id);
+          const selectorLabel = formatMessagePair('home.slider.show', { title: copy.ja.title });
+          const selectorLabelKo = formatMessagePair('home.slider.show', { title: copy.ko.title });
+          const announcement = formatMessagePair('home.slider.shown', { title: copy.ja.title });
+          const announcementKo = formatMessagePair('home.slider.shown', { title: copy.ko.title });
           return (
           <button
             type="button"
             role="tab"
             class:list={{ 'is-active': index === 0 }}
             aria-selected={index === 0 ? 'true' : 'false'}
-            aria-label={copy.ja.title + 'を表示'}
-            data-locale-aria-ja={copy.ja.title + 'を表示'}
-            data-locale-aria-ko={copy.ko.title + ' 표시'}
+            aria-label={selectorLabel.ja}
+            data-locale-aria-ja={selectorLabel.ja}
+            data-locale-aria-ko={selectorLabelKo.ko}
+            data-slide-announcement-ja={announcement.ja}
+            data-slide-announcement-ko={announcementKo.ko}
             data-slide-selector={index}
           >
             <span class="selector-line" aria-hidden="true"><span class="selector-progress"></span></span>
@@ -180,6 +188,14 @@ const projectMotifs = {
       slider.classList.remove('is-cycle-running');
       void slider.offsetWidth;
       slider.classList.add('is-cycle-running');
+    };
+
+    const updateLocalizedStatus = () => {
+      if (!status) return;
+      const selector = selectors[activeIndex];
+      status.textContent = document.documentElement.lang === 'ko'
+        ? selector?.dataset.slideAnnouncementKo ?? ''
+        : selector?.dataset.slideAnnouncementJa ?? '';
     };
 
     const playRefraction = () => {
@@ -223,8 +239,7 @@ const projectMotifs = {
 
       if (currentCount) currentCount.textContent = String(activeIndex + 1).padStart(2, '0');
       if (announce && status) {
-        const title = selectors[activeIndex]?.textContent?.trim() ?? '';
-        status.textContent = document.documentElement.lang === 'ko' ? title + '을(를) 표시했습니다' : title + 'を表示しました';
+        updateLocalizedStatus();
       }
     };
 
@@ -316,6 +331,7 @@ const projectMotifs = {
       if (document.hidden) pauseCycle();
       else if (pauseReasons.size === 0) resumeCycle();
     });
+    document.addEventListener('site:localechange', updateLocalizedStatus);
 
     window.requestAnimationFrame(() => {
       slider.classList.add('is-ready');

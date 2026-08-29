@@ -9,6 +9,8 @@ import DepthIndicator from '../components/home/DepthIndicator.astro';
 import HeroBorderTrace from '../components/ui/HeroBorderTrace.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
 import LocalizedText from '../components/ui/LocalizedText.astro';
+import type { LocalizedTextValue } from '../i18n/markup';
+import { githubActivityCopy, messages, pageCopy } from '../i18n/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/home.css';
 
@@ -94,7 +96,7 @@ interface ActivityItem {
   id: string;
   date: string;
   dateTime: string;
-  label: string;
+  label: LocalizedTextValue;
   repository: string;
   href: string;
 }
@@ -104,7 +106,7 @@ const fallbackGitHubActivity: ActivityItem[] = [
     id: 'fallback-2026-08-26',
     date: '2026/08/27 07:50',
     dateTime: '2026-08-26T22:50:06Z',
-    label: 'mainへpush',
+    label: githubActivityCopy.push('main'),
     repository: 'yunarang-dev/yunarang-dev.github.io',
     href: 'https://github.com/yunarang-dev/yunarang-dev.github.io',
   },
@@ -112,18 +114,23 @@ const fallbackGitHubActivity: ActivityItem[] = [
 
 const eventLabel = (event: GitHubEvent) => {
   const branch = event.payload?.ref?.replace('refs/heads/', '');
-  if (event.type === 'PushEvent') return (branch ?? 'repository') + 'へpush';
+  if (event.type === 'PushEvent') return githubActivityCopy.push(branch ?? githubActivityCopy.repository.ja);
   if (event.type === 'PullRequestEvent') {
-    const action = event.payload?.action === 'closed' ? 'Pull Requestを更新' : 'Pull Requestを作成';
-    return action + ' #' + (event.payload?.pull_request?.number ?? '');
+    return githubActivityCopy.pullRequest(
+      event.payload?.action === 'closed',
+      event.payload?.pull_request?.number ?? '',
+    );
   }
   if (event.type === 'IssuesEvent') {
-    const action = event.payload?.action === 'closed' ? 'Issueを完了' : 'Issueを更新';
-    return action + ' #' + (event.payload?.issue?.number ?? '');
+    return githubActivityCopy.issue(
+      event.payload?.action === 'closed',
+      event.payload?.issue?.number ?? '',
+    );
   }
-  if (event.type === 'CreateEvent') return '新しいブランチまたはリポジトリを作成';
-  if (event.type === 'ReleaseEvent') return 'Releaseを公開';
-  return event.type.replace('Event', '');
+  if (event.type === 'CreateEvent') return githubActivityCopy.create;
+  if (event.type === 'ReleaseEvent') return githubActivityCopy.release;
+  const eventName = event.type.replace('Event', '');
+  return { ja: eventName, ko: eventName };
 };
 
 const fetchGitHubActivity = async (): Promise<ActivityItem[]> => {
@@ -171,8 +178,10 @@ const githubActivity = await fetchGitHubActivity();
 ---
 
 <BaseLayout
-  title="Yunarang — Game Developer & Development Archive"
-  description="ゲーム、物語、AIを用いた開発の過程を記録する、ゆならんの個人ポートフォリオ兼開発アーカイブ。"
+  title={pageCopy.home.metaTitle.ja}
+  titleKo={pageCopy.home.metaTitle.ko}
+  description={pageCopy.home.metaDescription.ja}
+  descriptionKo={pageCopy.home.metaDescription.ko}
   pageClass="home-scroll"
   overlayHeader
 >
@@ -195,8 +204,8 @@ const githubActivity = await fetchGitHubActivity();
       <div class="record-column glass-pane">
         <HeroBorderTrace />
         <div class="column-heading">
-          <h2 id="records-title" data-i18n="home.logs.title">Recent Development Logs</h2>
-          <p data-i18n="home.logs.description">実装、設計、試行錯誤を残した直近の開発記録。</p>
+          <h2 id="records-title" data-i18n="home.logs.title">{messages.ja['home.logs.title']}</h2>
+          <p data-i18n="home.logs.description">{messages.ja['home.logs.description']}</p>
         </div>
         <ol class="timeline-list">
           {developmentLogs.map((log) => (
@@ -207,14 +216,14 @@ const githubActivity = await fetchGitHubActivity();
             </li>
           ))}
         </ol>
-        <ArrowLink href="/blog/" tone="cool"><span data-i18n="home.logs.all">すべての開発記録を見る</span></ArrowLink>
+        <ArrowLink href="/blog/" tone="cool"><span data-i18n="home.logs.all">{messages.ja['home.logs.all']}</span></ArrowLink>
       </div>
 
       <div class="record-column glass-pane">
         <HeroBorderTrace />
         <div class="column-heading">
-          <h2 data-i18n="home.posts.title">Recent Blog Posts</h2>
-          <p data-i18n="home.posts.description">開発の外側にある考察や、制作を支える小さな記録。</p>
+          <h2 data-i18n="home.posts.title">{messages.ja['home.posts.title']}</h2>
+          <p data-i18n="home.posts.description">{messages.ja['home.posts.description']}</p>
         </div>
         <ol class="post-list">
           {recentPosts.map((post) => (
@@ -224,7 +233,7 @@ const githubActivity = await fetchGitHubActivity();
             </li>
           ))}
         </ol>
-        <ArrowLink href="/blog/" tone="warm"><span data-i18n="home.posts.all">ブログ一覧へ</span></ArrowLink>
+        <ArrowLink href="/blog/" tone="warm"><span data-i18n="home.posts.all">{messages.ja['home.posts.all']}</span></ArrowLink>
       </div>
     </div>
     </section>
@@ -241,10 +250,10 @@ const githubActivity = await fetchGitHubActivity();
       </div>
       <div class="github-heading">
         <div>
-          <h2 id="github-title" data-i18n="home.github.title">GitHub Activity</h2>
-          <p data-i18n="home.github.description">公開リポジトリに残る、直近の制作の足跡。</p>
+          <h2 id="github-title" data-i18n="home.github.title">{messages.ja['home.github.title']}</h2>
+          <p data-i18n="home.github.description">{messages.ja['home.github.description']}</p>
         </div>
-        <ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.github.profile">GitHub プロフィールへ</span></ArrowLink>
+        <ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.github.profile">{messages.ja['home.github.profile']}</span></ArrowLink>
       </div>
 
       {githubActivity.length > 0 ? (
@@ -258,25 +267,25 @@ const githubActivity = await fetchGitHubActivity();
                 <path d="M6 7v7a5 5 0 0 0 5 5M8 12h4a6 6 0 0 0 6-6" />
               </svg>
               <time datetime={activity.dateTime}>{activity.date}</time>
-              <a href={activity.href} target="_blank" rel="noreferrer">{activity.label}</a>
+              <a href={activity.href} target="_blank" rel="noreferrer"><LocalizedText value={activity.label} /></a>
               <span>{activity.repository}</span>
             </li>
           ))}
         </ol>
       ) : (
         <div class="activity-fallback">
-          <p data-i18n="home.github.description">公開リポジトリに残る、直近の制作の足跡。</p>
+          <p data-i18n="home.github.description">{messages.ja['home.github.description']}</p>
         </div>
       )}
 
       <aside class="project-board-link" aria-labelledby="astral-days-board-title">
         <div class="project-board-link__copy">
-          <p class="project-board-link__eyebrow" data-i18n="home.github.board.eyebrow">PROJECT BOARD</p>
-          <h3 id="astral-days-board-title" data-i18n="home.github.board.title">Astral Days! Development</h3>
-          <p data-i18n="home.github.board.description">『アスデイ』の公開開発ボード。進行中の制作管理は GitHub Projects で記録しています。</p>
-          <ArrowLink href="https://github.com/users/yunarang-dev/projects/1/views/2" tone="cool" external><span data-i18n="home.github.board.open">開発ボードを見る</span></ArrowLink>
+          <p class="project-board-link__eyebrow" data-i18n="home.github.board.eyebrow">{messages.ja['home.github.board.eyebrow']}</p>
+          <h3 id="astral-days-board-title" data-i18n="home.github.board.title">{messages.ja['home.github.board.title']}</h3>
+          <p data-i18n="home.github.board.description">{messages.ja['home.github.board.description']}</p>
+          <ArrowLink href="https://github.com/users/yunarang-dev/projects/1/views/2" tone="cool" external><span data-i18n="home.github.board.open">{messages.ja['home.github.board.open']}</span></ArrowLink>
         </div>
-        <span class="project-board-link__status" data-i18n="home.github.board.status">PUBLIC BOARD</span>
+        <span class="project-board-link__status" data-i18n="home.github.board.status">{messages.ja['home.github.board.status']}</span>
       </aside>
     </div>
     </section>
@@ -291,13 +300,13 @@ const githubActivity = await fetchGitHubActivity();
         </svg>
         <span></span><span></span><span></span><span></span><span></span>
       </div>
-      <p class="contact-label" data-i18n="home.contact.eyebrow">LET'S CONNECT</p>
-      <h2 id="contact-title" data-i18n="home.contact.title">Continue the conversation.</h2>
-      <p data-i18n="home.contact.description">ゲーム開発、技術、ポートフォリオについての連絡は、GitHub またはメールからどうぞ。</p>
+      <p class="contact-label" data-i18n="home.contact.eyebrow">{messages.ja['home.contact.eyebrow']}</p>
+      <h2 id="contact-title" data-i18n="home.contact.title">{messages.ja['home.contact.title']}</h2>
+      <p data-i18n="home.contact.description">{messages.ja['home.contact.description']}</p>
       <ul>
-        <li><ArrowLink href="https://github.com/yunarang-dev" tone="warm" external>GitHub</ArrowLink></li>
-        <li><ArrowLink href="https://x.com/yunarang_dev" tone="warm" external>X / Twitter</ArrowLink></li>
-        <li><ArrowLink href="mailto:yunarang97@gmail.com" tone="warm">Email</ArrowLink></li>
+        <li><ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.contact.github">{messages.ja['home.contact.github']}</span></ArrowLink></li>
+        <li><ArrowLink href="https://x.com/yunarang_dev" tone="warm" external><span data-i18n="home.contact.x">{messages.ja['home.contact.x']}</span></ArrowLink></li>
+        <li><ArrowLink href="mailto:yunarang97@gmail.com" tone="warm"><span data-i18n="home.contact.email">{messages.ja['home.contact.email']}</span></ArrowLink></li>
       </ul>
     </div>
     </section>
@@ -397,7 +406,9 @@ const githubActivity = await fetchGitHubActivity();
       });
 
       depthValue.textContent = String(Math.round(currentDepth));
-      depthLabel.textContent = nearestPoint.dataset.depthLabelValue ?? '';
+      depthLabel.textContent = root.dataset.locale === 'ko'
+        ? nearestPoint.dataset.depthLabelKo ?? ''
+        : nearestPoint.dataset.depthLabelJa ?? '';
       depthPoints.forEach((point) => {
         const active = point === nearestPoint;
         point.classList.toggle('is-active', active);
@@ -520,6 +531,7 @@ const githubActivity = await fetchGitHubActivity();
   }
 
   updateGlassRefraction();
+  document.addEventListener('site:localechange', updateGlassRefraction);
   window.addEventListener('scroll', requestRefractionUpdate, { passive: true });
   window.addEventListener('resize', requestRefractionUpdate, { passive: true });
   window.addEventListener('pointermove', updateHaloTarget, { passive: true });

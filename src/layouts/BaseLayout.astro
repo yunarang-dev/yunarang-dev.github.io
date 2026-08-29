@@ -1,6 +1,7 @@
 ---
 import SiteFooter from '../components/global/SiteFooter.astro';
 import SiteHeader from '../components/global/SiteHeader.astro';
+import { messages, pageCopy } from '../i18n/site';
 import '../styles/global.css';
 
 interface Props {
@@ -22,12 +23,12 @@ interface Props {
 }
 
 const {
-  title = 'Yunarang — Game Developer & Personal Archive',
+  title = pageCopy.site.defaultTitle.ja,
   titleKo,
-  description = 'Unity、AI、ナラティブゲーム開発の過程と試行錯誤を記録する、個人開発アーカイブ。',
+  description = pageCopy.site.defaultDescription.ja,
   descriptionKo,
   image = '/social/yunarang-archive.png',
-  imageAlt = 'Yunarang development archive',
+  imageAlt = pageCopy.site.defaultImageAlt.ja,
   type = 'website',
   publishedTime,
   modifiedTime,
@@ -39,8 +40,8 @@ const {
   redirectTo,
 } = Astro.props;
 
-const koreanTitle = titleKo ?? title;
-const koreanDescription = descriptionKo ?? description;
+const koreanTitle = titleKo ?? (title === pageCopy.site.defaultTitle.ja ? pageCopy.site.defaultTitle.ko : title);
+const koreanDescription = descriptionKo ?? (description === pageCopy.site.defaultDescription.ja ? pageCopy.site.defaultDescription.ko : description);
 const site = Astro.site ?? Astro.url;
 const canonicalUrl = new URL(redirectTo ?? Astro.url.pathname, site).href;
 const socialImageUrl = new URL(image, site).href;
@@ -54,7 +55,7 @@ const jsonLd = JSON.stringify({
       '@type': 'WebSite',
       '@id': `${new URL('/', site).href}#website`,
       url: new URL('/', site).href,
-      name: 'Yunarang Development Archive',
+      name: pageCopy.site.name.ja,
       inLanguage: ['ja', 'ko'],
     },
     {
@@ -82,8 +83,8 @@ const jsonLd = JSON.stringify({
     <meta name="theme-color" content="#06111f" />
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
     <link rel="canonical" href={canonicalUrl} />
-    <link rel="alternate" type="application/rss+xml" title="Yunarang Development Archive RSS" href={feedUrl} />
-    <meta property="og:site_name" content="Yunarang Development Archive" />
+    <link rel="alternate" type="application/rss+xml" title={pageCopy.site.rssTitle.ja} href={feedUrl} />
+    <meta property="og:site_name" content={pageCopy.site.name.ja} />
     <meta property="og:locale" content="ja_JP" />
     <meta property="og:locale:alternate" content="ko_KR" />
     <meta property="og:type" content={type} />
@@ -108,7 +109,7 @@ const jsonLd = JSON.stringify({
     <script type="application/ld+json" is:inline set:html={jsonLd}></script>
   </head>
   <body>
-    <a class="skip-link" href="#main-content" data-i18n="skip-link">本文へ移動</a>
+    <a class="skip-link" href="#main-content" data-i18n="skip-link">{messages.ja['skip-link']}</a>
     <div class="page-transition" aria-hidden="true" data-page-transition>
       <span class="page-transition__ray page-transition__ray--wide"></span>
       <span class="page-transition__ray page-transition__ray--fine"></span>
@@ -184,6 +185,13 @@ const jsonLd = JSON.stringify({
           const key = element.dataset.i18nAria as MessageKey | undefined;
           if (key && key in localeMessages) {
             element.setAttribute('aria-label', localeMessages[key]);
+          }
+        });
+
+        document.querySelectorAll<HTMLElement>('[data-i18n-aria-roledescription]').forEach((element) => {
+          const key = element.dataset.i18nAriaRoledescription as MessageKey | undefined;
+          if (key && key in localeMessages) {
+            element.setAttribute('aria-roledescription', localeMessages[key]);
           }
         });
 

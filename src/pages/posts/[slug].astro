@@ -1,6 +1,7 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
 import { postRedirects, type PostRedirect } from '../../data/post-redirects';
+import { formatMessagePair, messages, pageCopy } from '../../i18n/site';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import PlaceholderPage from '../../components/global/PlaceholderPage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -69,7 +70,7 @@ const postSchema = post && postUrl
       '@id': `${postUrl}#article`,
       headline: post.data.title.ja,
       alternativeHeadline: post.data.title.ko,
-      description: post.data.description?.ja ?? 'ゲーム、物語、AIを用いた開発の過程を記録する個人開発アーカイブ。',
+      description: post.data.description?.ja ?? pageCopy.post.fallbackDescription.ja,
       image: [new URL(post.data.image?.src ?? '/social/yunarang-archive.png', site).href],
       datePublished: post.data.date.toISOString(),
       dateModified: (post.data.updated ?? post.data.date).toISOString(),
@@ -82,12 +83,15 @@ const postSchema = post && postUrl
       isPartOf: { '@id': `${new URL('/', site).href}#website` },
     }
   : undefined;
+const postPageTitleJa = post ? formatMessagePair('site.title-template', { title: post.data.title.ja }) : undefined;
+const postPageTitleKo = post ? formatMessagePair('site.title-template', { title: post.data.title.ko }) : undefined;
+const redirectPageTitle = route ? formatMessagePair('site.title-template', { title: route.title }) : undefined;
 ---
 
 {post && Content ? (
   <BaseLayout
-    title={`${post.data.title.ja} — Yunarang`}
-    titleKo={`${post.data.title.ko} — Yunarang`}
+    title={postPageTitleJa!.ja}
+    titleKo={postPageTitleKo!.ko}
     description={post.data.description?.ja}
     descriptionKo={post.data.description?.ko}
     image={post.data.image?.src}
@@ -98,10 +102,10 @@ const postSchema = post && postUrl
     structuredData={postSchema}
   >
     <article class="post-page">
-      <header class="post-header content-container" data-scroll-reveal>
+      <header class="post-header content-container">
         <a class="post-back" href="/blog/">
           <span aria-hidden="true">←</span>
-          <span data-i18n="post.back">Blog に戻る</span>
+          <span data-i18n="post.back">{messages.ja['post.back']}</span>
         </a>
         <div class="post-kicker">
           <LocalizedText value={post.data.category} />
@@ -110,7 +114,7 @@ const postSchema = post && postUrl
         </div>
         <LocalizedText as="h1" value={post.data.title} />
         {post.data.description && <LocalizedText as="p" class="post-description" value={post.data.description} />}
-        {post.data.tags.length > 0 && <ul class="post-tags" aria-label="Tags">{post.data.tags.map((tag) => <li><LocalizedText value={tag} /></li>)}</ul>}
+        {post.data.tags.length > 0 && <ul class="post-tags" aria-label={messages.ja['common.tags']} data-i18n-aria="common.tags">{post.data.tags.map((tag) => <li><LocalizedText value={tag} /></li>)}</ul>}
       </header>
 
       {post.data.image && (
@@ -121,19 +125,19 @@ const postSchema = post && postUrl
 
       <div class="post-layout content-container">
         <div class="post-reading">
-          <div class="post-body markdown-content" data-scroll-reveal-prose><Content /></div>
+          <div class="post-body markdown-content"><Content /></div>
 
           {(newerPost || olderPost) && (
-            <nav class="post-navigation" aria-label="Post navigation" data-i18n-aria="post.navigation">
+            <nav class="post-navigation" aria-label={messages.ja['post.navigation']} data-i18n-aria="post.navigation">
               {newerPost ? (
-                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.slug}/`} data-scroll-reveal>
-                  <span class="post-navigation__label" data-i18n="post.newer">NEWER RECORD</span>
+                <a class="post-navigation__item post-navigation__item--newer" href={`/posts/${newerPost.data.slug}/`}>
+                  <span class="post-navigation__label" data-i18n="post.newer">{messages.ja['post.newer']}</span>
                   <LocalizedText as="span" value={newerPost.data.title} />
                 </a>
               ) : <span></span>}
               {olderPost ? (
-                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.slug}/`} data-scroll-reveal>
-                  <span class="post-navigation__label" data-i18n="post.older">OLDER RECORD</span>
+                <a class="post-navigation__item post-navigation__item--older" href={`/posts/${olderPost.data.slug}/`}>
+                  <span class="post-navigation__label" data-i18n="post.older">{messages.ja['post.older']}</span>
                   <LocalizedText as="span" value={olderPost.data.title} />
                 </a>
               ) : <span></span>}
@@ -142,29 +146,31 @@ const postSchema = post && postUrl
         </div>
 
         <aside class="post-toc" data-post-toc hidden>
-          <p data-i18n="post.toc">CONTENTS</p>
-          <nav aria-label="Table of contents" data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
+          <p data-i18n="post.toc">{messages.ja['post.toc']}</p>
+          <nav aria-label={messages.ja['post.toc']} data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
         </aside>
       </div>
 
       <details class="post-toc-mobile content-container" data-post-toc hidden>
-        <summary data-i18n="post.toc">CONTENTS</summary>
-        <nav aria-label="Table of contents" data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
+        <summary data-i18n="post.toc">{messages.ja['post.toc']}</summary>
+        <nav aria-label={messages.ja['post.toc']} data-i18n-aria="post.toc"><ol data-post-toc-list></ol></nav>
       </details>
 
       {relatedPosts.length > 0 && (
         <section class="post-related content-container" aria-labelledby="related-records-title">
-          <div class="post-related__heading" data-scroll-reveal>
-            <p data-i18n="post.related">RELATED RECORDS</p>
-            <p data-i18n="post.related.copy">同じプロジェクト、または近いテーマの記録です。</p>
+          <div class="post-related__heading">
+            <p data-i18n="post.related">{messages.ja['post.related']}</p>
+            <p data-i18n="post.related.copy">{messages.ja['post.related.copy']}</p>
           </div>
-          <h2 id="related-records-title" class="sr-only" data-i18n="post.related">RELATED RECORDS</h2>
+          <h2 id="related-records-title" class="sr-only" data-i18n="post.related">{messages.ja['post.related']}</h2>
           <ol>
             {relatedPosts.map((relatedPost) => {
               const relatedDateJa = formatDate(relatedPost.data.date, 'ja-JP');
               const relatedDateKo = formatDate(relatedPost.data.date, 'ko-KR');
+              const relatedLabelJa = formatMessagePair('common.read-title', { title: relatedPost.data.title.ja });
+              const relatedLabelKo = formatMessagePair('common.read-title', { title: relatedPost.data.title.ko });
               return (
-                <li data-scroll-reveal>
+                <li>
                   <time datetime={relatedPost.data.date.toISOString()} data-locale-ja={relatedDateJa} data-locale-ko={relatedDateKo}>{relatedDateJa}</time>
                   <div>
                     <LocalizedText as="p" value={relatedPost.data.category} />
@@ -172,9 +178,9 @@ const postSchema = post && postUrl
                   </div>
                   <a
                     href={`/posts/${relatedPost.data.slug}/`}
-                    aria-label={relatedPost.data.title.ja}
-                    data-locale-aria-ja={relatedPost.data.title.ja}
-                    data-locale-aria-ko={relatedPost.data.title.ko}
+                    aria-label={relatedLabelJa.ja}
+                    data-locale-aria-ja={relatedLabelJa.ja}
+                    data-locale-aria-ko={relatedLabelKo.ko}
                   ><span aria-hidden="true">↗</span></a>
                 </li>
               );
@@ -221,12 +227,13 @@ const postSchema = post && postUrl
     </script>
   </BaseLayout>
 ) : (
-  <BaseLayout title={`${route!.title} — Yunarang`} redirectTo={redirectTo} noindex>
+  <BaseLayout title={redirectPageTitle!.ja} titleKo={redirectPageTitle!.ko} redirectTo={redirectTo} noindex>
     <PlaceholderPage
-      title={route!.title}
-      description={redirectTo
-        ? `${route!.date} · 이 프로젝트 문서는 전용 프로젝트 페이지로 이동했습니다.`
-        : `${route!.date} · 이 게시물은 다른 페이지로 이동했습니다.`}
+      title={{ ja: route!.title, ko: route!.title }}
+      description={{
+        ja: `${route!.date} · ${(redirectTo ? pageCopy.post.redirectProject : pageCopy.post.redirectPost).ja}`,
+        ko: `${route!.date} · ${(redirectTo ? pageCopy.post.redirectProject : pageCopy.post.redirectPost).ko}`,
+      }}
     />
   </BaseLayout>
 )}

@@ -4,7 +4,7 @@ import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
 import HeroBorderTrace from '../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { wikiCopy } from '../../i18n/site';
+import { formatMessagePair, messages, wikiCopy } from '../../i18n/site';
 import '../../styles/wiki.css';
 
 const [projects, wikiEntries] = await Promise.all([
@@ -25,7 +25,7 @@ const wikiUrl = new URL('/wiki/', site).href;
 const wikiSchema = {
   '@type': 'CollectionPage',
   '@id': `${wikiUrl}#collection`,
-  name: 'Yunarang Project Wiki',
+  name: wikiCopy.metaTitle.ja,
   description: wikiCopy.indexLead.ja,
   url: wikiUrl,
   inLanguage: ['ja', 'ko'],
@@ -65,11 +65,15 @@ const wikiSchema = {
               <HeroBorderTrace />
               <div class="project-wiki-project-card__topline">
                 <span>{project.data.shortTitle}</span>
-                <span>{project.entries.length} <span data-i18n="wiki.entries">ENTRIES</span></span>
+                <span>{project.entries.length} <span data-i18n="wiki.entries">{messages.ja['wiki.entries']}</span></span>
               </div>
               <LocalizedText as="h3" value={project.data.title} />
               <LocalizedText as="p" value={project.data.overview} />
-              <ul aria-label={`${project.data.title.ja} wiki entries`}>
+              <ul
+                aria-label={formatMessagePair('wiki.project-entries-label', { title: project.data.title.ja }).ja}
+                data-locale-aria-ja={formatMessagePair('wiki.project-entries-label', { title: project.data.title.ja }).ja}
+                data-locale-aria-ko={formatMessagePair('wiki.project-entries-label', { title: project.data.title.ko }).ko}
+              >
                 {project.entries.map((entry) => (
                   <li><LocalizedText value={entry.data.title} /></li>
                 ))}

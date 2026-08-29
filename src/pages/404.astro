@@ -1,16 +1,15 @@
 ---
 import LocalizedText from '../components/ui/LocalizedText.astro';
-import { getMessagePair } from '../i18n/site';
+import { messages, pageCopy } from '../i18n/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/not-found.css';
 
-const title = getMessagePair('not-found.title');
-const description = getMessagePair('not-found.description');
+const { title, description, navigation, metaTitle } = pageCopy.notFound;
 ---
 
 <BaseLayout
-  title="Signal Lost — Yunarang"
-  titleKo="길을 잃은 별 — Yunarang"
+  title={metaTitle.ja}
+  titleKo={metaTitle.ko}
   description={description.ja}
   descriptionKo={description.ko}
   noindex
@@ -35,14 +34,19 @@ const description = getMessagePair('not-found.description');
     <div class="not-found__content container">
       <div class="not-found__code" aria-hidden="true">404</div>
       <div class="not-found__copy" data-scroll-reveal>
-        <p class="not-found__eyebrow" data-i18n="not-found.eyebrow">SIGNAL LOST</p>
+        <p class="not-found__eyebrow" data-i18n="not-found.eyebrow">{messages.ja['not-found.eyebrow']}</p>
         <LocalizedText as="h1" id="not-found-title" value={title} />
         <LocalizedText as="p" class="not-found__description" value={description} />
 
-        <nav class="not-found__navigation" aria-label="記録へ戻る" data-i18n-aria="not-found.navigation">
-          <a href="/">Home <span aria-hidden="true">↗</span></a>
-          <a href="/blog/">Blog <span aria-hidden="true">↗</span></a>
-          <a href="/wiki/">Wiki <span aria-hidden="true">↗</span></a>
+        <nav
+          class="not-found__navigation"
+          aria-label={navigation.ja}
+          data-locale-aria-ja={navigation.ja}
+          data-locale-aria-ko={navigation.ko}
+        >
+          <a href="/"><span data-i18n="nav.home">{messages.ja['nav.home']}</span> <span aria-hidden="true">↗</span></a>
+          <a href="/blog/"><span data-i18n="nav.blog">{messages.ja['nav.blog']}</span> <span aria-hidden="true">↗</span></a>
+          <a href="/wiki/"><span data-i18n="nav.wiki">{messages.ja['nav.wiki']}</span> <span aria-hidden="true">↗</span></a>
         </nav>
       </div>
     </div>

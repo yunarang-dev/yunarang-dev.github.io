@@ -1,13 +1,16 @@
 ---
+import type { LocalizedTextValue } from '../../i18n/markup';
+import LocalizedText from '../ui/LocalizedText.astro';
+
 interface Props {
-  title: string;
-  description: string;
+  title: LocalizedTextValue;
+  description: LocalizedTextValue;
 }
 
 const { title, description } = Astro.props;
 ---
 
 <section class="placeholder-page content-container" data-scroll-reveal>
-  <h1>{title}</h1>
-  <p>{description}</p>
+  <LocalizedText as="h1" value={title} />
+  <LocalizedText as="p" value={description} />
 </section>

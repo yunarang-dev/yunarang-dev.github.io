@@ -5,6 +5,7 @@ import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
 import HeroBorderTrace from '../../components/ui/HeroBorderTrace.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import ProjectIdentityMotif from '../../components/projects/ProjectIdentityMotif.astro';
+import { messages, pageCopy } from '../../i18n/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/projects.css';
 
@@ -14,8 +15,8 @@ const projectsUrl = new URL('/projects/', site).href;
 const projectsSchema = {
   '@type': 'CollectionPage',
   '@id': `${projectsUrl}#collection`,
-  name: 'Yunarang Projects',
-  description: 'ゲーム、物語、AI開発環境を通して、作ることを探究する進行中のプロジェクト。',
+  name: pageCopy.projects.metaTitle.ja,
+  description: pageCopy.projects.metaDescription.ja,
   url: projectsUrl,
   inLanguage: ['ja', 'ko'],
   isPartOf: { '@id': `${new URL('/', site).href}#website` },
@@ -32,24 +33,22 @@ const projectsSchema = {
 ---
 
 <BaseLayout
-  title="Projects — Yunarang"
-  titleKo="프로젝트 — Yunarang"
-  description="ゲーム、物語、AI開発環境を通して、作ることを探究する進行中のプロジェクト。"
-  descriptionKo="게임, 이야기, AI 개발 환경을 통해 만드는 일을 탐구하는 진행 중인 프로젝트입니다."
+  title={pageCopy.projects.metaTitle.ja}
+  titleKo={pageCopy.projects.metaTitle.ko}
+  description={pageCopy.projects.metaDescription.ja}
+  descriptionKo={pageCopy.projects.metaDescription.ko}
   structuredData={projectsSchema}
   pageClass="projects-page-root"
 >
   <main class="projects-index">
     <ConstellationMotif variant="projects" class="constellation-motif--projects" />
     <header class="projects-index__hero content-container" data-scroll-reveal>
-      <p class="projects-index__eyebrow" data-i18n="projects.eyebrow">SELECTED WORK</p>
-      <h1 data-i18n="projects.title">Projects in progress.</h1>
-      <p class="projects-index__intro" data-i18n="projects.description">
-        ゲーム、物語、AI開発環境。異なる方法で「作ること」を試している現在進行形のプロジェクトです。
-      </p>
+      <p class="projects-index__eyebrow" data-i18n="projects.eyebrow">{messages.ja['projects.eyebrow']}</p>
+      <h1 data-i18n="projects.title">{messages.ja['projects.title']}</h1>
+      <p class="projects-index__intro" data-i18n="projects.description">{messages.ja['projects.description']}</p>
     </header>
 
-    <section class="projects-index__list container" aria-label="Projects">
+    <section class="projects-index__list container" aria-label={messages.ja['projects.list']} data-i18n-aria="projects.list">
       {projects.map((project, index) => (
         <article class:list={[
           'project-index-card',
@@ -76,7 +75,7 @@ const projectsSchema = {
             <ProjectIdentityMotif projectId={project.id} />
             <div class="project-index-card__heading">
               <span class="project-index-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span class="project-index-card__status" data-i18n="project-page.status.active">IN DEVELOPMENT</span>
+              <span class="project-index-card__status" data-i18n="project-page.status.active">{messages.ja['project-page.status.active']}</span>
             </div>
             <LocalizedText as="h2" value={project.data.title} />
             <LocalizedText as="p" class="project-index-card__tagline" value={project.data.tagline} />
@@ -84,17 +83,17 @@ const projectsSchema = {
 
             <dl class="project-index-card__meta">
               <div>
-                <dt data-i18n="project-page.role">ROLE</dt>
+                <dt data-i18n="project-page.role">{messages.ja['project-page.role']}</dt>
                 <dd>{project.data.role}</dd>
               </div>
               <div>
-                <dt data-i18n="project-page.tools">TOOLS</dt>
+                <dt data-i18n="project-page.tools">{messages.ja['project-page.tools']}</dt>
                 <dd>{project.data.technologies.join(' · ')}</dd>
               </div>
             </dl>
 
             <a class="project-index-card__link" href={`/projects/${project.id}/`}>
-              <span data-i18n="project.open">プロジェクトを見る</span>
+              <span data-i18n="project.open">{messages.ja['project.open']}</span>
               <span aria-hidden="true">→</span>
             </a>
           </div>

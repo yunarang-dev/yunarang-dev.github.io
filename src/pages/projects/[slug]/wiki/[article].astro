@@ -6,7 +6,7 @@ import LocalizedText from '../../../../components/ui/LocalizedText.astro';
 import ProjectWikiNavigation from '../../../../components/projects/ProjectWikiNavigation.astro';
 import BaseLayout from '../../../../layouts/BaseLayout.astro';
 import { wikiCategoryLabel, type WikiCategory } from '../../../../data/project-wiki';
-import { wikiCopy } from '../../../../i18n/site';
+import { formatMessagePair, wikiCopy } from '../../../../i18n/site';
 import '../../../../styles/wiki.css';
 
 export async function getStaticPaths() {
@@ -54,11 +54,19 @@ const articleSchema = {
   about: { '@id': `${new URL(`/projects/${project.id}/`, site).href}#project` },
   author: { '@id': `${new URL('/', site).href}#yunarang` },
 };
+const metaTitleJa = formatMessagePair('wiki.article.meta-title', {
+  article: entry.data.title.ja,
+  project: project.data.title.ja,
+});
+const metaTitleKo = formatMessagePair('wiki.article.meta-title', {
+  article: entry.data.title.ko,
+  project: project.data.title.ko,
+});
 ---
 
 <BaseLayout
-  title={`${entry.data.title.ja} — ${project.data.title.ja} Wiki`}
-  titleKo={`${entry.data.title.ko} — ${project.data.title.ko} 위키`}
+  title={metaTitleJa.ja}
+  titleKo={metaTitleKo.ko}
   description={entry.data.description.ja}
   descriptionKo={entry.data.description.ko}
   image={`/social/${project.id}.png`}

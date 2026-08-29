@@ -111,7 +111,7 @@ profile:
       ko: "University"
     value:
       ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学 電子情報工学部 IT融合専攻（主専攻）・日本語文学科（複数専攻）"
-      ko: "숭실대학교 전자정보공학부 IT융합전공(주전공) · 일어일문학과(복수전공)"
+      ko: "숭실대학교 지능전자공학부(주전공) · 일어일문학과(복수전공)"
     note:
       ja: "2032年2月卒業予定"
       ko: "2032년 2월 졸업 예정"
@@ -119,8 +119,8 @@ profile:
       ja: "Affiliation"
       ko: "Affiliation"
     value:
-      ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発連合サークル）・INGAME（仁川拠点大学生ゲーム開発連合サークル）"
-      ko: "숭실대학교 게임 개발 중앙 동아리 ‘겜마루’ · UNIDEV(전국 대학생 게임 개발 연합동아리) · INGAME(인천 거점 대학생 게임 개발 연합동아리)"
+      ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発サークル連合）・INGAME（仁川拠点大学生ゲーム開発連合サークル）"
+      ko: "숭실대학교 게임 개발 중앙 동아리 ‘겜마루’ · UNIDEV(전국 대학생 게임 개발 동아리 연합회) · INGAME(인천 거점 대학생 게임 개발 연합동아리)"
   - label:
       ja: "Focus"
       ko: "Focus"
