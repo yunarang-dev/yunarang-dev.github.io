@@ -1,7 +1,5 @@
 ---
 import { getCollection } from 'astro:content';
-import astralDaysHero from '../assets/projects/astral-days-dawn.png';
-import projectVxHero from '../assets/projects/project-vx-workflow.png';
 import DeepSeaField from '../components/home/DeepSeaField.astro';
 import MainProjectNavigator from '../components/home/MainProjectNavigator.astro';
 import ProjectSlider from '../components/home/ProjectSlider.astro';
@@ -10,7 +8,7 @@ import HeroBorderTrace from '../components/ui/HeroBorderTrace.astro';
 import ArrowLink from '../components/ui/ArrowLink.astro';
 import LocalizedText from '../components/ui/LocalizedText.astro';
 import type { LocalizedTextValue } from '../i18n/markup';
-import { githubActivityCopy, messages, pageCopy } from '../i18n/site';
+import { githubActivityCopy, messages, pageCopy, projectHeroImages } from '../i18n/site';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import '../styles/home.css';
 
@@ -36,19 +34,23 @@ const primaryProjectFallback = [
     id: 'astral-days',
     role: 'Direction · Narrative · Client Development',
     technologies: ['Unity', 'C#', 'Narrative Design'],
-    image: astralDaysHero,
-    imageAlt: '夜明け前の海辺の駅で、二人の人物が同じ地平線を見つめている風景',
+    image: projectHeroImages['astral-days'].image,
+    imageAlt: projectHeroImages['astral-days'].imageAlt,
   },
   {
     id: 'project-vx',
     role: 'Game Systems · AI Workflow · Direction',
     technologies: ['Unity', 'C#', 'AI Agents'],
-    image: projectVxHero,
-    imageAlt: '開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ',
+    image: projectHeroImages['project-vx'].image,
+    imageAlt: projectHeroImages['project-vx'].imageAlt,
   },
 ];
 
 const homeProjects = featuredProjects.length >= 2 ? featuredProjects : primaryProjectFallback;
+const homeHeroProjects = homeProjects.map((project) => {
+  const hero = projectHeroImages[project.id as keyof typeof projectHeroImages];
+  return hero ? { ...project, ...hero } : project;
+});
 
 const timeZone = 'Asia/Seoul';
 const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
@@ -187,7 +189,7 @@ const githubActivity = await fetchGitHubActivity();
 >
   <div class="home-refraction-layer" aria-hidden="true"></div>
   <DepthIndicator />
-  <ProjectSlider projects={homeProjects} />
+  <ProjectSlider projects={homeHeroProjects} />
   <div class="deep-sea-journey">
     <DeepSeaField />
     <MainProjectNavigator projects={homeProjects} />
@@ -204,15 +206,15 @@ const githubActivity = await fetchGitHubActivity();
       <div class="record-column glass-pane">
         <HeroBorderTrace />
         <div class="column-heading">
-          <h2 id="records-title" data-beam-text data-i18n="home.logs.title">{messages.ja['home.logs.title']}</h2>
-          <p data-beam-text="muted" data-i18n="home.logs.description">{messages.ja['home.logs.description']}</p>
+          <h2 id="records-title" data-i18n="home.logs.title">{messages.ja['home.logs.title']}</h2>
+          <p data-i18n="home.logs.description">{messages.ja['home.logs.description']}</p>
         </div>
         <ol class="timeline-list">
           {developmentLogs.map((log) => (
             <li>
               <span class="timeline-point" aria-hidden="true"></span>
               <time datetime={log.data.date.toISOString()} data-locale-ja={log.dateJa} data-locale-ko={log.dateKo}>{log.dateJa}</time>
-              <a data-beam-text="soft" href={`/posts/${log.data.slug}/`}><LocalizedText value={log.data.title} /></a>
+              <a href={`/posts/${log.data.slug}/`}><LocalizedText value={log.data.title} /></a>
             </li>
           ))}
         </ol>
@@ -222,14 +224,14 @@ const githubActivity = await fetchGitHubActivity();
       <div class="record-column glass-pane">
         <HeroBorderTrace />
         <div class="column-heading">
-          <h2 data-beam-text data-i18n="home.posts.title">{messages.ja['home.posts.title']}</h2>
-          <p data-beam-text="muted" data-i18n="home.posts.description">{messages.ja['home.posts.description']}</p>
+          <h2 data-i18n="home.posts.title">{messages.ja['home.posts.title']}</h2>
+          <p data-i18n="home.posts.description">{messages.ja['home.posts.description']}</p>
         </div>
         <ol class="post-list">
           {recentPosts.map((post) => (
             <li>
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
-              <a data-beam-text="soft" href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a>
+              <a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a>
             </li>
           ))}
         </ol>
@@ -250,8 +252,8 @@ const githubActivity = await fetchGitHubActivity();
       </div>
       <div class="github-heading">
         <div>
-          <h2 id="github-title" data-beam-text data-i18n="home.github.title">{messages.ja['home.github.title']}</h2>
-          <p data-beam-text="muted" data-i18n="home.github.description">{messages.ja['home.github.description']}</p>
+          <h2 id="github-title" data-i18n="home.github.title">{messages.ja['home.github.title']}</h2>
+          <p data-i18n="home.github.description">{messages.ja['home.github.description']}</p>
         </div>
         <ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.github.profile">{messages.ja['home.github.profile']}</span></ArrowLink>
       </div>
@@ -267,7 +269,7 @@ const githubActivity = await fetchGitHubActivity();
                 <path d="M6 7v7a5 5 0 0 0 5 5M8 12h4a6 6 0 0 0 6-6" />
               </svg>
               <time datetime={activity.dateTime}>{activity.date}</time>
-              <a data-beam-text="soft" href={activity.href} target="_blank" rel="noreferrer"><LocalizedText value={activity.label} /></a>
+              <a href={activity.href} target="_blank" rel="noreferrer"><LocalizedText value={activity.label} /></a>
               <span>{activity.repository}</span>
             </li>
           ))}
@@ -281,8 +283,8 @@ const githubActivity = await fetchGitHubActivity();
       <aside class="project-board-link" aria-labelledby="astral-days-board-title">
         <div class="project-board-link__copy">
           <p class="project-board-link__eyebrow" data-i18n="home.github.board.eyebrow">{messages.ja['home.github.board.eyebrow']}</p>
-          <h3 id="astral-days-board-title" data-beam-text data-i18n="home.github.board.title">{messages.ja['home.github.board.title']}</h3>
-          <p data-beam-text="muted" data-i18n="home.github.board.description">{messages.ja['home.github.board.description']}</p>
+          <h3 id="astral-days-board-title" data-i18n="home.github.board.title">{messages.ja['home.github.board.title']}</h3>
+          <p data-i18n="home.github.board.description">{messages.ja['home.github.board.description']}</p>
           <ArrowLink href="https://github.com/users/yunarang-dev/projects/1/views/2" tone="cool" external><span data-i18n="home.github.board.open">{messages.ja['home.github.board.open']}</span></ArrowLink>
         </div>
         <span class="project-board-link__status" data-i18n="home.github.board.status">{messages.ja['home.github.board.status']}</span>
@@ -301,8 +303,8 @@ const githubActivity = await fetchGitHubActivity();
         <span></span><span></span><span></span><span></span><span></span>
       </div>
       <p class="contact-label" data-i18n="home.contact.eyebrow">{messages.ja['home.contact.eyebrow']}</p>
-      <h2 id="contact-title" data-beam-text data-i18n="home.contact.title">{messages.ja['home.contact.title']}</h2>
-      <p data-beam-text="muted" data-i18n="home.contact.description">{messages.ja['home.contact.description']}</p>
+      <h2 id="contact-title" data-i18n="home.contact.title">{messages.ja['home.contact.title']}</h2>
+      <p data-i18n="home.contact.description">{messages.ja['home.contact.description']}</p>
       <ul>
         <li><ArrowLink href="https://github.com/yunarang-dev" tone="warm" external><span data-i18n="home.contact.github">{messages.ja['home.contact.github']}</span></ArrowLink></li>
         <li><ArrowLink href="https://x.com/yunarang_dev" tone="warm" external><span data-i18n="home.contact.x">{messages.ja['home.contact.x']}</span></ArrowLink></li>
@@ -328,7 +330,6 @@ const githubActivity = await fetchGitHubActivity();
     ...document.querySelectorAll<HTMLElement>('.github-section .github-heading, .github-section .activity-list, .github-section .project-board-link'),
     ...document.querySelectorAll<HTMLElement>('.contact-pane > .contact-label, .contact-pane > h2, .contact-pane > p, .contact-pane > ul'),
   ];
-  const beamTextTargets = [...document.querySelectorAll<HTMLElement>('[data-beam-text]')];
   const depthIndicator = document.querySelector<HTMLElement>('[data-depth-indicator]');
   const depthValue = depthIndicator?.querySelector<HTMLElement>('[data-depth-value]');
   const depthLabel = depthIndicator?.querySelector<HTMLElement>('[data-depth-label]');
@@ -345,11 +346,6 @@ const githubActivity = await fetchGitHubActivity();
     const journeyProgress = Math.min(Math.max((position - heroHeight) / Math.max(scrollableHeight - heroHeight, 1), 0), 1);
     const deepWaterProgress = Math.min(Math.max((depthProgress - 0.52) / 0.28, 0), 1);
     const easedDepth = deepWaterProgress * deepWaterProgress * (3 - 2 * deepWaterProgress);
-    beamTextTargets.forEach((target) => {
-      const bounds = target.getBoundingClientRect();
-      target.style.setProperty('--beam-background-x', `${(-bounds.left).toFixed(2)}px`);
-      target.style.setProperty('--beam-background-y', `${(-bounds.top).toFixed(2)}px`);
-    });
     const traceAnchors = [
       { element: document.querySelector<HTMLElement>('.main-projects'), strength: 1 },
       { element: document.querySelector<HTMLElement>('.records-section'), strength: 0.8 },
@@ -433,7 +429,6 @@ const githubActivity = await fetchGitHubActivity();
     root.style.setProperty('--panel-reflection-light', String((refractionLight * 1.75).toFixed(2)) + '%');
     root.style.setProperty('--panel-reflection-soft', String((refractionLight * 1.18).toFixed(2)) + '%');
     root.style.setProperty('--home-border-trace-strength', borderTraceStrength.toFixed(4));
-    root.style.setProperty('--text-beam-main-opacity', String((afterHeroProgress * borderTraceStrength * 100).toFixed(1)) + '%');
     root.style.setProperty('--journey-progress', journeyProgress.toFixed(3));
     root.style.setProperty('--journey-depth', easedDepth.toFixed(3));
     root.style.setProperty('--journey-current-opacity', String((0.36 - easedDepth * 0.17).toFixed(3)));
@@ -539,7 +534,6 @@ const githubActivity = await fetchGitHubActivity();
 
   updateGlassRefraction();
   document.addEventListener('site:localechange', updateGlassRefraction);
-  document.addEventListener('home:projectchange', requestRefractionUpdate);
   window.addEventListener('scroll', requestRefractionUpdate, { passive: true });
   window.addEventListener('resize', requestRefractionUpdate, { passive: true });
   window.addEventListener('pointermove', updateHaloTarget, { passive: true });

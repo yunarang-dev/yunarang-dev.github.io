@@ -1,10 +1,10 @@
 ---
 import { Image } from 'astro:assets';
-import { getCollection, render, type CollectionEntry } from 'astro:content';
+import { getCollection, render } from 'astro:content';
 import ArrowLink from '../../components/ui/ArrowLink.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import ProjectIdentityMotif from '../../components/projects/ProjectIdentityMotif.astro';
-import { formatMessagePair, messages } from '../../i18n/site';
+import { formatMessagePair, messages, projectHeroImages } from '../../i18n/site';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import '../../styles/projects.css';
 
@@ -14,10 +14,6 @@ export async function getStaticPaths() {
     params: { slug: project.id },
     props: { project },
   }));
-}
-
-interface Props {
-  project: CollectionEntry<'projects'>;
 }
 
 const timeZone = 'Asia/Seoul';
@@ -30,6 +26,9 @@ const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
   }).format(date);
 
 const { project } = Astro.props;
+const configuredHero = projectHeroImages[project.id as keyof typeof projectHeroImages];
+const projectHeroImage = configuredHero?.image ?? project.data.heroImage;
+const projectHeroAlt = configuredHero?.imageAlt ?? project.data.heroAlt;
 const ProjectDocument = (await render(project)).Content;
 const posts = await getCollection('posts', ({ data }) => !data.draft);
 const wikiEntries = await getCollection('projectWikis', ({ data }) => !data.draft);
@@ -68,18 +67,18 @@ const projectPageTitleKo = formatMessagePair('site.title-template', { title: pro
   description={project.data.overview.ja}
   descriptionKo={project.data.overview.ko}
   image={`/social/${project.id}.png`}
-  imageAlt={project.data.heroAlt}
+  imageAlt={projectHeroAlt}
   structuredData={projectSchema}
   pageClass="projects-page-root"
   overlayHeader
 >
   <article class:list={['project-page', `project-page--${project.id}`]}>
     <header class="project-page__hero">
-      {project.data.heroImage && project.data.heroAlt && (
+      {projectHeroImage && projectHeroAlt && (
         <Image
           class="project-page__hero-image"
-          src={project.data.heroImage}
-          alt={project.data.heroAlt}
+          src={projectHeroImage}
+          alt={projectHeroAlt}
           widths={[960, 1440, 1920]}
           sizes="100vw"
           format="webp"

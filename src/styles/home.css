@@ -9,7 +9,6 @@ html.home-scroll {
   --panel-reflection-soft: 5.43%;
   --panel-reflection-soft-drift: 0%;
   --panel-reflection-light-drift: 0%;
-  --text-beam-main-opacity: 0%;
   --home-border-trace-strength: 1;
   --journey-progress: 0;
   --journey-depth: 0;
@@ -46,15 +45,6 @@ html.home-scroll {
       rgb(233 243 255 / var(--panel-reflection-light)) calc(var(--glass-refraction) + 0.7% + var(--panel-reflection-light-drift)),
       transparent calc(var(--glass-refraction) + 3.8% + var(--panel-reflection-light-drift))
     );
-  --home-text-refraction:
-    linear-gradient(
-      112deg,
-      transparent calc(var(--glass-refraction) - 5%),
-      rgb(103 190 255 / var(--text-beam-main-opacity)) calc(var(--glass-refraction) - 1.8%),
-      rgb(103 190 255 / var(--text-beam-main-opacity)) var(--glass-refraction),
-      rgb(103 190 255 / var(--text-beam-main-opacity)) calc(var(--glass-refraction) + 2.4%),
-      transparent calc(var(--glass-refraction) + 5.6%)
-    );
   --home-glass-surface: linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
   scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
@@ -63,43 +53,6 @@ html.home-scroll {
 html.home-scroll .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-}
-
-html.home-scroll [data-beam-text] {
-  --beam-text-base: var(--color-text);
-  --beam-background-x: 0px;
-  --beam-background-y: 0px;
-  background-image:
-    var(--home-text-refraction),
-    linear-gradient(var(--beam-text-base), var(--beam-text-base));
-  background-attachment: scroll;
-  background-position: var(--beam-background-x) var(--beam-background-y);
-  background-repeat: no-repeat;
-  background-size: 100vw 100svh;
-  background-clip: text;
-  color: transparent;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-}
-
-html.home-scroll [data-beam-text='soft'] {
-  --beam-text-base: var(--color-text-soft);
-}
-
-html.home-scroll [data-beam-text='muted'],
-html.home-scroll [data-beam-text='project'] {
-  --beam-text-base: var(--color-muted);
-}
-
-html.home-scroll .project-tab.is-active [data-beam-text='project'] {
-  background-image: none;
-  color: var(--color-dawn-soft);
-  -webkit-text-fill-color: currentColor;
-}
-
-html.home-scroll a[data-beam-text]:hover,
-html.home-scroll a:hover [data-beam-text] {
-  --beam-text-base: var(--color-dawn-soft);
 }
 
 .home-refraction-layer {

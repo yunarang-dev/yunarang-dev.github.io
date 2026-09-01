@@ -32,7 +32,7 @@ const { projects } = Astro.props;
   <div class="container project-layout">
     <div class="project-rail glass-pane">
       <HeroBorderTrace />
-      <h2 id="main-projects-title" data-beam-text="muted" data-i18n="home.projects.title">{messages.ja['home.projects.title']}</h2>
+      <h2 id="main-projects-title" data-i18n="home.projects.title">{messages.ja['home.projects.title']}</h2>
       <div class="project-tabs" role="tablist" aria-label={messages.ja['home.slider.label']} data-i18n-aria="home.slider.label">
         {projects.map((project, index) => {
           const copy = getProjectCopy(project.id);
@@ -48,7 +48,7 @@ const { projects } = Astro.props;
             data-project-tab={index}
           >
             <span class="project-number">{String(index + 1).padStart(2, '0')}</span>
-            <span class="project-name" data-beam-text="project" data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</span>
+            <span class="project-name" data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</span>
             <svg viewBox="0 0 24 24" aria-hidden="true">
               <path d="M5 12h14M13.5 6.5 19 12l-5.5 5.5" />
             </svg>
@@ -80,18 +80,18 @@ const { projects } = Astro.props;
           data-project-panel
         >
           <div class="project-intro">
-            <h3 data-beam-text data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</h3>
-            <p data-beam-text="soft" data-locale-ja={copy.ja.summary} data-locale-ko={copy.ko.summary}>{copy.ja.summary}</p>
+            <h3 data-locale-ja={copy.ja.title} data-locale-ko={copy.ko.title}>{copy.ja.title}</h3>
+            <p data-locale-ja={copy.ja.summary} data-locale-ko={copy.ko.summary}>{copy.ja.summary}</p>
           </div>
 
           <dl class="project-meta">
             <div>
               <dt data-i18n="home.projects.role">{messages.ja['home.projects.role']}</dt>
-              <dd data-beam-text="soft">{project.role}</dd>
+              <dd>{project.role}</dd>
             </div>
             <div>
               <dt data-i18n="home.projects.tools">{messages.ja['home.projects.tools']}</dt>
-              <dd data-beam-text="soft">{project.technologies.join(' / ')}</dd>
+              <dd>{project.technologies.join(' / ')}</dd>
             </div>
           </dl>
 
@@ -140,9 +140,6 @@ const { projects } = Astro.props;
         panel.classList.toggle('is-active', selected);
       });
 
-      window.requestAnimationFrame(() => {
-        document.dispatchEvent(new CustomEvent('home:projectchange'));
-      });
     };
 
     tabs.forEach((tab, index) => {

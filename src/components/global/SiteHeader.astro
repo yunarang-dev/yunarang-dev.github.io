@@ -82,19 +82,47 @@ const isCurrent = (href: string) => {
     z-index: 20;
     min-height: var(--header-height);
     border-bottom: 1px solid var(--color-line);
-    background: rgb(3 10 19 / 76%);
-    backdrop-filter: blur(12px);
+    background:
+      linear-gradient(115deg, rgb(130 174 255 / 5%), transparent 34%, rgb(255 138 61 / 3%) 74%, transparent),
+      rgb(3 10 19 / 68%);
+    box-shadow:
+      inset 0 1px 0 rgb(226 239 255 / 7%),
+      0 0.6rem 2rem rgb(0 4 10 / 14%);
+    backdrop-filter: blur(18px) saturate(132%);
+    -webkit-backdrop-filter: blur(18px) saturate(132%);
+  }
+
+  .site-header::before {
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(
+      100deg,
+      transparent 4%,
+      rgb(205 228 255 / 3%) 38%,
+      rgb(205 228 255 / 7%) 50%,
+      transparent 66%
+    );
+    content: '';
+    pointer-events: none;
   }
 
   .site-header--overlay {
     position: absolute;
     inset: 0 0 auto;
-    border-bottom-color: rgb(242 244 247 / 12%);
-    background: linear-gradient(180deg, rgb(3 10 19 / 72%), transparent);
-    backdrop-filter: none;
+    border-bottom-color: rgb(205 228 255 / 15%);
+    background:
+      linear-gradient(115deg, rgb(130 174 255 / 5%), transparent 38%, rgb(255 138 61 / 2%) 78%, transparent),
+      linear-gradient(180deg, rgb(3 10 19 / 62%), rgb(3 10 19 / 28%));
+    box-shadow:
+      inset 0 1px 0 rgb(226 239 255 / 7%),
+      0 0.8rem 2.4rem rgb(0 4 10 / 10%);
+    backdrop-filter: blur(16px) saturate(128%);
+    -webkit-backdrop-filter: blur(16px) saturate(128%);
   }
 
   .header-inner {
+    position: relative;
+    z-index: 1;
     min-height: var(--header-height);
     display: flex;
     align-items: center;
@@ -178,8 +206,12 @@ const isCurrent = (href: string) => {
       padding: var(--space-5);
       border: 1px solid var(--color-line-strong);
       border-radius: var(--radius-md);
-      background: var(--color-surface-strong);
+      background:
+        linear-gradient(135deg, rgb(130 174 255 / 7%), transparent 42%),
+        rgb(8 22 37 / 88%);
       box-shadow: var(--shadow-soft);
+      backdrop-filter: blur(18px) saturate(130%);
+      -webkit-backdrop-filter: blur(18px) saturate(130%);
     }
 
     .mobile-nav ul {

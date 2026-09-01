@@ -1,3 +1,51 @@
+import type { ImageMetadata } from "astro";
+
+interface ProjectHeroImage {
+  fileName: string;
+  image: ImageMetadata;
+  imageAlt: string;
+}
+
+const projectHeroFiles = import.meta.glob<ImageMetadata>(
+  "../assets/projects/*.{png,jpg,jpeg,webp,avif}",
+  { eager: true, import: "default" },
+);
+
+const projectHero = (fileName: string, imageAlt: string): ProjectHeroImage => {
+  const image = projectHeroFiles[`../assets/projects/${fileName}`];
+
+  if (!image) {
+    throw new Error(
+      `[projectHeroImages] src/assets/projects/${fileName} 파일을 찾을 수 없습니다. ` +
+      "site.ts의 fileName과 실제 파일명을 확인해 주세요.",
+    );
+  }
+
+  return { fileName, image, imageAlt };
+};
+
+/**
+ * 프로젝트 대표 이미지는 여기에서 한 번에 교체합니다.
+ *
+ * 1. 새 이미지를 `src/assets/projects/`에 추가합니다.
+ * 2. 아래 projectHero의 첫 번째 값을 새 파일명으로 변경합니다.
+ * 3. 이미지 내용이 달라지면 두 번째 값인 imageAlt도 함께 수정합니다.
+ *
+ * 이 설정은 Home 첫 화면의 대형 슬라이드와 프로젝트 상세 페이지에
+ * 동시에 적용됩니다. 설정이 없는 프로젝트는 Markdown의 heroImage를
+ * 자동으로 사용합니다.
+ */
+export const projectHeroImages = {
+  "astral-days": projectHero(
+    "astral-days-dawn.png",
+    "夜明け前の海辺の駅で、二人の人物が同じ地平線を見つめている風景",
+  ),
+  "project-vx": projectHero(
+    "project-vx-workflow.png",
+    "開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ",
+  ),
+} satisfies Record<string, ProjectHeroImage>;
+
 export const supportedLocales = ["ja", "ko"] as const;
 
 export type SiteLocale = (typeof supportedLocales)[number];
@@ -182,7 +230,7 @@ export const messages = {
     "home.meta.description": "게임, 이야기, AI를 활용한 개발 과정을 기록하는 유나랑의 개인 포트폴리오 겸 개발 아카이브입니다.",
     "blog.eyebrow": "DEVELOPMENT ARCHIVE",
     "blog.title": "나의 발자취가, 누군가의 길이 되기를.",
-    "blog.description": "게임 기획, 설계, 개발, 배움. 모든 지나온 길을 기록하고 있습니다.",
+    "blog.description": "지금까지 지나온 모든 발자취를 남깁니다.",
     "blog.order": "LATEST → OLDEST",
     "blog.count": "RECORDS",
     "blog.filter.label": "FILTER BY CATEGORY",
