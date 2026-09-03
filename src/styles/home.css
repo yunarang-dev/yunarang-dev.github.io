@@ -46,18 +46,13 @@ html.home-scroll {
       transparent calc(var(--glass-refraction) + 3.8% + var(--panel-reflection-light-drift))
     );
   --home-glass-surface: linear-gradient(135deg, rgb(255 255 255 / 4%), transparent 27%);
-  scroll-snap-type: y proximity;
+  scroll-snap-type: y mandatory;
   scroll-behavior: smooth;
-  overscroll-behavior-y: none;
 }
 
 html.home-scroll .snap-section {
   scroll-snap-align: start;
   scroll-snap-stop: always;
-}
-
-html.home-scroll.is-home-wheel-paging {
-  scroll-snap-type: none;
 }
 
 .home-refraction-layer {
@@ -884,8 +879,12 @@ html.home-scroll footer {
 }
 
 @media (max-width: 48rem) {
+  html.home-scroll {
+    scroll-snap-type: y proximity;
+  }
+
   html.home-scroll .snap-section {
-    scroll-snap-stop: always;
+    scroll-snap-stop: normal;
   }
 
   .records-section,
