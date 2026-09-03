@@ -21,6 +21,7 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
     ...post,
     dateJa: formatDate(post.data.date, 'ja-JP'),
     dateKo: formatDate(post.data.date, 'ko-KR'),
+    series: post.data.slug.split('-')[0]?.toUpperCase() ?? '',
   }));
 
 const [latestPost, ...remainingPosts] = posts;
@@ -131,7 +132,7 @@ const blogSchema = {
     </nav>
 
     {latestPost && (
-      <section class="blog-featured" data-blog-entry data-category={latestPost.data.category.ja} aria-labelledby="latest-entry-title" data-scroll-reveal>
+      <section class="blog-featured" data-blog-entry data-category={latestPost.data.category.ja} data-series={latestPost.series} aria-labelledby="latest-entry-title" data-scroll-reveal>
         <div class="blog-featured__header">
           <p data-i18n="blog.latest">{messages.ja['blog.latest']}</p>
           <time datetime={latestPost.data.date.toISOString()} data-locale-ja={latestPost.dateJa} data-locale-ko={latestPost.dateKo}>{latestPost.dateJa}</time>
@@ -165,7 +166,7 @@ const blogSchema = {
 
       <ol class="blog-record-list">
         {remainingPosts.map((post, index) => (
-          <li data-blog-entry data-category={post.data.category.ja} data-scroll-reveal>
+          <li data-blog-entry data-category={post.data.category.ja} data-series={post.series} data-scroll-reveal>
             <article class="blog-record">
               <div class="blog-record__ordinal" aria-hidden="true">{String(index + 2).padStart(2, '0')}</div>
               <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo}>{post.dateJa}</time>
@@ -254,8 +255,31 @@ const blogSchema = {
     };
 
     filters.forEach((button) => {
-      button.addEventListener('click', () => applyFilter(button.dataset.blogFilter ?? 'all'));
+      button.addEventListener('click', () => {
+        applyFilter(button.dataset.blogFilter ?? 'all');
+        if (window.location.search) {
+          window.history.replaceState({}, '', window.location.pathname + window.location.hash);
+        }
+      });
     });
+
+    const initialSeries = new URLSearchParams(window.location.search).get('series')?.toUpperCase();
+    if (initialSeries) {
+      let visible = 0;
+
+      entries.forEach((entry) => {
+        const matches = entry.dataset.series === initialSeries;
+        entry.hidden = !matches;
+        if (matches) visible += 1;
+      });
+
+      filters.forEach((button) => {
+        button.classList.remove('is-active');
+        button.setAttribute('aria-pressed', 'false');
+      });
+      if (count) count.textContent = String(visible);
+      if (empty) empty.hidden = visible !== 0;
+    }
 
     const canNudgeMapNode = () => !reducedMotion.matches && !mapIsCompact.matches;
 

@@ -14,6 +14,8 @@ if (!aboutEntry) {
 const about = aboutEntry.data;
 const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => area.code === 'AD' || area.code === 'VX');
 const archiveCards = about.archiveAreas.filter((area: { code: string }) => area.code !== 'AD' && area.code !== 'VX');
+const archiveAreaHref = (area: { code: string; links?: { href: string }[] }) =>
+  area.links?.[0]?.href ?? `/blog/?series=${encodeURIComponent(area.code)}`;
 const site = Astro.site ?? Astro.url;
 const aboutUrl = new URL('/about/', site).href;
 const aboutSchema = {
@@ -122,11 +124,20 @@ const aboutSchema = {
       <div class="container archive-feature-list">
         {featuredArchiveAreas.map((area: any, index: number) => (
           <article class:list={['archive-feature', `archive-feature--${area.code.toLowerCase()}`, { 'archive-feature--reverse': index % 2 === 1 }]}>
+            <a
+              class="archive-feature__link"
+              href={archiveAreaHref(area)}
+              aria-labelledby={`archive-area-title-${area.code.toLowerCase()}`}
+            ></a>
             <div class="archive-feature-project">
               <p class="archive-code">{area.code}</p>
-              <LocalizedText as="h3" value={area.title} />
+              <LocalizedText as="h3" id={`archive-area-title-${area.code.toLowerCase()}`} value={area.title} />
               <LocalizedText as="p" class="archive-motto" value={area.motto} />
-              {area.links && <div class="archive-links">{area.links.map((link: any) => <ArrowLink href={link.href} tone="warm"><LocalizedText value={link.label} /></ArrowLink>)}</div>}
+              {area.links?.length > 1 && (
+                <div class="archive-links archive-links--secondary">
+                  {area.links.slice(1).map((link: any) => <ArrowLink href={link.href} tone="warm"><LocalizedText value={link.label} /></ArrowLink>)}
+                </div>
+              )}
             </div>
             <div class="archive-feature-detail">
               <LocalizedText as="p" class="archive-feature-label" value={about.sections.archive.overview} />
@@ -147,8 +158,13 @@ const aboutSchema = {
       <div class="container archive-grid">
         {archiveCards.map((area: any) => (
           <article class="archive-card">
+            <a
+              class="archive-card__link"
+              href={archiveAreaHref(area)}
+              aria-labelledby={`archive-area-title-${area.code.toLowerCase()}`}
+            ></a>
             <p class="archive-code">{area.code}</p>
-            <LocalizedText as="h3" value={area.title} />
+            <LocalizedText as="h3" id={`archive-area-title-${area.code.toLowerCase()}`} value={area.title} />
             <LocalizedText as="p" class="archive-motto" value={area.motto} />
             <LocalizedText as="p" class="archive-description" value={area.description} />
             {area.table && area.code === 'CT' && (
@@ -159,7 +175,6 @@ const aboutSchema = {
                 </table>
               </div>
             )}
-            {area.links && <div class="archive-links">{area.links.map((link: any) => <ArrowLink href={link.href} tone="warm"><LocalizedText value={link.label} /></ArrowLink>)}</div>}
           </article>
         ))}
       </div>

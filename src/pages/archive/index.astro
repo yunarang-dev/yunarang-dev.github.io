@@ -90,7 +90,11 @@ const archiveSchema = {
         >
           <time datetime={post.data.date.toISOString()} data-locale-ja={post.dateJa} data-locale-ko={post.dateKo} data-scroll-reveal>{post.dateJa}</time>
           <span class="timeline-star" aria-hidden="true"><span></span></span>
-          <article class="timeline-record">
+          <a
+            class="timeline-record"
+            href={`/posts/${post.data.slug}/`}
+            aria-labelledby={`archive-post-title-${post.data.slug}`}
+          >
             <div class="timeline-record__meta" data-scroll-reveal>
               <LocalizedText value={post.data.category} />
               <span aria-hidden="true">·</span>
@@ -98,14 +102,10 @@ const archiveSchema = {
               {index === 0 && <span class="timeline-record__latest" data-i18n="archive.latest">{messages.ja['archive.latest']}</span>}
             </div>
             <div class="timeline-record__copy" data-scroll-reveal>
-              <h2><a href={`/posts/${post.data.slug}/`}><LocalizedText value={post.data.title} /></a></h2>
+              <h2 id={`archive-post-title-${post.data.slug}`}><LocalizedText value={post.data.title} /></h2>
               {post.data.description && <LocalizedText as="p" class="timeline-record__description" value={post.data.description} />}
-              <a class="timeline-record__link" href={`/posts/${post.data.slug}/`}>
-                <span data-i18n="archive.open">{messages.ja['archive.open']}</span>
-                <span aria-hidden="true">→</span>
-              </a>
             </div>
-          </article>
+          </a>
         </li>
       ))}
     </ol>

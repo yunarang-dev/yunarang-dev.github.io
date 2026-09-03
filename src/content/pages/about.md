@@ -119,8 +119,8 @@ profile:
       ja: "Affiliation"
       ko: "Affiliation"
     value:
-      ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・UNIDEV（全国大学生ゲーム開発サークル連合）・INGAME（仁川拠点大学生ゲーム開発連合サークル）"
-      ko: "숭실대학교 게임 개발 중앙 동아리 ‘겜마루’ · UNIDEV(전국 대학생 게임 개발 동아리 연합회) · INGAME(인천 거점 대학생 게임 개발 연합동아리)"
+      ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・「UNIDEV」（全国大学生ゲーム開発サークル連合）・「INGAME」（仁川拠点大学生ゲーム開発連合サークル）"
+      ko: "숭실대학교 게임 개발 중앙 동아리 겜마루 · UNIDEV(전국 대학생 게임 개발 동아리 연합회) · INGAME(인천 거점 대학생 게임 개발 연합동아리)"
   - label:
       ja: "Focus"
       ko: "Focus"

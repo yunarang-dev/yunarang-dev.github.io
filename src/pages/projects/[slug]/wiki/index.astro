@@ -93,19 +93,20 @@ const notesTitle = formatMessagePair('wiki.notes-title', { shortTitle: project.d
           <ol class="project-wiki__grid">
             {articles.map((article, index) => (
               <li>
-                <article class="project-wiki-card" data-scroll-reveal>
+                <a
+                  class="project-wiki-card"
+                  href={`/projects/${project.id}/wiki/${article.slug}/`}
+                  aria-labelledby={`wiki-card-title-${article.slug}`}
+                  data-scroll-reveal
+                >
                   <HeroBorderTrace />
                   <div class="project-wiki-card__topline">
                     <span>{String(index + 1).padStart(2, '0')}</span>
                     <span>{wikiCategoryLabel[article.category]}</span>
                   </div>
-                  <LocalizedText as="h3" value={article.title} />
+                  <LocalizedText as="h3" id={`wiki-card-title-${article.slug}`} value={article.title} />
                   <LocalizedText as="p" value={article.description} />
-                  <a href={`/projects/${project.id}/wiki/${article.slug}/`}>
-                    <LocalizedText value={wikiCopy.readEntry} />
-                    <span aria-hidden="true">→</span>
-                  </a>
-                </article>
+                </a>
               </li>
             ))}
           </ol>

@@ -4,42 +4,43 @@ title:
   ja: "アスデイ：Astral Days!"
   ko: "아스데이: Astral Days!"
 tagline:
-  ja: "<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。"
+  ja: "この夜が明けても、輝くハルへ。"
   ko: "이 새벽이 끝나더라도, 빛나는 하루를 향해."
 overview:
-  ja: "傷ついた少女たちの連帯と救済を描く、百合オープンフィールド・リンクアクションRPG。物語の感情とプレイそのものが互いに影響し合う体験を目指しています。"
-  ko: "상처 입은 소녀들의 연대와 구원을 그리는 백합 오픈필드 링크 액션 RPG입니다. 이야기 속 감정과 플레이 자체가 서로 영향을 주는 경험을 목표로 합니다."
+  ja: "非日常の中で傷を隠し、過去から逃げ、誰かを信じる術さえ忘れてしまった少女たち。新たな日常の中で互いの傷と向き合い、もう一度人を信じ、やがて生きていくことを選ぶまでの日々を描く、百合オープンフィールド・リンクアクションRPGです。"
+  ko: "비일상 속 상처를 숨기고, 과거에서 도망치고, 누군가를 믿는 법마저 잊어버린 소녀들. <br>새로운 일상 속에서 서로의 상처를 마주하며, 다시 사람을 믿고,<br>끝내 살아가기를 선택하기까지의 나날을 그리는 백합 오픈필드 링크 액션 RPG입니다."
 status: "active"
 role: "Yuri · Narrative · Coming of Age · Action RPG · Link Action"
 technologies:
   - Unity
   - C#
-  - Narrative Design
+  - Blender
+  - Logic Pro
 focus:
+  - title:
+      ja: "Narrative Design"
+      ko: "Narrative Design"
+    description:
+      ja: "実体験と感情の記録をモチーフとし、<br>キャラクター同士の関係の変化が、そのまま物語の変化へとつながります。"
+      ko: "실제 경험과 감정의 기록을 모티브로, <br>캐릭터 간의 관계 변화가 곧 스토리의 변화입니다."
   - title:
       ja: "Yuri Narrative"
       ko: "Yuri Narrative"
     description:
-      ja: "実体験と感情の記録を出発点に、キャラクターの葛藤を物語を動かす力として描きます。"
-      ko: "실제 경험과 감정의 기록을 출발점으로, 캐릭터의 갈등 자체가 이야기를 움직이는 힘이 되도록 만듭니다."
-  - title:
-      ja: "Open Field"
-      ko: "Open Field"
-    description:
-      ja: "複数の大きなステージを自然な接続で結び、没入感と開発・最適化の現実性を両立させます。"
-      ko: "여러 큰 스테이지를 자연스럽게 연결해 몰입감과 개발·최적화의 현실성을 함께 확보합니다."
+      ja: "傷ついた少女たちが互いとの関わりを通して、<br>再び世界とつながっていく物語を描きます。"
+      ko: "상처 입은 소녀들이 서로를 통해 <br>세상과 다시 맞닿는 서사를 그려냅니다."
   - title:
       ja: "Link Action"
       ko: "Link Action"
     description:
-      ja: "デバフゲージとリンクアクティングを通じ、スキルの選択と連鎖が流れるようにつながる戦闘を設計します。"
-      ko: "디버프 게이지와 링크 액팅을 통해 스킬 선택과 연계가 물 흐르듯 이어지는 전투를 설계합니다."
+      ja: "流れるようにつながるリンクアクティングを通じて、キャラクターとスキルが<br>連携する戦闘を設計します。"
+      ko: "물 흐르듯 이어지는 링크 액팅을 통해 <br>캐릭터·스킬 간 연계 전투를 설계합니다."
   - title:
-      ja: "Emotion as Gameplay"
-      ko: "Emotion as Gameplay"
+      ja: "Narrative and Gameplay"
+      ko: "Narrative and Gameplay"
     description:
-      ja: "キャラクターの関係性と感情共鳴を、物語の装飾ではなく実際のプレイ体験へ接続します。"
-      ko: "캐릭터 관계와 감정 공명을 이야기의 장식이 아닌 실제 플레이 경험으로 연결합니다."
+      ja: "ストーリーやキャラクター同士の関係性が、感情共鳴を介して、<br>戦闘・物語の展開・演出へとつながります。"
+      ko: "스토리, 캐릭터 관계가 감정 공명을 매개로 <br>전투·서사·연출과 이어집니다."
 featured: true
 order: 1
 heroImage: "../../assets/projects/astral-days-dawn.png"
@@ -55,8 +56,6 @@ links:
 ![Astral Days! Concept Art](/images/posts/2026-02-16/1.jpeg)
 _[Astral Days! Concept Art]_
 -->
-
-[この投稿の韓国語バージョンはこちらです。](/posts/KR-02/)
 
 > 「<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。」
 

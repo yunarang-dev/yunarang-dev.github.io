@@ -16,7 +16,7 @@ export const projectCopy: Record<string, LocalizedProjectCopy> = {
   'astral-days': {
     ja: {
       title: 'アスデイ：Astral Days!',
-      summary: '<ruby>明日ノ日<rt>アスデイ</rt></ruby>、夜明け輝く<ruby>春<rt>ハル</rt></ruby>に会いに行く。',
+      summary: 'この夜が明けても、輝くハルへ。',
     },
     ko: {
       title: '아스데이: Astral Days!',

@@ -61,13 +61,18 @@ const wikiSchema = {
       <ol class="project-wiki__project-grid">
         {wikiProjects.map((project) => (
           <li>
-            <article class="project-wiki-project-card" data-scroll-reveal>
+            <a
+              class="project-wiki-project-card"
+              href={`/projects/${project.id}/wiki/`}
+              aria-labelledby={`wiki-project-title-${project.id}`}
+              data-scroll-reveal
+            >
               <HeroBorderTrace />
               <div class="project-wiki-project-card__topline">
                 <span>{project.data.shortTitle}</span>
                 <span>{project.entries.length} <span data-i18n="wiki.entries">{messages.ja['wiki.entries']}</span></span>
               </div>
-              <LocalizedText as="h3" value={project.data.title} />
+              <LocalizedText as="h3" id={`wiki-project-title-${project.id}`} value={project.data.title} />
               <LocalizedText as="p" value={project.data.overview} />
               <ul
                 aria-label={formatMessagePair('wiki.project-entries-label', { title: project.data.title.ja }).ja}
@@ -78,11 +83,7 @@ const wikiSchema = {
                   <li><LocalizedText value={entry.data.title} /></li>
                 ))}
               </ul>
-              <a href={`/projects/${project.id}/wiki/`}>
-                <LocalizedText value={wikiCopy.library} />
-                <span aria-hidden="true">→</span>
-              </a>
-            </article>
+            </a>
           </li>
         ))}
       </ol>

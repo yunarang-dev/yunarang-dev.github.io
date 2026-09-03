@@ -155,6 +155,9 @@
     rgb(8 24 41 / 47%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), 0 1.25rem 3rem rgb(0 0 0 / 11%);
   backdrop-filter: blur(0.9rem);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
   transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
 }
 
@@ -164,10 +167,16 @@
   z-index: 3;
 }
 
-.project-wiki-card:hover {
+.project-wiki-card:hover,
+.project-wiki-card:focus-visible {
   border-color: rgb(182 206 255 / 42%);
   background-color: rgb(17 39 61 / 62%);
   transform: translateY(-0.2rem);
+}
+
+.project-wiki-card:focus-visible {
+  outline: 2px solid var(--color-moon);
+  outline-offset: 0.3rem;
 }
 
 .project-wiki-card__topline {
@@ -194,24 +203,6 @@
   color: var(--color-muted);
   font-size: var(--step--1);
   line-height: 1.8;
-}
-
-.project-wiki-card a {
-  display: inline-flex;
-  gap: var(--space-3);
-  margin-top: auto;
-  padding-top: var(--space-6);
-  color: var(--color-dawn-soft);
-  font-size: var(--step--1);
-  text-decoration: underline;
-  text-decoration-color: rgb(246 177 125 / 36%);
-  text-underline-offset: 0.3em;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-
-.project-wiki-card a:hover {
-  color: var(--color-text);
-  text-decoration-color: currentColor;
 }
 
 .project-wiki__document {
@@ -273,6 +264,22 @@
     rgb(8 24 41 / 48%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 9%), 0 1.25rem 3rem rgb(0 0 0 / 12%);
   backdrop-filter: blur(0.9rem);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--transition-base), background-color var(--transition-base), transform var(--transition-base);
+}
+
+.project-wiki-project-card:hover,
+.project-wiki-project-card:focus-visible {
+  border-color: rgb(182 206 255 / 42%);
+  background-color: rgb(17 39 61 / 62%);
+  transform: translateY(-0.2rem);
+}
+
+.project-wiki-project-card:focus-visible {
+  outline: 2px solid var(--color-moon);
+  outline-offset: 0.3rem;
 }
 
 .project-wiki-project-card__topline {
@@ -316,24 +323,6 @@
   margin-right: var(--space-2);
   color: var(--color-dawn-soft);
   content: '✦';
-}
-
-.project-wiki-project-card > a {
-  display: inline-flex;
-  gap: var(--space-3);
-  margin-top: auto;
-  padding-top: var(--space-6);
-  color: var(--color-dawn-soft);
-  font-size: var(--step--1);
-  text-decoration: underline;
-  text-decoration-color: rgb(246 177 125 / 36%);
-  text-underline-offset: 0.3em;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-
-.project-wiki-project-card > a:hover {
-  color: var(--color-text);
-  text-decoration-color: currentColor;
 }
 
 .project-wiki__empty {
@@ -400,7 +389,10 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .project-wiki-card:hover {
+  .project-wiki-card:hover,
+  .project-wiki-card:focus-visible,
+  .project-wiki-project-card:hover,
+  .project-wiki-project-card:focus-visible {
     transform: none;
   }
 }

@@ -50,54 +50,53 @@ const projectsSchema = {
 
     <section class="projects-index__list container" aria-label={messages.ja['projects.list']} data-i18n-aria="projects.list">
       {projects.map((project, index) => (
-        <article class:list={[
-          'project-index-card',
-          `project-index-card--${project.id}`,
-          { 'project-index-card--reverse': index % 2 === 1 },
-        ]}>
-          <HeroBorderTrace />
-          <div class="project-index-card__media">
-            {project.data.heroImage && project.data.heroAlt && (
-              <Image
-                src={project.data.heroImage}
-                alt={project.data.heroAlt}
-                widths={[640, 960, 1280]}
-                sizes="(max-width: 46rem) 100vw, 52vw"
-                format="webp"
-                quality={84}
-              />
-            )}
-            <div class="project-index-card__media-shade" aria-hidden="true"></div>
-            <span class="project-index-card__code" aria-hidden="true">{project.data.shortTitle}</span>
-          </div>
-
-          <div class="project-index-card__copy" data-scroll-reveal>
-            <ProjectIdentityMotif projectId={project.id} />
-            <div class="project-index-card__heading">
-              <span class="project-index-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-              <span class="project-index-card__status" data-i18n="project-page.status.active">{messages.ja['project-page.status.active']}</span>
+        <a
+          class:list={[
+            'project-index-card',
+            `project-index-card--${project.id}`,
+            { 'project-index-card--reverse': index % 2 === 1 },
+          ]}
+          href={`/projects/${project.id}/`}
+          aria-labelledby={`project-card-title-${project.id}`}
+        >
+            <HeroBorderTrace />
+            <div class="project-index-card__media">
+              {project.data.heroImage && project.data.heroAlt && (
+                <Image
+                  src={project.data.heroImage}
+                  alt={project.data.heroAlt}
+                  widths={[640, 960, 1280]}
+                  sizes="(max-width: 46rem) 100vw, 52vw"
+                  format="webp"
+                  quality={84}
+                />
+              )}
+              <div class="project-index-card__media-shade" aria-hidden="true"></div>
+              <span class="project-index-card__code" aria-hidden="true">{project.data.shortTitle}</span>
             </div>
-            <LocalizedText as="h2" value={project.data.title} />
-            <LocalizedText as="p" class="project-index-card__tagline" value={project.data.tagline} />
-            <LocalizedText as="p" class="project-index-card__overview" value={project.data.overview} />
 
-            <dl class="project-index-card__meta">
-              <div>
-                <dt data-i18n="project-page.role">{messages.ja['project-page.role']}</dt>
-                <dd>{project.data.role}</dd>
+            <div class="project-index-card__copy" data-scroll-reveal>
+              <ProjectIdentityMotif projectId={project.id} />
+              <div class="project-index-card__heading">
+                <span class="project-index-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+                <span class="project-index-card__status" data-i18n="project-page.status.active">{messages.ja['project-page.status.active']}</span>
               </div>
-              <div>
-                <dt data-i18n="project-page.tools">{messages.ja['project-page.tools']}</dt>
-                <dd>{project.data.technologies.join(' · ')}</dd>
-              </div>
-            </dl>
+              <LocalizedText as="h2" id={`project-card-title-${project.id}`} value={project.data.title} />
+              <LocalizedText as="p" class="project-index-card__tagline" value={project.data.tagline} />
+              <LocalizedText as="p" class="project-index-card__overview" value={project.data.overview} />
 
-            <a class="project-index-card__link" href={`/projects/${project.id}/`}>
-              <span data-i18n="project.open">{messages.ja['project.open']}</span>
-              <span aria-hidden="true">→</span>
-            </a>
-          </div>
-        </article>
+              <dl class="project-index-card__meta">
+                <div>
+                  <dt data-i18n="project-page.role">{messages.ja['project-page.role']}</dt>
+                  <dd>{project.data.role}</dd>
+                </div>
+                <div>
+                  <dt data-i18n="project-page.tools">{messages.ja['project-page.tools']}</dt>
+                  <dd>{project.data.technologies.join(' · ')}</dd>
+                </div>
+              </dl>
+            </div>
+        </a>
       ))}
     </section>
   </main>

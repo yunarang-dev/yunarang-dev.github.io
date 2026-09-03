@@ -128,46 +128,40 @@ const jsonLd = JSON.stringify({
         type MessageKey,
         type SiteLocale,
       } from '../i18n/site';
+      import { parseLocalizedMarkup } from '../i18n/markup';
 
       const root = document.documentElement;
-      const rubyPattern = /<ruby>([^<>]+)<rt>([^<>]+)<\/rt><\/ruby>/g;
 
       /**
        * Localized site copy is kept as plain strings, but Japanese project copy
-       * can include the standard Markdown-compatible ruby form:
-       * <ruby>漢字<rt>かんじ</rt></ruby>.
+       * can include the site's constrained ruby and line-break notation.
        *
-       * Build only that constrained element structure instead of assigning
-       * arbitrary string content with innerHTML.
+       * Build only those constrained element structures instead of assigning
+       * arbitrary authored string content with innerHTML.
        */
       const setLocalizedText = (element: HTMLElement, value: string) => {
-        rubyPattern.lastIndex = 0;
-        let matched = false;
-        let textStart = 0;
-        let match: RegExpExecArray | null;
         const fragment = document.createDocumentFragment();
 
-        while ((match = rubyPattern.exec(value)) !== null) {
-          matched = true;
-          fragment.append(value.slice(textStart, match.index));
+        parseLocalizedMarkup(value).forEach((token) => {
+          if (token.type === 'text') {
+            fragment.append(token.value);
+            return;
+          }
+
+          if (token.type === 'break') {
+            fragment.append(document.createElement('br'));
+            return;
+          }
 
           const ruby = document.createElement('ruby');
-          ruby.append(match[1]);
+          ruby.append(token.base);
 
           const reading = document.createElement('rt');
-          reading.textContent = match[2];
+          reading.textContent = token.reading;
           ruby.append(reading);
           fragment.append(ruby);
+        });
 
-          textStart = match.index + match[0].length;
-        }
-
-        if (!matched) {
-          element.textContent = value;
-          return;
-        }
-
-        fragment.append(value.slice(textStart));
         element.replaceChildren(fragment);
       };
 

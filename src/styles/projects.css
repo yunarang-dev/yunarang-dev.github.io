@@ -70,6 +70,22 @@
   border: 1px solid var(--color-line);
   background: rgb(5 16 29 / 44%);
   box-shadow: inset 0 1px 0 rgb(255 255 255 / 5%), var(--shadow-soft);
+  color: inherit;
+  cursor: pointer;
+  text-decoration: none;
+  transition: border-color var(--transition-base), background-color var(--transition-base), box-shadow var(--transition-base);
+}
+
+.project-index-card:hover,
+.project-index-card:focus-visible {
+  border-color: color-mix(in srgb, var(--project-accent) 48%, var(--color-line));
+  background-color: rgb(9 24 41 / 56%);
+  box-shadow: inset 0 1px 0 rgb(255 255 255 / 8%), 0 1.5rem 4rem rgb(0 0 0 / 20%);
+}
+
+.project-index-card:focus-visible {
+  outline: 2px solid var(--project-accent);
+  outline-offset: 0.3rem;
 }
 
 .project-index-card--astral-days,
@@ -124,7 +140,7 @@
   transition: transform 700ms ease, opacity var(--transition-base);
 }
 
-.project-index-card:hover .project-index-card__media img {
+.project-index-card:is(:hover, :focus-visible) .project-index-card__media img {
   opacity: 0.92;
   transform: scale(1.025);
 }
@@ -299,23 +315,6 @@
   line-height: 1.6;
 }
 
-.project-index-card__link {
-  display: inline-flex;
-  gap: var(--space-3);
-  margin-top: var(--space-6);
-  color: var(--color-dawn-soft);
-  font-size: 0.92rem;
-  text-decoration: underline;
-  text-decoration-color: rgb(246 177 125 / 36%);
-  text-underline-offset: 0.32em;
-  transition: color var(--transition-fast), text-decoration-color var(--transition-fast);
-}
-
-.project-index-card__link:hover {
-  color: var(--color-text);
-  text-decoration-color: currentColor;
-}
-
 .project-page {
   --project-accent: var(--color-moon);
   --project-accent-soft: rgb(130 174 255 / 12%);
@@ -331,6 +330,24 @@
   overflow: hidden;
   color: var(--color-text);
   background: var(--color-canvas);
+}
+
+.project-page__hero::after {
+  position: absolute;
+  z-index: 0;
+  right: 0;
+  bottom: -1px;
+  left: 0;
+  height: clamp(6rem, 11vw, 10rem);
+  background: linear-gradient(
+    180deg,
+    transparent 0%,
+    rgb(3 10 19 / 18%) 24%,
+    rgb(3 10 19 / 72%) 67%,
+    var(--color-canvas-deep) 100%
+  );
+  content: '';
+  pointer-events: none;
 }
 
 .project-page__hero > .project-page__hero-motif {
@@ -370,6 +387,22 @@
   object-fit: cover;
   opacity: 0.62;
   filter: saturate(0.78) contrast(1.06);
+  -webkit-mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 68%,
+    rgb(0 0 0 / 88%) 78%,
+    rgb(0 0 0 / 34%) 93%,
+    transparent 100%
+  );
+  mask-image: linear-gradient(
+    180deg,
+    #000 0%,
+    #000 68%,
+    rgb(0 0 0 / 88%) 78%,
+    rgb(0 0 0 / 34%) 93%,
+    transparent 100%
+  );
 }
 
 .project-page__hero-shade {
@@ -431,11 +464,37 @@
 }
 
 .project-page__brief {
+  position: relative;
+  isolation: isolate;
   padding-block: clamp(5rem, 10vw, 9rem);
 }
 
+.project-page__brief::before {
+  position: absolute;
+  z-index: 0;
+  top: -5px;
+  left: 50%;
+  width: 100vw;
+  height: clamp(10rem, 23vw, 18rem);
+  background: linear-gradient(
+    180deg,
+    var(--color-canvas-deep) 0%,
+    rgb(3 10 19 / 78%) 38%,
+    rgb(3 10 19 / 26%) 76%,
+    transparent 100%
+  );
+  content: '';
+  pointer-events: none;
+  transform: translateX(-50%);
+}
+
+.project-page__brief > * {
+  position: relative;
+  z-index: 1;
+}
+
 .project-page__brief h2 {
-  max-width: 26ch;
+  max-width: 32.666ch;
   margin-top: var(--space-5);
   color: var(--color-text);
   font-size: var(--step-2);
@@ -656,6 +715,22 @@
 
   .project-page__hero-image {
     opacity: 0.48;
+    -webkit-mask-image: linear-gradient(
+      180deg,
+      #000 0%,
+      #000 60%,
+      rgb(0 0 0 / 84%) 72%,
+      rgb(0 0 0 / 30%) 91%,
+      transparent 100%
+    );
+    mask-image: linear-gradient(
+      180deg,
+      #000 0%,
+      #000 60%,
+      rgb(0 0 0 / 84%) 72%,
+      rgb(0 0 0 / 30%) 91%,
+      transparent 100%
+    );
   }
 
   .project-page__hero-shade {
