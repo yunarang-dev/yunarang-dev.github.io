@@ -556,16 +556,6 @@ const githubActivity = await fetchGitHubActivity();
     const direction = Math.sign(event.deltaY);
     if (canScrollWithin(event.target, direction)) return;
 
-    // Trackpads emit continuous pixel-based momentum events. Preserve that
-    // stream without the section-paging lock, while applying a small gain so
-    // tall Home sections do not feel resistant under proximity snapping.
-    if (event.deltaMode === WheelEvent.DOM_DELTA_PIXEL) {
-      event.preventDefault();
-      const scrollingElement = document.scrollingElement;
-      if (scrollingElement) scrollingElement.scrollTop += event.deltaY * 1.12;
-      return;
-    }
-
     const targetTop = getSectionDestination(direction);
 
     // At the first and final boundaries, retain native scrolling so the footer
