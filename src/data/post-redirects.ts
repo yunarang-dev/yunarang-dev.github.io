@@ -34,4 +34,16 @@ export const postRedirects: PostRedirect[] = [
     date: '2026-03-06 16:39:49 +0900',
     redirectTo: '/projects/astral-days/',
   },
+  {
+  slug: 'AD-01',
+  title: '[AD] 01. 普通だったある日、私に夢が生まれた。（切っ掛け編）',
+  date: '2026-01-25T14:20:45+09:00',
+  redirectTo: '/posts/AD-001/',
+  },
+  {
+  slug: 'AD-02',
+  title: '[AD] 02. これまでの歩み、そしてこれから。（ストーリー編）',
+  date: '2026-06-29T12:31:45+09:00',
+  redirectTo: '/posts/AD-002/',
+  },
 ];
