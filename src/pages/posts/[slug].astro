@@ -1,7 +1,6 @@
 ---
 import { getCollection, render, type CollectionEntry } from 'astro:content';
-import { postRedirects, type PostRedirect } from '../../data/post-redirects';
-import { formatMessagePair, messages, pageCopy } from '../../i18n/site';
+import { formatMessagePair, messages, pageCopy, postRedirects, type PostRedirect } from '../../i18n/site';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import PlaceholderPage from '../../components/global/PlaceholderPage.astro';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -194,36 +193,163 @@ const redirectPageTitle = route ? formatMessagePair('site.title-template', { tit
       const root = document.documentElement;
       const tocLists = Array.from(document.querySelectorAll<HTMLOListElement>('[data-post-toc-list]'));
       const tocRegions = Array.from(document.querySelectorAll<HTMLElement>('[data-post-toc]'));
+      const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+      let visibleHeadings: HTMLElement[] = [];
+
+      const sectionIdForHeading = (headingId: string) => {
+        let sectionId = '';
+
+        for (const heading of visibleHeadings) {
+          if (heading.tagName === 'H2') sectionId = heading.id;
+          if (heading.id === headingId) return sectionId;
+        }
+
+        return sectionId;
+      };
+
+      const setSublistExpanded = (sublist: HTMLOListElement, isExpanded: boolean) => {
+        const wasExpanded = sublist.dataset.tocExpanded === 'true';
+        if (wasExpanded === isExpanded) return;
+
+        const startHeight = sublist.hidden ? 0 : sublist.getBoundingClientRect().height;
+        const startOpacity = sublist.hidden ? 0 : Number.parseFloat(getComputedStyle(sublist).opacity);
+        sublist.dataset.tocExpanded = String(isExpanded);
+        sublist.getAnimations().forEach((animation) => animation.cancel());
+
+        if (reducedMotion.matches) {
+          sublist.hidden = !isExpanded;
+          return;
+        }
+
+        if (isExpanded) {
+          sublist.hidden = false;
+          const targetHeight = sublist.scrollHeight;
+          sublist.animate(
+            [
+              { height: `${startHeight}px`, opacity: startOpacity },
+              { height: `${targetHeight}px`, opacity: 1 },
+            ],
+            { duration: 300, easing: 'cubic-bezier(0.22, 1, 0.36, 1)' },
+          );
+          return;
+        }
+
+        const animation = sublist.animate(
+          [
+            { height: `${startHeight}px`, opacity: startOpacity },
+            { height: '0px', opacity: 0 },
+          ],
+          { duration: 240, easing: 'cubic-bezier(0.4, 0, 0.6, 1)' },
+        );
+
+        animation.finished
+          .then(() => {
+            if (sublist.dataset.tocExpanded === 'false') sublist.hidden = true;
+          })
+          .catch(() => undefined);
+      };
+
+      const setActiveTableOfContents = (headingId: string) => {
+        const activeSectionId = sectionIdForHeading(headingId);
+
+        tocLists.forEach((list) => {
+          list.querySelectorAll<HTMLAnchorElement>('a[data-toc-target]').forEach((link) => {
+            const isActive = link.dataset.tocTarget === headingId;
+            link.className = isActive ? 'is-active' : '';
+            if (isActive) link.setAttribute('aria-current', 'location');
+            else link.removeAttribute('aria-current');
+          });
+
+          list.querySelectorAll<HTMLOListElement>('[data-toc-sublist]').forEach((sublist) => {
+            const isExpanded = sublist.dataset.tocSection === activeSectionId;
+            setSublistExpanded(sublist, isExpanded);
+
+            const sectionLink = Array.from(list.querySelectorAll<HTMLAnchorElement>('a[data-toc-target]')).find(
+              (link) => link.dataset.tocTarget === sublist.dataset.tocSection,
+            );
+            sectionLink?.setAttribute('aria-expanded', String(isExpanded));
+          });
+        });
+      };
+
+      const updateActiveTableOfContents = () => {
+        if (visibleHeadings.length === 0) return;
+
+        const activationLine = Math.min(Math.max(window.innerHeight * 0.3, 140), 260);
+        const activeHeading = visibleHeadings.reduce(
+          (current, heading) => heading.getBoundingClientRect().top <= activationLine ? heading : current,
+          visibleHeadings[0],
+        );
+
+        setActiveTableOfContents(activeHeading.id);
+      };
 
       const updateTableOfContents = () => {
-        const headings = Array.from(document.querySelectorAll<HTMLElement>('.post-body :is(h2, h3)')).filter((heading) => {
+        visibleHeadings = Array.from(document.querySelectorAll<HTMLElement>('.post-body :is(h2, h3)')).filter((heading) => {
           const localeContent = heading.closest<HTMLElement>('[data-content-locale]');
           return !localeContent || localeContent.dataset.contentLocale === root.dataset.locale;
         });
 
         tocRegions.forEach((region) => {
-          region.hidden = headings.length === 0;
+          region.hidden = visibleHeadings.length === 0;
         });
 
         tocLists.forEach((list) => {
           list.replaceChildren();
+          let currentSectionItem: HTMLLIElement | undefined;
+          let currentSublist: HTMLOListElement | undefined;
 
-          headings.forEach((heading) => {
+          visibleHeadings.forEach((heading) => {
             if (!heading.id) return;
 
             const item = document.createElement('li');
-            item.className = heading.tagName === 'H3' ? 'is-subheading' : '';
             const link = document.createElement('a');
             link.href = `#${heading.id}`;
+            link.dataset.tocTarget = heading.id;
             link.textContent = heading.textContent?.trim() ?? '';
+            link.addEventListener('click', () => {
+              setActiveTableOfContents(heading.id);
+            });
             item.append(link);
-            list.append(item);
+
+            if (heading.tagName === 'H2') {
+              item.className = 'is-section';
+              list.append(item);
+              currentSectionItem = item;
+              currentSublist = undefined;
+              return;
+            }
+
+            item.className = 'is-subheading';
+
+            if (!currentSectionItem) {
+              list.append(item);
+              return;
+            }
+
+            if (!currentSublist) {
+              currentSublist = document.createElement('ol');
+              currentSublist.className = 'toc-sublist';
+              currentSublist.dataset.tocSublist = '';
+              currentSublist.dataset.tocSection = currentSectionItem.querySelector<HTMLAnchorElement>('a')?.dataset.tocTarget ?? '';
+              currentSublist.dataset.tocExpanded = 'false';
+              currentSublist.hidden = true;
+              currentSectionItem.querySelector<HTMLAnchorElement>('a')?.setAttribute('aria-expanded', 'false');
+              currentSectionItem.append(currentSublist);
+            }
+
+            currentSublist.append(item);
           });
         });
+
+        updateActiveTableOfContents();
       };
 
       updateTableOfContents();
       document.addEventListener('site:localechange', updateTableOfContents);
+      window.addEventListener('scroll', updateActiveTableOfContents, { passive: true });
+      window.addEventListener('resize', updateActiveTableOfContents, { passive: true });
+      window.addEventListener('hashchange', updateActiveTableOfContents);
     </script>
   </BaseLayout>
 ) : (

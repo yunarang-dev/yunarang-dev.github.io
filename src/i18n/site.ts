@@ -53,6 +53,57 @@ export type SiteLocale = (typeof supportedLocales)[number];
 export const defaultLocale: SiteLocale = "ja";
 export const localeStorageKey = "yunarang:locale";
 
+export interface PostRedirect {
+  slug: string;
+  title: string;
+  date: string;
+  redirectTo: string;
+}
+
+/**
+ * 기존에 공개되었던 게시글 URL의 이동 대상은 여기에서 관리합니다.
+ * `slug`는 이전 주소의 `/posts/{slug}/`, `redirectTo`는 새 주소입니다.
+ * 현재 Content Collection에 같은 slug의 글이 있으면 실제 글이 우선합니다.
+ */
+export const postRedirects: PostRedirect[] = [
+  {
+    slug: "AD-01",
+    title: "[AD] 001. 普通だったある日、私に夢が生まれた。（切っ掛け編）",
+    date: "2026-01-25T14:20:45+09:00",
+    redirectTo: "/posts/AD-001/",
+  },
+  {
+    slug: "AD-02",
+    title: "[AD] 002. これまでの歩み、そしてこれから。（ストーリー編）",
+    date: "2026-06-29T12:31:45+09:00",
+    redirectTo: "/posts/AD-002/",
+  },
+  {
+    slug: "AD-00",
+    title: "[AD] 00. The Project 『アスデイ：Astral Days!』",
+    date: "2026-01-14 00:55:49 +0900",
+    redirectTo: "/projects/astral-days/",
+  },
+  {
+    slug: "VX-00",
+    title: "[VX] 00. 『Project VX』　起動！",
+    date: "2026-08-18 23:11:08 +0900",
+    redirectTo: "/projects/project-vx/",
+  },
+  {
+    slug: "KR-01",
+    title: "[AD-01] 01. 평범했던 어느 날, 내게 꿈이 생겨났다.",
+    date: "2026-02-06 00:10:26 +0900",
+    redirectTo: "/posts/AD-001/",
+  },
+  {
+    slug: "KR-02",
+    title: "[AD-00] 02. The Project 『아스데이: Astral Days!』",
+    date: "2026-03-06 16:39:49 +0900",
+    redirectTo: "/projects/astral-days/",
+  },
+];
+
 export const messages = {
   ja: {
     "site.wordmark": "YUNARANG",

@@ -85,9 +85,9 @@
 
 .post-layout {
   display: grid;
-  grid-template-columns: minmax(0, 47rem) minmax(10rem, 13rem);
-  gap: clamp(2rem, 6vw, 6rem);
-  justify-content: center;
+  grid-template-columns: 47rem 20rem;
+  gap: clamp(2rem, 5vw, 5rem);
+  justify-content: start;
   margin-top: clamp(3.5rem, 8vw, 6.5rem);
 }
 
@@ -142,6 +142,12 @@
   list-style: none;
 }
 
+.post-toc ol.toc-sublist,
+.post-toc-mobile ol.toc-sublist {
+  overflow: hidden;
+  margin-top: var(--space-2);
+}
+
 .post-toc li + li,
 .post-toc-mobile li + li {
   margin-top: var(--space-2);
@@ -158,6 +164,7 @@
   font-size: 0.76rem;
   line-height: 1.48;
   text-decoration: none;
+  transition: color var(--transition-fast), text-shadow var(--transition-fast);
 }
 
 .post-toc a:hover,
@@ -165,6 +172,13 @@
   color: var(--color-text);
   text-decoration: underline;
   text-underline-offset: 0.2em;
+}
+
+.post-toc a.is-active,
+.post-toc-mobile a.is-active {
+  color: var(--color-moon);
+  font-weight: 500;
+  text-shadow: 0 0 0.85rem rgb(130 174 255 / 38%);
 }
 
 .post-toc-mobile {
@@ -311,7 +325,7 @@
   color: var(--color-dawn-soft);
 }
 
-@media (max-width: 64rem) {
+@media (max-width: 74rem) {
   .post-layout {
     grid-template-columns: minmax(0, 47rem);
   }
