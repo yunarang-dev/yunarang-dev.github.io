@@ -474,6 +474,15 @@ const { projects } = Astro.props;
   }
 
   @media (max-width: 48rem) {
+    .main-projects::before,
+    .glass-pane::after {
+      display: none;
+    }
+
+    .ambient-line {
+      display: none;
+    }
+
     .main-projects {
       min-height: auto;
       padding-block: var(--space-8);

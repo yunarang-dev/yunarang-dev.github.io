@@ -883,6 +883,20 @@ html.home-scroll footer {
     scroll-snap-type: y proximity;
   }
 
+  .home-refraction-layer,
+  .deep-sea-light-columns,
+  .deep-sea-current,
+  .deep-sea-meteor {
+    display: none;
+  }
+
+  .records-section::before,
+  .github-section::before,
+  .contact-section::before,
+  .glass-pane::after {
+    display: none;
+  }
+
   html.home-scroll .snap-section {
     scroll-snap-stop: normal;
   }
