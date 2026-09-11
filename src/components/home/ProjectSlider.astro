@@ -51,6 +51,25 @@ const projectMotifs = {
       [84, 67, 1.5, 'cool'],
     ],
   },
+  'lumi': {
+    main: '5,62 20,41 38,52 55,27 73,42 94,18',
+    branch: '20,41 32,18 55,27 68,71 88,82',
+    signal: '5,62 26,78 48,69 68,71 91,57',
+    points: [
+      [5, 62, 1.5, 'cool'],
+      [20, 41, 2.1, 'cool'],
+      [38, 52, 1.55, 'warm'],
+      [55, 27, 2.5, 'cool'],
+      [73, 42, 1.65, 'cool'],
+      [94, 18, 1.5, 'cool'],
+      [32, 18, 1.3, 'cool'],
+      [68, 71, 1.85, 'warm'],
+      [88, 82, 1.25, 'cool'],
+      [26, 78, 1.35, 'cool'],
+      [48, 69, 1.3, 'cool'],
+      [91, 57, 1.35, 'cool'],
+    ],
+  },
 } as const;
 ---
 
@@ -81,7 +100,7 @@ const projectMotifs = {
           alt={project.imageAlt}
           widths={[640, 960, 1280, 1600, 1920]}
           sizes="100vw"
-          format="webp"
+          format={project.image.format === 'svg' ? 'svg' : 'webp'}
           quality={86}
           loading={index === 0 ? 'eager' : 'lazy'}
           fetchpriority={index === 0 ? 'high' : 'auto'}
@@ -737,6 +756,16 @@ const projectMotifs = {
   .oled-constellation--project-vx .oled-constellation-signal {
     stroke: rgb(130 174 255 / 60%);
     stroke-dasharray: 1 1.8;
+  }
+
+  .oled-constellation--lumi .oled-constellation-main {
+    stroke: rgb(172 224 255 / 76%);
+  }
+
+  .oled-constellation--lumi .oled-constellation-branch,
+  .oled-constellation--lumi .oled-constellation-signal {
+    stroke: rgb(126 207 255 / 58%);
+    stroke-dasharray: 1.25 1.65;
   }
 
   .oled-constellation-grid {

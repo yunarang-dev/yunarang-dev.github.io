@@ -81,7 +81,7 @@ const projectPageTitleKo = formatMessagePair('site.title-template', { title: pro
           alt={projectHeroAlt}
           widths={[960, 1440, 1920]}
           sizes="100vw"
-          format="webp"
+          format={projectHeroImage.format === 'svg' ? 'svg' : 'webp'}
           quality={86}
           loading="eager"
         />
@@ -117,6 +117,12 @@ const projectPageTitleKo = formatMessagePair('site.title-template', { title: pro
         {project.data.links?.board && (
           <ArrowLink href={project.data.links.board} tone="warm" external>
             <span data-i18n="project-page.board.open">{messages.ja['project-page.board.open']}</span>
+          </ArrowLink>
+        )}
+
+        {project.data.links?.github && (
+          <ArrowLink href={project.data.links.github} tone="cool" external>
+            <span data-i18n="project-page.github.open">{messages.ja['project-page.github.open']}</span>
           </ArrowLink>
         )}
       </div>

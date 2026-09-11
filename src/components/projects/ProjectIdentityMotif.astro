@@ -6,6 +6,7 @@ interface Props {
 
 const { projectId, class: className } = Astro.props;
 const isAstralDays = projectId === 'astral-days';
+const isLumi = projectId === 'lumi';
 ---
 
 <div
@@ -22,6 +23,14 @@ const isAstralDays = projectId === 'astral-days';
       <circle cx="198" cy="167" r="4" />
       <circle cx="260" cy="85" r="3" />
       <circle cx="334" cy="125" r="2.5" />
+    </svg>
+  ) : isLumi ? (
+    <svg viewBox="0 0 420 300" role="presentation">
+      <path class="project-identity-motif__orbit" d="M-18 235C78 118 162 79 257 94c65 10 116 49 184 130" />
+      <path class="project-identity-motif__orbit project-identity-motif__orbit--soft" d="M18 282C98 180 174 144 262 153c65 7 119 40 171 99" />
+      <path class="project-identity-motif__line" d="m48 215 72-80 78 37 70-104 65 73 64-44" />
+      <path class="project-identity-motif__line project-identity-motif__line--signal" d="m120 135 30-73 48 110 72 54 63-85" />
+      <circle cx="48" cy="215" r="4" /><circle cx="120" cy="135" r="3" /><circle cx="198" cy="172" r="5" /><circle cx="268" cy="68" r="3.5" /><circle cx="333" cy="141" r="4" /><circle cx="397" cy="97" r="3" />
     </svg>
   ) : (
     <svg viewBox="0 0 420 300" role="presentation">

@@ -279,6 +279,25 @@ archiveAreas:
           ko: "Production"
         - ja: "📅 Planned"
           ko: "📅 Planned"
+  - code: "LU"
+    title:
+      ja: "LUMI"
+      ko: "LUMI"
+    motto:
+      ja: "「Long-term Unified Machine Intelligence」"
+      ko: "「Long-term Unified Machine Intelligence」"
+    description:
+      ja: "モデル、ランタイム、プロジェクト、セッションが変わっても、一貫したアイデンティティ、作業方針、実行ポリシー、開発ワークフローを保つための、移植可能なモジュール式AIエージェント・ハーネスです。対話・実装・独立レビューを明確に分離し、安全なプロジェクトルーティングと長期的な開発の継続性を目指します。"
+      ko: "모델, 런타임, 프로젝트, 세션이 달라져도 일관된 정체성, 작업 방식, 실행 정책, 개발 워크플로를 유지하기 위한 이식 가능한 모듈식 AI 에이전트 하네스입니다. 대화·구현·독립 리뷰를 명확히 분리하고, 안전한 프로젝트 라우팅과 장기 개발의 연속성을 지향합니다."
+    links:
+      - label:
+          ja: "プロジェクトを見る"
+          ko: "프로젝트 보기"
+        href: "/projects/lumi/"
+      - label:
+          ja: "GitHub Repository"
+          ko: "GitHub Repository"
+        href: "https://github.com/yunarang-dev/LUMI"
   - code: "CT"
     title:
       ja: "コンテスト・成果物"

@@ -12,8 +12,9 @@ if (!aboutEntry) {
 }
 
 const about = aboutEntry.data;
-const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => area.code === 'AD' || area.code === 'VX');
-const archiveCards = about.archiveAreas.filter((area: { code: string }) => area.code !== 'AD' && area.code !== 'VX');
+const featuredProjectCodes = new Set(['AD', 'VX', 'LU']);
+const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => featuredProjectCodes.has(area.code));
+const archiveCards = about.archiveAreas.filter((area: { code: string }) => !featuredProjectCodes.has(area.code));
 const archiveAreaHref = (area: { code: string; links?: { href: string }[] }) =>
   area.links?.[0]?.href ?? `/blog/?series=${encodeURIComponent(area.code)}`;
 const site = Astro.site ?? Astro.url;

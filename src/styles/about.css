@@ -284,6 +284,17 @@
   --archive-feature-accent-soft: rgb(130 174 255 / 14%);
 }
 
+.archive-feature--lu {
+  --archive-feature-accent: rgb(137 220 255);
+  --archive-feature-accent-soft: rgb(86 196 255 / 14%);
+}
+
+.archive-feature--lu .archive-feature-project {
+  background:
+    linear-gradient(150deg, var(--archive-feature-accent-soft), transparent 60%),
+    rgb(6 20 35 / 72%);
+}
+
 .archive-feature__link,
 .archive-card__link {
   position: absolute;

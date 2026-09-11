@@ -7,7 +7,7 @@ interface ProjectHeroImage {
 }
 
 const projectHeroFiles = import.meta.glob<ImageMetadata>(
-  "../assets/projects/*.{png,jpg,jpeg,webp,avif}",
+  "../assets/projects/*.{png,jpg,jpeg,webp,avif,svg}",
   { eager: true, import: "default" },
 );
 
@@ -43,6 +43,10 @@ export const projectHeroImages = {
   "project-vx": projectHero(
     "project-vx-workflow.png",
     "開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ",
+  ),
+  "lumi": projectHero(
+    "lumi-signal.svg",
+    "暗い空間に複数の知性と開発経路を結ぶ青白い光のネットワーク",
   ),
 } satisfies Record<string, ProjectHeroImage>;
 
@@ -200,6 +204,7 @@ export const messages = {
     "project-page.records.copy": "このプロジェクトに紐づく開発記録を、新しい順に表示しています。",
     "project-page.records.empty": "開発記録は準備中です。",
     "project-page.board.open": "GitHub Projects を開く",
+    "project-page.github.open": "GitHub Repository",
     "project-page.wiki.open": "PROJECT WIKI",
     "common.read-title": "{title} を読む",
     "home.slider.label": "メインプロジェクト",
@@ -346,6 +351,7 @@ export const messages = {
     "project-page.records.copy": "이 프로젝트와 연결된 개발 기록을 최신순으로 표시합니다.",
     "project-page.records.empty": "개발 기록을 준비하고 있습니다.",
     "project-page.board.open": "GitHub Projects 열기",
+    "project-page.github.open": "GitHub Repository",
     "project-page.wiki.open": "PROJECT WIKI",
     "common.read-title": "{title} 읽기",
     "home.slider.label": "주요 프로젝트",

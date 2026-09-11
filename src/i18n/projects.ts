@@ -33,6 +33,16 @@ export const projectCopy: Record<string, LocalizedProjectCopy> = {
       summary: 'Virtual Developer Transformation―― 그 가능성을 시험하다.',
     },
   },
+  'lumi': {
+    ja: {
+      title: 'LUMI',
+      summary: 'モデルやランタイムを越えて、ひとつの知性と開発の流れをつなぐ。',
+    },
+    ko: {
+      title: 'LUMI',
+      summary: '모델과 런타임을 넘어, 하나의 지능과 개발 흐름을 이어가다.',
+    },
+  },
 };
 
 export function getProjectCopy(projectId: string): LocalizedProjectCopy {

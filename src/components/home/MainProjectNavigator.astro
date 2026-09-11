@@ -101,7 +101,7 @@ const { projects } = Astro.props;
               alt={project.imageAlt}
               widths={[640, 960, 1280]}
               sizes="(max-width: 48rem) 90vw, 52vw"
-              format="webp"
+              format={project.image.format === 'svg' ? 'svg' : 'webp'}
               quality={84}
               loading="eager"
             />
@@ -340,9 +340,11 @@ const { projects } = Astro.props;
   }
 
   .project-meta dd {
+    min-width: 0;
     color: var(--color-text-soft);
     font-family: var(--font-mono);
     font-size: var(--step--1);
+    overflow-wrap: anywhere;
   }
 
   .project-media {

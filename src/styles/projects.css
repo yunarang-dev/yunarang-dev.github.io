@@ -100,6 +100,12 @@
   --project-accent-soft: rgb(130 174 255 / 12%);
 }
 
+.project-index-card--lumi,
+.project-page--lumi {
+  --project-accent: rgb(137 220 255);
+  --project-accent-soft: rgb(86 196 255 / 13%);
+}
+
 .project-index-card > :not(.hero-border-trace) {
   position: relative;
   z-index: 3;
@@ -247,6 +253,13 @@
     linear-gradient(0deg, rgb(3 10 19 / 50%), transparent 42%);
 }
 
+.project-index-card--lumi .project-index-card__media-shade {
+  background:
+    radial-gradient(circle at 55% 43%, rgb(116 220 255 / 17%), transparent 35%),
+    linear-gradient(120deg, rgb(3 10 19 / 51%), transparent 58%),
+    linear-gradient(0deg, rgb(3 10 19 / 56%), transparent 44%);
+}
+
 .project-index-card__heading {
   display: flex;
   align-items: center;
@@ -309,10 +322,12 @@
 
 .project-index-card__meta dd,
 .project-page__meta dd {
+  min-width: 0;
   margin: 0;
   color: var(--color-text-soft);
   font-size: var(--step--1);
   line-height: 1.6;
+  overflow-wrap: anywhere;
 }
 
 .project-page {
@@ -376,6 +391,13 @@
     linear-gradient(135deg, transparent 58%, rgb(105 164 255 / 10%)),
     linear-gradient(90deg, rgb(3 10 19 / 88%) 0%, rgb(3 10 19 / 68%) 46%, rgb(3 10 19 / 22%) 100%),
     linear-gradient(0deg, rgb(3 10 19 / 85%) 0%, transparent 48%);
+}
+
+.project-page--lumi .project-page__hero-shade {
+  background:
+    radial-gradient(circle at 63% 42%, rgb(113 218 255 / 13%), transparent 34%),
+    linear-gradient(90deg, rgb(3 10 19 / 90%) 0%, rgb(3 10 19 / 65%) 47%, rgb(3 10 19 / 18%) 100%),
+    linear-gradient(0deg, rgb(3 10 19 / 87%) 0%, transparent 50%);
 }
 
 .project-page__hero-image {
@@ -455,6 +477,7 @@
 }
 
 .project-page__meta > div {
+  min-width: 0;
   padding-top: var(--space-3);
   border-top: 1px solid rgb(182 206 255 / 34%);
 }

@@ -67,7 +67,7 @@ const projectsSchema = {
                   alt={project.data.heroAlt}
                   widths={[640, 960, 1280]}
                   sizes="(max-width: 46rem) 100vw, 52vw"
-                  format="webp"
+                  format={project.data.heroImage.format === 'svg' ? 'svg' : 'webp'}
                   quality={84}
                 />
               )}
