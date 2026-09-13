@@ -26,11 +26,11 @@ export const projectCopy: Record<string, LocalizedProjectCopy> = {
   'project-vx': {
     ja: {
       title: 'Project VX',
-      summary: 'Virtual Developer Transformation――その可能性を試す。',
+      summary: '人の魂を込める。 AIの技術を加える。',
     },
     ko: {
       title: 'Project VX',
-      summary: 'Virtual Developer Transformation―― 그 가능성을 시험하다.',
+      summary: '사람의 혼을 담다. AI의 기술을 더하다.',
     },
   },
   'lumi': {
