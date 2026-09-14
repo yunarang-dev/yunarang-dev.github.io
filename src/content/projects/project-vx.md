@@ -4,17 +4,17 @@ title:
   ja: "Project VX"
   ko: "Project VX"
 tagline:
-  ja: "Virtual Developer Transformation――その可能性を試す。"
-  ko: "Virtual Developer Transformation――그 가능성을 시험하다."
+  ja: "人の魂を込める。 AIの技術を加える。"
+  ko: "사람의 혼을 담다. AI의 기술을 더하다."
 overview:
-  ja: "『Project VX』は、AIを活用することで、人のアイデアをどこまで実現できるのかを試す実験プロジェクトです。バーチャル開発者（AI Developer）を構築し、テストし、実際の開発へと活用していくその過程を記録しています。AIを単なる補助ツールとして使うのではなく、人間がアイデアを定義し、AIをディレクションすることで、どこまで開発を進められるのかを検証します。"
-  ko: "『Project VX』는 AI를 활용해 사람의 아이디어를 어디까지 실현할 수 있는지 시험하는 실험 프로젝트입니다. 버추얼 개발자(AI Developer)를 구축하고 검증하며 실제 개발에 활용해 가는 과정을 기록합니다. AI를 단순 보조 도구로 쓰는 대신, 사람이 아이디어를 정의하고 AI를 디렉션할 때 개발을 어디까지 진행할 수 있는지 검증합니다."
+  ja: "『Project VX』は、AIを活用して人のアイデアをどこまで具現化できるかを試みる実験的プロジェクトです。人がアイデアを定義し、AIをディレクションすることで、開発をどこまで進められるかを検証します。"
+  ko: "『Project VX』는 AI를 활용해 사람의 아이디어를 어디까지 실현할 수 있는지 시험하는 실험 프로젝트입니다. 사람이 아이디어를 정의하고 AI를 디렉션할 때 개발을 어디까지 진행할 수 있는지 검증합니다."
 status: "active"
 role: "AI Workflow · Yuri · Loop Story · Reasoning · Death Game"
 technologies:
   - Unity
   - C#
-  - AI Agents(GPT 5.6 Luna, Sol, Codex)
+  - AI Agents(GPT 5.6 Luna, Sol, Codex, etc.)
 focus:
   - title:
       ja: "Virtual Developer"
