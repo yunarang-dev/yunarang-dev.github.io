@@ -5,10 +5,10 @@ title:
   ko: "LUMI"
 tagline:
   ja: "モデルやランタイムを越えて、ひとつの知性と開発の流れをつなぐ。"
-  ko: "모델과 런타임을 넘어, 하나의 지능과 개발 흐름을 이어가다."
+  ko: "모델과 프로젝트의 벽을 넘어, 하나의 지능과 개발 흐름을 이어가다."
 overview:
-  ja: "LUMI（Long-term Unified Machine Intelligence）は、異なるモデル、ランタイム、プロジェクト、セッションをまたいでも、一貫したアイデンティティ、作業方針、実行ポリシー、開発ワークフローを保つための、移植可能なモジュール式AIエージェント・ハーネスです。"
-  ko: "LUMI(Long-term Unified Machine Intelligence)는 서로 다른 모델, 런타임, 프로젝트, 세션을 넘나들어도 일관된 정체성, 작업 방식, 실행 정책, 개발 워크플로를 유지하기 위한 이식 가능한 모듈식 AI 에이전트 하네스입니다."
+  ja: "LUMIは、異なるモデル、ランタイム、プロジェクト、セッションを行き来しても、一貫したアイデンティティ、作業方式、実行ポリシー、開発ワークフローを維持するための、移植可能なモジュール式AIエージェントハーネスを追求しています。"
+  ko: "LUMI는 서로 다른 모델, 런타임, 프로젝트, 세션을 넘나들어도 일관된 정체성, 작업 방식, 실행 정책, 개발 워크플로를 유지하기 위한 이식 가능한 모듈식 AI 에이전트 하네스를 추구합니다."
 status: "active"
 role: "Portable AI Agent Harness · Orchestration"
 technologies:
@@ -27,20 +27,20 @@ focus:
       ja: "Role Separation"
       ko: "Role Separation"
     description:
-      ja: "対話、実装、作業者、独立レビューの責任を分け、判断と検証の境界を明確にします。"
-      ko: "대화, 구현, 작업자, 독립 리뷰의 책임을 분리해 판단과 검증의 경계를 명확히 합니다."
+      ja: "対話エージェント、実装エージェント、サブエージェント、独立レビューエージェントの役割と責任を分離し、判断と検証の境界を明確にします。"
+      ko: "대화 에이전트, 구현 에이전트, 서브 에이전트, 독립 리뷰 에이전트의 역할과 책임을 분리해 판단과 검증의 경계를 명확히 합니다."
   - title:
       ja: "Project Routing"
       ko: "Project Routing"
     description:
       ja: "明示的なルーティングとプロジェクトプロファイルにより、複数の開発環境を安全に扱います。"
-      ko: "명시적인 라우팅과 프로젝트 프로필로 여러 개발 환경을 안전하게 다룹니다."
+      ko: "명시적인 라우팅과 프로젝트 프로필로 여러 개발 환경을 하나의 통합된 환경처럼 편하고 안전하게 다룹니다."
   - title:
-      ja: "Portable Runtime"
-      ko: "Portable Runtime"
+      ja: "Open Sources Based"
+      ko: "Open Sources Based"
     description:
-      ja: "特定のランタイムに論理的な振る舞いを固定せず、モジュール式アダプターとして展開します。"
-      ko: "논리적 행동을 특정 런타임에 고정하지 않고 모듈식 어댑터로 확장합니다."
+      ja: "OpenClawのようなOpenSourceをベースに構築されており、ライセンス内で自由に活用できます。"
+      ko: "OpenClaw와 같은 OpenSource들을 베이스로 구축되어 라이선스 내 자유롭게 활용할 수 있습니다."
 featured: true
 order: 3
 heroImage: "../../assets/projects/lumi-signal.svg"
