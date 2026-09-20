@@ -194,7 +194,7 @@ export const messages = {
     "wiki.empty": "このプロジェクトのWikiは準備中です。",
     "wiki.entries": "ENTRIES",
     "project-page.status.active": "IN DEVELOPMENT",
-    "project-page.role": "Genre",
+    "project-page.role": "GENRE",
     "project-page.tools": "TOOLS",
     "project-page.brief": "PROJECT BRIEF",
     "project-page.focus": "DESIGN PILLARS",

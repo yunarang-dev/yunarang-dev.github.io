@@ -281,14 +281,14 @@ archiveAreas:
           ko: "📅 Planned"
   - code: "LU"
     title:
-      ja: "LUMI"
-      ko: "LUMI"
+      ja: "LUMI:NOUS"
+      ko: "LUMI:NOUS"
     motto:
-      ja: "「Long-term Unified Machine Intelligence」"
-      ko: "「Long-term Unified Machine Intelligence」"
+      ja: "「誰かの夢を輝かせるために。」"
+      ko: "「누군가의 꿈을 빛낼 수 있도록.」"
     description:
-      ja: "モデル、ランタイム、プロジェクト、セッションが変わっても、一貫したアイデンティティ、作業方針、実行ポリシー、開発ワークフローを保つための、移植可能なモジュール式AIエージェント・ハーネスです。対話・実装・独立レビューを明確に分離し、安全なプロジェクトルーティングと長期的な開発の継続性を目指します。"
-      ko: "모델, 런타임, 프로젝트, 세션이 달라져도 일관된 정체성, 작업 방식, 실행 정책, 개발 워크플로를 유지하기 위한 이식 가능한 모듈식 AI 에이전트 하네스입니다. 대화·구현·독립 리뷰를 명확히 분리하고, 안전한 프로젝트 라우팅과 장기 개발의 연속성을 지향합니다."
+      ja: "LUMI:NOUSは初心者から熟練者まで、アイデアを持つ皆が想像を形にできる  統合ゲーム開発ハブです。<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
+      ko: "LUMI:NOUS는 초보자부터 숙련자, 아이디어를 가진 모두가 상상을 실현할 수 있는 통합 게임 개발 허브입니다.<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
     links:
       - label:
           ja: "プロジェクトを見る"

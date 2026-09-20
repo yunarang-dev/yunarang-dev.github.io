@@ -35,12 +35,12 @@ export const projectCopy: Record<string, LocalizedProjectCopy> = {
   },
   'lumi': {
     ja: {
-      title: 'LUMI',
-      summary: 'モデルやランタイムを越えて、ひとつの知性と開発の流れをつなぐ。',
+      title: 'LUMI:NOUS',
+      summary: '誰かの夢を輝かせるために。',
     },
     ko: {
-      title: 'LUMI',
-      summary: '모델과 런타임을 넘어, 하나의 지능과 개발 흐름을 이어가다.',
+      title: 'LUMI:NOUS',
+      summary: '누군가의 꿈을 빛낼 수 있도록.',
     },
   },
 };
