@@ -116,11 +116,42 @@ profile:
       ja: "2032年2月卒業予定"
       ko: "2032년 2월 졸업 예정"
   - label:
-      ja: "Affiliation"
-      ko: "Affiliation"
-    value:
-      ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「<ruby>ゲームマル<rt>GAMMARU</rt></ruby>」・「UNIDEV」（全国大学生ゲーム開発サークル連合）・「INGAME」（仁川拠点大学生ゲーム開発連合サークル）"
-      ko: "숭실대학교 게임 개발 중앙 동아리 겜마루 · UNIDEV(전국 대학생 게임 개발 동아리 연합회) · INGAME(인천 거점 대학생 게임 개발 연합동아리)"
+      ja: "Bio"
+      ko: "Bio"
+    bio:
+      # Add href: "https://..." to an item to link its activity name.
+      - name: "Soongsil University"
+        period: "2026. 03. 03. — Present"
+        description:
+          ja: "電子情報工学部 IT融合専攻に入学"
+          ko: "전자정보공학부 IT융합전공 26학번으로 입학"
+        href: "https://ssu.ac.kr/"
+        note:
+          ja: "2027年より知能電子工学部へ改編"
+          ko: "2027년부터 지능전자공학부로 전환"
+      - name: "GAMMARU（31 期）"
+        period: "2026. 03. 08. — Present"
+        description:
+          ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「ゲームマル」"
+          ko: "숭실대학교 게임 개발 중앙 동아리 겜마루"
+        href: "https://gammaru.dev/"
+      - name: "UNIDEV"
+        period: "2026. 03. 25. — Present"
+        description:
+          ja: "全国大学生ゲーム開発サークル連合"
+          ko: "전국 대학생 게임 개발 동아리 연합회"
+        href: "https://www.unidev.kr/"
+      - name: "INGAME"
+        period: "2026. 08. 25. — Present"
+        description:
+          ja: "仁川拠点大学生ゲーム開発連合サークル"
+          ko: "인천 거점 대학생 게임 개발 연합동아리"
+      - name: "GDGoC Soongsil（6 期）"
+        period: "2026. 09. 23. — Present"
+        description:
+          ja: "Google Developer Groups on Campus Soongsil University"
+          ko: "Google Developer Groups on Campus Soongsil University"
+        href: "https://gdgocsoongsil.com/"
   - label:
       ja: "Focus"
       ko: "Focus"

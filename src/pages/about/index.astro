@@ -75,12 +75,27 @@ const aboutSchema = {
         </div>
       </div>
       <dl class="content-container profile-grid">
-        {about.profile.map((item: { label: any; value: any; note?: any }) => (
+        {about.profile.map((item: { label: any; value?: any; note?: any; bio?: { name: string; href?: string; period: string; description: any; note?: any }[] }) => (
           <div class="profile-row">
             <LocalizedText as="dt" value={item.label} />
             <dd>
-              <LocalizedText value={item.value} />
-              {item.note && <LocalizedText as="small" value={item.note} />}
+              {item.bio ? (
+                <ol class="bio-timeline">
+                  {item.bio.map((entry) => (
+                    <li class="bio-timeline__entry">
+                      <h3>{entry.href ? <a href={entry.href}>{entry.name}</a> : entry.name}</h3>
+                      <p class="bio-timeline__period">{entry.period}</p>
+                      <LocalizedText as="p" class="bio-timeline__description" value={entry.description} />
+                      {entry.note && <LocalizedText as="p" class="bio-timeline__note" value={entry.note} />}
+                    </li>
+                  ))}
+                </ol>
+              ) : (
+                <>
+                  <LocalizedText value={item.value} />
+                  {item.note && <LocalizedText as="small" value={item.note} />}
+                </>
+              )}
             </dd>
           </div>
         ))}
