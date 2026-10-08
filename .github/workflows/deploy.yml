@@ -28,7 +28,8 @@ jobs:
         with:
           node-version: 24
           package-manager: npm
-          build-cmd: npm run build
+          # Re-render Markdown after remark plugin changes, even with a restored cache.
+          build-cmd: ASTRO_TELEMETRY_DISABLED=1 npx astro sync --force && npm run build
           out-dir: dist
 
   deploy:
