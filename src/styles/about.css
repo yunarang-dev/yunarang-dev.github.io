@@ -328,7 +328,7 @@
 
 .archive-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: minmax(0, 1fr);
   gap: 1px;
   margin-top: var(--space-5);
   border: 1px solid var(--color-line-strong);
@@ -473,7 +473,7 @@
 
 .archive-card {
   position: relative;
-  aspect-ratio: 1;
+  aspect-ratio: auto;
   min-width: 0;
   padding: clamp(1.6rem, 3vw, 3rem);
   background: rgb(4 15 26 / 96%);
@@ -673,10 +673,6 @@
     gap: var(--space-2);
   }
 
-  .archive-grid {
-    grid-template-columns: 1fr;
-  }
-
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -722,8 +718,6 @@
   }
 
   .archive-card {
-    aspect-ratio: auto;
-    min-height: min(24rem, 100vw);
     padding: var(--space-5);
   }
 

@@ -17,25 +17,25 @@ hero:
     ja: "夜明けの薄明かりの中を進みながら、一行のコードがあなたの心に残りますように。"
     ko: "동트기 전 새벽을 나아가며, 한 줄의 코드가 당신의 마음에 남도록."
   intro:
-    ja: "初めまして！ 私は韓国ソウルの<ruby>崇実<rt>スンシル</rt></ruby>大学で電子情報工学を専攻しており、ゲーム開発者を目指している「ゆならん」と申します。ここでは主に、Unityで感情を重視したストーリーゲームを制作する過程を記録しています。どうぞよろしくお願いします！"
-    ko: "안녕하세요! 저는 숭실대학교 지능전자공학부에서 공부하며, 게임 개발자를 꿈꾸는 『유나랑』이라고 합니다. 주로 Unity를 이용해 감정 중심의 스토리 게임을 만드는 과정을 기록합니다. 아무쪼록 잘 부탁드립니다!"
+    ja: "初めまして！ 私は韓国ソウルの<ruby>崇実<rt>スンシル</rt></ruby>大学で電子情報工学を専攻しており、ゲーム開発者とゲームプランナーを目指している「ゆならん」と申します。ここでは主に、Unityで感情を重視したストーリーゲームを制作する過程を記録しています。どうぞよろしくお願いします！"
+    ko: "안녕하세요! 저는 숭실대학교 지능전자공학부에서 공부하며, 게임 개발자와 기획자를 꿈꾸는 『유나랑』이라고 합니다. 주로 Unity를 이용해 감정 중심의 스토리 게임을 만드는 과정을 기록합니다. 잘 부탁드립니다!"
   focusLabel:
-    ja: "DEVELOPMENT FOCUS"
-    ko: "DEVELOPMENT FOCUS"
+    ja: "Game Design & Development Focus"
+    ko: "Game Design & Development Focus"
   focus:
     ja: "Narrative & Emotion-driven Game Development"
     ko: "Narrative & Emotion-driven Game Development"
   focusMeta:
-    ja: "UNITY / STORY / AI"
-    ko: "UNITY / STORY / AI"
+    ja: "PLANNING / DEVELOPMENT / STORY"
+    ko: "PLANNING / DEVELOPMENT / STORY"
 sections:
   profile:
     number:
       ja: "02 / PROFILE"
       ko: "02 / PROFILE"
     heading:
-      ja: "Developer Profile"
-      ko: "Developer Profile"
+      ja: "Creator Profile"
+      ko: "Creator Profile"
   tools:
     number:
       ja: "03 / TOOLS & SETUP"
@@ -57,7 +57,7 @@ sections:
       ja: "What I am building and recording"
       ko: "What I am building and recording"
     copy:
-      ja: "ゲーム、技術、学び、日々の思考まで。個人アーカイブを構成する領域です。"
+      ja: "想像を形に。夢を広げていく。"
       ko: "상상을 실현하다. 꿈을 펼쳐나가다."
     overview:
       ja: "Overview"
@@ -132,7 +132,7 @@ profile:
       - name: "GAMMARU（31 期）"
         period: "2026. 03. 08. — Present"
         description:
-          ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「ゲームマル」"
+          ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「GAMMARU」"
           ko: "숭실대학교 게임 개발 중앙 동아리 겜마루"
         href: "https://gammaru.dev/"
       - name: "UNIDEV"
@@ -328,7 +328,7 @@ archiveAreas:
       - label:
           ja: "GitHub Repository"
           ko: "GitHub Repository"
-        href: "https://github.com/yunarang-dev/LUMI"
+        href: "https://github.com/yunarang-dev/LUMINOUS"
   - code: "CT"
     title:
       ja: "コンテスト・成果物"
@@ -341,7 +341,7 @@ archiveAreas:
       ko: "더 넓은 세계에서 새로운 도전을 이어갑니다."
     table:
       -
-        - ja: "ゲームマル ２０２６夏コンテスト"
+        - ja: "GAMMARU ２０２６夏コンテスト"
           ko: "겜마루 2026 여름 콘테스트"
         - ja: "ERROR CODE: H"
           ko: "ERROR CODE: H"
@@ -351,16 +351,27 @@ archiveAreas:
           ko: "Programming & Art (UI)"
         - ja: "✅ Done"
           ko: "✅ Done"
+      -
+        - ja: "INGAME 26-2 ショートトラベル"
+          ko: "INGAME 26-2 숏트래블"
+        - ja: "TRAXX/ING!"
+          ko: "TRAXX/ING!"
+        - ja: "2026.10.03 – 2027.01.22."
+          ko: "2026.10.03 – 2027.01.22."
+        - ja: "Project Lead(Programming, Planning, Art, Sound)"
+          ko: "Project Lead(Programming, Planning, Art, Sound)"
+        - ja: "🔄 In Progress"
+          ko: "🔄 In Progress"
   - code: "BS"
     title:
-      ja: "他の創作物の深層分析"
-      ko: "다른 창작물의 심층 분석"
+      ja: "創作物の深層分析"
+      ko: "창작물 심층 분석"
     motto:
       ja: "「先人の足跡から、次の一歩を学ぶ。」"
       ko: "「앞선 이들의 발자취에서, 배워나가는 다음 한 걸음.」"
     description:
-      ja: "お気に入りのゲームのシステムとストーリーを分析し、開発者としての視野を広げます。"
-      ko: "좋아하는 게임의 시스템과 스토리를 분석하며 개발자로서의 시야를 넓힙니다."
+      ja: "好きなゲームから自ら制作する作品まで、システムとストーリーを分析し、ゲーム制作者としての視野を広げます。<br>分析をもとに作成した逆仕様書をLUMI:NOUSで実際に実装・検証し、作品の設計意図をより深く理解することを目指します。"
+      ko: "좋아하는 게임부터 직접 만드는 작품까지, 시스템과 스토리를 분석하며 게임 제작자로서의 시야를 넓힙니다.<br>분석을 바탕으로 작성한 역사양서를 LUMI:NOUS를 통해 실제로 구현하고 검증하며, 작품의 설계 의도를 더 깊이 이해하는 것을 목표로 합니다."
   - code: "CS"
     title:
       ja: "CS・プログラミング練習"
@@ -421,16 +432,6 @@ archiveAreas:
     description:
       ja: "日々の雑多な記録や、個人的な考えを綴ります。"
       ko: "일상의 소소한 기록과 개인적인 생각을 적습니다."
-  - code: "KR"
-    title:
-      ja: "韓国語版"
-      ko: "한국어판"
-    motto:
-      ja: "「思考の深淵。ありのままの形。」"
-      ko: "「사고의 심연. 있는 그대로의 모습.」"
-    description:
-      ja: "DevLogの韓国語版です。"
-      ko: "DevLog의 한국어 버전입니다."
 lifePlan:
   - period:
       ja: "常時"
@@ -450,10 +451,8 @@ lifePlan:
       ja: "2027年まで（大学 2年生）"
       ko: "2027년까지 (대학교 2학년)"
     items:
-      - ja: "📅 情報処理産業技士（韓国の資格証）合格"
-        ko: "📅 정보처리산업기사 합격"
-      - ja: "📅 AtCoder Gray"
-        ko: "📅 AtCoder Gray"
+      - ja: "📅 AtCoder Brown"
+        ko: "📅 AtCoder Brown"
       - ja: "📅 大学対抗ゲームジャム参加"
         ko: "📅 대학교 대항전 게임잼 참가"
   - period:
@@ -462,16 +461,14 @@ lifePlan:
     items:
       - ja: "📅 JLPT N1合格"
         ko: "📅 JLPT N1 합격"
-      - ja: "📅 Project VZ & UNICON（UNIDEVのコンテスト）参加"
-        ko: "📅 Project VZ & UNICON(UNIDEV 콘테스트) 참가"
+      - ja: "📅 UNICON（UNIDEVのコンテスト）参加"
+        ko: "📅 UNICON(UNIDEV 콘테스트) 참가"
   - period:
       ja: "2029年まで（兵役期間）"
       ko: "2029년까지 (병역 기간)"
     items:
       - ja: "📅 TOEIC 850点以上取得"
         ko: "📅 TOEIC 850점 이상 취득"
-      - ja: "📅 AtCoder Brown"
-        ko: "📅 AtCoder Brown"
   - period:
       ja: "2030年まで（大学 3年生）"
       ko: "2030년까지 (대학교 3학년)"
@@ -480,8 +477,6 @@ lifePlan:
         ko: "📅 일본 대학 교환학생"
       - ja: "📅 AtCoder Green"
         ko: "📅 AtCoder Green"
-      - ja: "📅 漢検準２級合格"
-        ko: "📅 칸켄 준2급 합격"
   - period:
       ja: "2031年まで（大学 4年生）"
       ko: "2031년까지 (대학교 4학년)"
@@ -489,7 +484,9 @@ lifePlan:
   - period:
       ja: "その後"
       ko: "그 이후"
-    items: []
+    items:
+      - ja: "📅 漢検準２級合格"
+        ko: "📅 칸켄 준2급 합격"
 externalLinks:
   - label: "Email"
     href: "mailto:yunarang97@gmail.com"
