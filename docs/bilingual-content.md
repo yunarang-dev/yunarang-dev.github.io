@@ -101,6 +101,11 @@ The optional title is enclosed in double quotes. A quoted URL supports spaces
 in file names. HTTP(S) URLs ending in `.pdf` also work, provided the remote
 server permits embedding; hosting the file in `public/` is recommended.
 
+Local PDF paths are automatically normalized to Unicode NFC, including
+percent-encoded paths. This prevents decomposed Korean/Japanese file names
+copied on macOS from producing mismatched URLs on GitHub Pages. External
+HTTP(S) paths are left unchanged.
+
 Put a directive inside each `:::locale` block if the document or its title
 differs by language. The viewer follows the existing language switcher.
 Do not add a closing `:::` for a PDF directive; that marker only closes a

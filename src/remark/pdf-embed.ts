@@ -22,7 +22,17 @@ function pdfUrl(source: string) {
     throw new Error('A :::pdf URL must point to a .pdf file and must not contain credentials.');
   }
 
-  return source.startsWith('/') ? `${url.pathname}${url.search}${url.hash}` : url.href;
+  if (!source.startsWith('/')) return url.href;
+
+  // macOS can provide decomposed file names, while Git tracks NFC names.
+  // Decode each segment separately so encoded separators remain encoded.
+  try {
+    url.pathname = url.pathname.split('/').map((segment) => encodeURIComponent(decodeURIComponent(segment).normalize('NFC'))).join('/');
+  } catch {
+    throw new Error('A :::pdf site-root path contains invalid URL encoding.');
+  }
+
+  return `${url.pathname}${url.search}${url.hash}`;
 }
 
 function transformChildren(nodes: MarkdownNode[], source: string): MarkdownNode[] {

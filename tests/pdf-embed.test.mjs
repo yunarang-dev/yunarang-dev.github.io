@@ -30,6 +30,31 @@ test('keeps viewers inside their respective locale blocks without breaking YouTu
   assert.equal((html.match(/class="pdf-embed__viewer"/g) ?? []).length, 2);
 });
 
+test('normalizes decomposed Korean and Japanese local file names in both viewer and fallback link', async () => {
+  for (const name of ['협업용_가이드.pdf', '共同作業ガイド.pdf']) {
+    const source = `/pdf/${name.normalize('NFD')}`;
+    const expected = `/pdf/${encodeURIComponent(name.normalize('NFC'))}`;
+    const html = await render(`:::pdf ${source} "PDF"`);
+    assert.ok(html.includes(`src="${expected}"`));
+    assert.ok(html.includes(`href="${expected}"`));
+  }
+});
+
+test('normalizes percent-encoded local names without changing query, fragment or encoded separators', async () => {
+  const name = encodeURIComponent('협업용_가이드.pdf'.normalize('NFD'));
+  const source = `/pdf/a%2Fb/${name}?download=1#page=2`;
+  const expected = `/pdf/a%2Fb/${encodeURIComponent('협업용_가이드.pdf')}?download=1#page=2`;
+  const html = await render(`:::pdf ${source}`);
+  assert.ok(html.includes(`src="${expected}"`));
+  assert.ok(html.includes(`href="${expected}"`));
+});
+
+test('does not normalize externally hosted PDF paths', async () => {
+  const source = `https://example.com/${encodeURIComponent('共同作業ガイド.pdf'.normalize('NFD'))}`;
+  const html = await render(`:::pdf ${source}`);
+  assert.ok(html.includes(`src="${source}"`));
+});
+
 test('leaves code examples and ordinary prose untouched', async () => {
   const html = await render('```markdown\n:::pdf /documents/example.pdf\n```\n\nUse :::pdf in your post.');
   assert.doesNotMatch(html, /class="pdf-embed"/);
@@ -45,6 +70,7 @@ test('rejects malformed directives, unsafe schemes, credentials and non-PDF file
     ':::pdf /\\example.com/file.pdf',
     ':::pdf https://user:password@example.com/file.pdf',
     ':::pdf /documents/file.html',
+    ':::pdf /pdf/bad%ZZ.pdf',
   ]) {
     await assert.rejects(() => render(markdown), /:::pdf/);
   }
