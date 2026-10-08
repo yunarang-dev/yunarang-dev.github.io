@@ -3,6 +3,7 @@ import { unified } from '@astrojs/markdown-remark';
 import sitemap from '@astrojs/sitemap';
 import { localeContentRemarkPlugin } from './src/remark/locale-content';
 import { youtubeEmbedRemarkPlugin } from './src/remark/youtube-embed';
+import { pdfEmbedRemarkPlugin } from './src/remark/pdf-embed';
 
 const redirectPaths = new Set([
   '/posts/AD-00/',
@@ -30,6 +31,6 @@ export default defineConfig({
     responsiveStyles: true,
   },
   markdown: {
-    processor: unified({ remarkPlugins: [youtubeEmbedRemarkPlugin, localeContentRemarkPlugin] }),
+    processor: unified({ remarkPlugins: [pdfEmbedRemarkPlugin, youtubeEmbedRemarkPlugin, localeContentRemarkPlugin] }),
   },
 });

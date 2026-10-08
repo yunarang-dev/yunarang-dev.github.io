@@ -26,6 +26,7 @@ npm run preview
 - 일반 페이지 데이터: `src/content/pages/`
 - 포스트 미디어: `public/images/posts/YYYY-MM-DD/`
 - 프로젝트 이미지: `public/images/projects/`
+- PDF 문서: `public/pdf/` (예: `public/pdf/portfolio.pdf` → `:::pdf /pdf/portfolio.pdf`)
 
 새 포스트의 작성 형식과 한일 병기 규칙은
 [`docs/bilingual-content.md`](docs/bilingual-content.md)를 참고합니다.
@@ -130,4 +131,3 @@ INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
 DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
 FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
 OTHER DEALINGS IN THE FONT SOFTWARE.
-

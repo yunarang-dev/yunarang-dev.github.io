@@ -81,3 +81,32 @@ so links that have already been shared continue to work.
 
 Store post images in `public/images/posts/YYYY-MM-DD/` and reference them from
 Markdown with an absolute site path such as `/images/posts/2026-08-28/1.png`.
+
+## Embedded PDF
+
+PDF files can be read inside a post without MDX or additional JavaScript.
+Save the file at `public/pdf/example.pdf`, then use its public URL,
+**without** the `public` prefix:
+
+```markdown
+:::pdf /pdf/example.pdf
+
+:::pdf /pdf/example.pdf "企画書"
+
+:::pdf "/pdf/my portfolio.pdf" "포트폴리오"
+```
+
+Keep each directive on its own line with blank lines before and after it.
+The optional title is enclosed in double quotes. A quoted URL supports spaces
+in file names. HTTP(S) URLs ending in `.pdf` also work, provided the remote
+server permits embedding; hosting the file in `public/` is recommended.
+
+Put a directive inside each `:::locale` block if the document or its title
+differs by language. The viewer follows the existing language switcher.
+Do not add a closing `:::` for a PDF directive; that marker only closes a
+language block.
+
+The native PDF viewer depends on the visitor's browser. Some mobile browsers
+may show only a preview or not display it inline. The always-visible `PDF ↗`
+link opens the original file in a new tab as a fallback. Files placed in
+`public/` are public downloads, not private attachments.
