@@ -133,21 +133,23 @@ const projectPageTitleKo = formatMessagePair('site.title-template', { title: pro
       <LocalizedText as="h2" id="project-brief-title" value={project.data.overview} />
     </section>
 
-    <section class="project-page__focus container" aria-labelledby="project-focus-title">
-      <div class="project-page__section-heading" data-scroll-reveal>
-        <p class="project-page__section-label" data-i18n="project-page.focus">{messages.ja['project-page.focus']}</p>
-        <LocalizedText as="h2" id="project-focus-title" value={focusTitle} />
-      </div>
-      <ol class="project-focus-grid">
-        {project.data.focus.map((item, index) => (
-          <li class="project-focus-card" data-scroll-reveal>
-            <span class="project-focus-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
-            <LocalizedText as="h3" value={item.title} />
-            <LocalizedText as="p" value={item.description} />
-          </li>
-        ))}
-      </ol>
-    </section>
+    {project.data.focus.length > 0 && (
+      <section class="project-page__focus container" aria-labelledby="project-focus-title">
+        <div class="project-page__section-heading" data-scroll-reveal>
+          <p class="project-page__section-label" data-i18n="project-page.focus">{messages.ja['project-page.focus']}</p>
+          <LocalizedText as="h2" id="project-focus-title" value={focusTitle} />
+        </div>
+        <ol class="project-focus-grid">
+          {project.data.focus.map((item, index) => (
+            <li class="project-focus-card" data-scroll-reveal>
+              <span class="project-focus-card__number" aria-hidden="true">{String(index + 1).padStart(2, '0')}</span>
+              <LocalizedText as="h3" value={item.title} />
+              <LocalizedText as="p" value={item.description} />
+            </li>
+          ))}
+        </ol>
+      </section>
+    )}
 
     <section
       class="project-page__story"

@@ -40,6 +40,10 @@ export const projectHeroImages = {
     "astral-days-dawn.png",
     "夜明け前の海辺の駅で、二人の人物が同じ地平線を見つめている風景",
   ),
+  "project-vx": projectHero(
+    "project-vx-workflow.png",
+    "開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ",
+  ),
   "lumi": projectHero(
     "lumi-signal.svg",
     "暗い空間に複数の知性と開発経路を結ぶ青白い光のネットワーク",
@@ -138,6 +142,8 @@ export const messages = {
     "blog.records": "ALL RECORDS",
     "blog.read": "記録を読む",
     "blog.empty": "このカテゴリーの記事はまだありません。",
+    "blog.vx-moved": "Project VXの開発記録はLUへ移動しました。",
+    "blog.vx-moved.open": "LUの開発記録を読む",
     "blog.meta.title": "Blog — Yunarang",
     "blog.meta.description": "ゲーム開発、設計、実装、学びの過程を積み重ねていく個人開発アーカイブ。",
     "post.back": "Blog に戻る",
@@ -285,6 +291,8 @@ export const messages = {
     "blog.records": "ALL RECORDS",
     "blog.read": "기록 읽기",
     "blog.empty": "이 카테고리에는 아직 글이 없습니다.",
+    "blog.vx-moved": "Project VX의 개발 기록은 LU로 옮겼습니다.",
+    "blog.vx-moved.open": "LU 개발 기록 보기",
     "blog.meta.title": "블로그 — Yunarang",
     "blog.meta.description": "게임 개발, 설계, 구현, 배움의 과정을 차곡차곡 쌓아 가는 개인 개발 아카이브입니다.",
     "post.back": "Blog로 돌아가기",

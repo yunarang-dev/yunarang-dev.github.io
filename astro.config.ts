@@ -12,7 +12,6 @@ const vxRedirects = {
       return [`/posts/VX-${number}/`, `/posts/LU-${number}/`];
     }),
   ),
-  '/projects/project-vx/': '/posts/LU-00/',
   '/projects/project-vx/wiki/': '/projects/lumi/wiki/',
   '/projects/project-vx/wiki/overview/': '/projects/lumi/wiki/overview/',
   '/projects/project-vx/wiki/virtual-developer/': '/projects/lumi/wiki/virtual-developer/',

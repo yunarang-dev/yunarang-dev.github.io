@@ -12,7 +12,7 @@ if (!aboutEntry) {
 }
 
 const about = aboutEntry.data;
-const featuredProjectCodes = new Set(['AD', 'LU']);
+const featuredProjectCodes = new Set(['AD', 'VX', 'LU']);
 const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => featuredProjectCodes.has(area.code));
 const archiveCards = about.archiveAreas.filter((area: { code: string }) => !featuredProjectCodes.has(area.code));
 const archiveAreaHref = (area: { code: string; links?: { href: string }[] }) =>

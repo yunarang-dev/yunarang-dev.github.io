@@ -240,6 +240,25 @@ archiveAreas:
           ja: "開発計画"
           ko: "개발 계획"
         href: "/posts/AD-00/#-アスデイastral-daysの開発計画"
+  - code: "VX"
+    title:
+      ja: "Project VX"
+      ko: "Project VX"
+    motto:
+      ja: "「人の魂を込める。 AIの技術を加える。」"
+      ko: "「사람의 혼을 담다. AI의 기술을 더하다.」"
+    description:
+      ja: "『Project VX』は、AIを活用して人のアイデアをどこまで具現化できるかを試みる実験的プロジェクトです。これまでの開発記録はLUMI:NOUS（LU）で読めます。"
+      ko: "『Project VX』는 AI를 활용해 사람의 아이디어를 어디까지 실현할 수 있는지 시험하는 실험 프로젝트입니다. 기존 개발 기록은 LUMI:NOUS(LU)에서 볼 수 있습니다."
+    links:
+      - label:
+          ja: "プロジェクトを見る"
+          ko: "프로젝트 보기"
+        href: "/projects/project-vx/"
+      - label:
+          ja: "LUの開発記録"
+          ko: "LU 개발 기록"
+        href: "/blog/?series=LU"
   - code: "LU"
     title:
       ja: "LUMI:NOUS"

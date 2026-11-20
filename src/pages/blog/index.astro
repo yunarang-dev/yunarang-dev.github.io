@@ -1,5 +1,5 @@
 ---
-import { getCollection } from 'astro:content';
+import { getCollection, getEntry } from 'astro:content';
 import ConstellationMotif from '../../components/ui/ConstellationMotif.astro';
 import LocalizedText from '../../components/ui/LocalizedText.astro';
 import { messages, pageCopy } from '../../i18n/site';
@@ -15,7 +15,11 @@ const formatDate = (date: Date, locale: 'ja-JP' | 'ko-KR') =>
     day: 'numeric',
   }).format(date);
 
-const posts = (await getCollection('posts', ({ data }) => !data.draft))
+const [publishedPosts, vxProject] = await Promise.all([
+  getCollection('posts', ({ data }) => !data.draft),
+  getEntry('projects', 'project-vx'),
+]);
+const posts = publishedPosts
   .sort((a, b) => b.data.date.getTime() - a.data.date.getTime())
   .map((post) => ({
     ...post,
@@ -25,9 +29,11 @@ const posts = (await getCollection('posts', ({ data }) => !data.draft))
   }));
 
 const [latestPost, ...remainingPosts] = posts;
-const categories = Array.from(
-  new Map(posts.map((post) => [post.data.category.ja, post.data.category])).entries(),
-).map(([id, label]) => ({ id, label }));
+const categoryLabels = new Map(posts.map((post) => [post.data.category.ja, post.data.category]));
+if (vxProject && !categoryLabels.has(vxProject.data.title.ja)) {
+  categoryLabels.set(vxProject.data.title.ja, vxProject.data.title);
+}
+const categories = Array.from(categoryLabels, ([id, label]) => ({ id, label }));
 const constellationFilters = [
   {
     id: 'all',
@@ -195,6 +201,13 @@ const blogSchema = {
       </ol>
 
       <p class="blog-records__empty" data-blog-empty hidden data-i18n="blog.empty">{messages.ja['blog.empty']}</p>
+      {vxProject && (
+        <p class="blog-records__empty" data-blog-vx-moved={vxProject.data.title.ja} hidden>
+          <span data-i18n="blog.vx-moved">{messages.ja['blog.vx-moved']}</span>
+          {' '}
+          <a href="/blog/?series=LU" data-i18n="blog.vx-moved.open">{messages.ja['blog.vx-moved.open']}</a>
+        </p>
+      )}
     </section>
   </section>
 
@@ -203,6 +216,8 @@ const blogSchema = {
     const entries = Array.from(document.querySelectorAll<HTMLElement>('[data-blog-entry]'));
     const count = document.querySelector<HTMLElement>('[data-blog-visible-count]');
     const empty = document.querySelector<HTMLElement>('[data-blog-empty]');
+    const vxMoved = document.querySelector<HTMLElement>('[data-blog-vx-moved]');
+    const vxCategory = vxMoved?.dataset.blogVxMoved;
     const map = document.querySelector<HTMLElement>('.blog-filter-map');
     const mapNodes = Array.from(document.querySelectorAll<HTMLButtonElement>('.blog-filter-node'));
     const mapLines = Array.from(document.querySelectorAll<SVGLineElement>('[data-blog-line]'));
@@ -235,23 +250,26 @@ const blogSchema = {
       ? Array.from(mapPolygon.points).map((point) => ({ x: point.x, y: point.y }))
       : [];
 
-    const applyFilter = (filter: string) => {
+    const applyFilter = (filter: string, bySeries = false) => {
       let visible = 0;
 
       entries.forEach((entry) => {
-        const matches = filter === 'all' || entry.dataset.category === filter;
+        const value = bySeries ? entry.dataset.series : entry.dataset.category;
+        const matches = filter === 'all' || value === filter;
         entry.hidden = !matches;
         if (matches) visible += 1;
       });
 
       filters.forEach((button) => {
-        const isActive = button.dataset.blogFilter === filter;
+        const isActive = !bySeries && button.dataset.blogFilter === filter;
         button.classList.toggle('is-active', isActive);
         button.setAttribute('aria-pressed', String(isActive));
       });
 
       if (count) count.textContent = String(visible);
-      if (empty) empty.hidden = visible !== 0;
+      const showMoveNotice = visible === 0 && filter === vxCategory;
+      if (empty) empty.hidden = visible !== 0 || showMoveNotice;
+      if (vxMoved) vxMoved.hidden = !showMoveNotice;
     };
 
     filters.forEach((button) => {
@@ -263,23 +281,10 @@ const blogSchema = {
       });
     });
 
-    const requestedSeries = new URLSearchParams(window.location.search).get('series')?.toUpperCase();
-    const initialSeries = requestedSeries === 'VX' ? 'LU' : requestedSeries;
+    const initialSeries = new URLSearchParams(window.location.search).get('series')?.toUpperCase();
     if (initialSeries) {
-      let visible = 0;
-
-      entries.forEach((entry) => {
-        const matches = entry.dataset.series === initialSeries;
-        entry.hidden = !matches;
-        if (matches) visible += 1;
-      });
-
-      filters.forEach((button) => {
-        button.classList.remove('is-active');
-        button.setAttribute('aria-pressed', 'false');
-      });
-      if (count) count.textContent = String(visible);
-      if (empty) empty.hidden = visible !== 0;
+      const category = initialSeries === 'VX' ? vxCategory : undefined;
+      applyFilter(category ?? initialSeries, !category);
     }
 
     const canNudgeMapNode = () => !reducedMotion.matches && !mapIsCompact.matches;
