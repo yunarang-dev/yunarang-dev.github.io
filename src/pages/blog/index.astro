@@ -263,7 +263,8 @@ const blogSchema = {
       });
     });
 
-    const initialSeries = new URLSearchParams(window.location.search).get('series')?.toUpperCase();
+    const requestedSeries = new URLSearchParams(window.location.search).get('series')?.toUpperCase();
+    const initialSeries = requestedSeries === 'VX' ? 'LU' : requestedSeries;
     if (initialSeries) {
       let visible = 0;
 

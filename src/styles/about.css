@@ -356,11 +356,6 @@
   --archive-feature-accent-soft: rgb(255 138 61 / 14%);
 }
 
-.archive-feature--vx {
-  --archive-feature-accent: var(--color-moon);
-  --archive-feature-accent-soft: rgb(130 174 255 / 14%);
-}
-
 .archive-feature--lu {
   --archive-feature-accent: rgb(137 220 255);
   --archive-feature-accent-soft: rgb(86 196 255 / 14%);
@@ -439,12 +434,6 @@
   justify-content: center;
   background:
     linear-gradient(135deg, var(--archive-feature-accent-soft), transparent 58%),
-    rgb(6 20 35 / 72%);
-}
-
-.archive-feature--vx .archive-feature-project {
-  background:
-    linear-gradient(225deg, var(--archive-feature-accent-soft), transparent 58%),
     rgb(6 20 35 / 72%);
 }
 

@@ -1,5 +1,5 @@
 ---
-project: project-vx
+project: lumi
 title:
   ja: "Virtual Developer"
   ko: "Virtual Developer"

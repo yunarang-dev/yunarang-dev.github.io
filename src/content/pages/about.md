@@ -62,7 +62,7 @@ sections:
     overview:
       ja: "Overview"
       ko: "Overview"
-    vxHeaders:
+    experimentHeaders:
       - ja: "Version"
         ko: "Version"
       - ja: "Main Target"
@@ -240,21 +240,32 @@ archiveAreas:
           ja: "開発計画"
           ko: "개발 계획"
         href: "/posts/AD-00/#-アスデイastral-daysの開発計画"
-  - code: "VX"
+  - code: "LU"
     title:
-      ja: "Project VX"
-      ko: "Project VX"
+      ja: "LUMI:NOUS"
+      ko: "LUMI:NOUS"
     motto:
-      ja: "「人の魂を込める。 AIの技術を加える。」"
-      ko: "「사람의 혼을 담다. AI의 기술을 더하다.」"
+      ja: "「誰かの夢を輝かせるために。」"
+      ko: "「누군가의 꿈을 빛낼 수 있도록.」"
     description:
-      ja: "『Project VX』は、AIを活用して人のアイデアをどこまで具現化できるかを試みる実験的プロジェクトです。人がアイデアを定義し、AIをディレクションすることで、開発をどこまで進められるかを検証します。<br><br>Since 2026. 08. 19."
-      ko: "『Project VX』는 AI를 활용해 사람의 아이디어를 어디까지 실현할 수 있는지 시험하는 실험 프로젝트입니다. 사람이 아이디어를 정의하고 AI를 디렉션할 때 개발을 어디까지 진행할 수 있는지 검증합니다.<br><br>Since 2026. 08. 19."
+      ja: "LUMI:NOUSは初心者から熟練者まで、アイデアを持つ皆が想像を形にできる  統合ゲーム開発ハブです。<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
+      ko: "LUMI:NOUS는 초보자부터 숙련자, 아이디어를 가진 모두가 상상을 실현할 수 있는 통합 게임 개발 허브입니다.<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
     links:
       - label:
           ja: "プロジェクトを見る"
           ko: "프로젝트 보기"
-        href: "/projects/project-vx/"
+        href: "/projects/lumi/"
+      - label:
+          ja: "GitHub Repository"
+          ko: "GitHub Repository"
+        href: "https://github.com/yunarang-dev/LUMINOUS"
+      - label:
+          ja: "Project VX の実験記録"
+          ko: "Project VX 실험 기록"
+        href: "/posts/LU-00/"
+    tableCaption:
+      ja: "Project VX の実験計画"
+      ko: "Project VX 실험 계획"
     table:
       -
         - ja: "Test #1"
@@ -310,25 +321,6 @@ archiveAreas:
           ko: "Production"
         - ja: "📅 Planned"
           ko: "📅 Planned"
-  - code: "LU"
-    title:
-      ja: "LUMI:NOUS"
-      ko: "LUMI:NOUS"
-    motto:
-      ja: "「誰かの夢を輝かせるために。」"
-      ko: "「누군가의 꿈을 빛낼 수 있도록.」"
-    description:
-      ja: "LUMI:NOUSは初心者から熟練者まで、アイデアを持つ皆が想像を形にできる  統合ゲーム開発ハブです。<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
-      ko: "LUMI:NOUS는 초보자부터 숙련자, 아이디어를 가진 모두가 상상을 실현할 수 있는 통합 게임 개발 허브입니다.<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
-    links:
-      - label:
-          ja: "プロジェクトを見る"
-          ko: "프로젝트 보기"
-        href: "/projects/lumi/"
-      - label:
-          ja: "GitHub Repository"
-          ko: "GitHub Repository"
-        href: "https://github.com/yunarang-dev/LUMINOUS"
   - code: "CT"
     title:
       ja: "コンテスト・成果物"

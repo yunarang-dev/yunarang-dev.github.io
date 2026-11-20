@@ -31,21 +31,22 @@ link can keep working.
 ```markdown
 ---
 title:
-  ja: "Project VX 開発記録 #18"
-  ko: "Project VX 개발 기록 #18"
+  ja: "LUMI:NOUS 開発記録 #18"
+  ko: "LUMI:NOUS 개발 기록 #18"
 date: 2026-08-27
 description:
   ja: "短い紹介文。"
   ko: "짧은 소개문입니다."
 category:
-  ja: "Project VX"
-  ko: "Project VX"
+  ja: "LUMI:NOUS"
+  ko: "LUMI:NOUS"
 tags:
   - ja: "Unity"
     ko: "Unity"
   - ja: "ゲーム開発"
     ko: "게임 개발"
-slug: "VX-11"
+project: "lumi"
+slug: "LU-18"
 ---
 
 :::locale ja

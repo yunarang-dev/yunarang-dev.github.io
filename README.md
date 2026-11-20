@@ -5,12 +5,30 @@ Astro와 TypeScript로 만든 개인 포트폴리오, 개발 블로그, 프로�
 
 ## Local development
 
+프로젝트 폴더에서 최초 1회 의존성을 설치합니다. Node.js 24는 배포 환경과 같습니다.
+
 ```sh
-npm install
+npm ci
+```
+
+이후 로컬 미리보기가 필요할 때 서버를 실행합니다.
+
+```sh
 npm run dev
 ```
 
-기본 개발 서버는 `http://localhost:4321/`에서 열립니다.
+브라우저에서 [블로그 목록](http://localhost:4321/blog/)을 열고,
+`src/content/posts/`의 Markdown 글을 수정해 저장한 다음 확인합니다.
+새 글이나 수정한 글이 보이지 않으면 페이지를 새로고침하세요. 글의 `slug`는
+개별 주소 `/posts/<slug>/`를 결정합니다. `draft: true`인 글은 로컬을 포함해
+목록과 개별 페이지에서 제외됩니다. 로컬 미리보기는 GitHub Pages에 배포하지 않습니다.
+
+서버 종료 및 상태 확인:
+
+```sh
+npx astro dev stop
+npx astro dev status
+```
 
 ```sh
 npm run check

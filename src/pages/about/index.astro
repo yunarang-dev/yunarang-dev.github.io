@@ -12,7 +12,7 @@ if (!aboutEntry) {
 }
 
 const about = aboutEntry.data;
-const featuredProjectCodes = new Set(['AD', 'VX', 'LU']);
+const featuredProjectCodes = new Set(['AD', 'LU']);
 const featuredArchiveAreas = about.archiveAreas.filter((area: { code: string }) => featuredProjectCodes.has(area.code));
 const archiveCards = about.archiveAreas.filter((area: { code: string }) => !featuredProjectCodes.has(area.code));
 const archiveAreaHref = (area: { code: string; links?: { href: string }[] }) =>
@@ -158,10 +158,11 @@ const aboutSchema = {
             <div class="archive-feature-detail">
               <LocalizedText as="p" class="archive-feature-label" value={about.sections.archive.overview} />
               <LocalizedText as="p" class="archive-description" value={area.description} />
-              {area.table && area.code === 'VX' && (
+              {area.table && (
                 <div class="archive-table-wrap">
                   <table>
-                    <thead><tr>{about.sections.archive.vxHeaders.map((header: any) => <LocalizedText as="th" value={header} />)}</tr></thead>
+                    {area.tableCaption && <caption><LocalizedText value={area.tableCaption} /></caption>}
+                    <thead><tr>{about.sections.archive.experimentHeaders.map((header: any) => <LocalizedText as="th" value={header} />)}</tr></thead>
                     <tbody>{area.table.map((row: any[]) => <tr>{row.map((cell: any) => <LocalizedText as="td" value={cell} />)}</tr>)}</tbody>
                   </table>
                 </div>

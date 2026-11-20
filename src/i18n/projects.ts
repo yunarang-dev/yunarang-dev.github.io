@@ -23,16 +23,6 @@ export const projectCopy: Record<string, LocalizedProjectCopy> = {
       summary: '이 새벽이 끝나더라도,  빛나는 하루를 향해.',
     },
   },
-  'project-vx': {
-    ja: {
-      title: 'Project VX',
-      summary: '人の魂を込める。 AIの技術を加える。',
-    },
-    ko: {
-      title: 'Project VX',
-      summary: '사람의 혼을 담다. AI의 기술을 더하다.',
-    },
-  },
   'lumi': {
     ja: {
       title: 'LUMI:NOUS',

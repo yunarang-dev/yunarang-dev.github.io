@@ -40,10 +40,6 @@ export const projectHeroImages = {
     "astral-days-dawn.png",
     "夜明け前の海辺の駅で、二人の人物が同じ地平線を見つめている風景",
   ),
-  "project-vx": projectHero(
-    "project-vx-workflow.png",
-    "開発者がコード、レベル設計、レビュー工程を重ねながらゲーム世界を構築しているスタジオ",
-  ),
   "lumi": projectHero(
     "lumi-signal.svg",
     "暗い空間に複数の知性と開発経路を結ぶ青白い光のネットワーク",
@@ -87,12 +83,6 @@ export const postRedirects: PostRedirect[] = [
     title: "[AD] 00. The Project 『アスデイ：Astral Days!』",
     date: "2026-01-14 00:55:49 +0900",
     redirectTo: "/projects/astral-days/",
-  },
-  {
-    slug: "VX-00",
-    title: "[VX] 00. 『Project VX』　起動！",
-    date: "2026-08-18 23:11:08 +0900",
-    redirectTo: "/projects/project-vx/",
   },
   {
     slug: "KR-01",

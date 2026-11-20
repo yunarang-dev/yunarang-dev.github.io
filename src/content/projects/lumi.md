@@ -41,7 +41,7 @@ focus:
       ja: "Apache-2.0ライセンスで公開される、自由に利用・改変・拡張できるオープンソースプロジェクトです。"
       ko: "Apache-2.0 라이선스로 공개되어 자유롭게 사용·수정·확장할 수 있는 오픈소스 프로젝트입니다."
 featured: true
-order: 3
+order: 2
 heroImage: "../../assets/projects/lumi-signal.svg"
 heroAlt: "暗い空間に複数の知性と開発経路を結ぶ青白い光のネットワーク"
 links:

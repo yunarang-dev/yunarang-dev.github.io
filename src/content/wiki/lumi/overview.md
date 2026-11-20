@@ -1,5 +1,5 @@
 ---
-project: project-vx
+project: lumi
 title:
   ja: "Project VX とは"
   ko: "Project VX란"
