@@ -132,7 +132,7 @@ profile:
       - name: "GAMMARU（31 期）"
         period: "2026. 03. 08. — Present"
         description:
-          ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発中央サークル「GAMMARU」"
+          ja: "<ruby>崇実<rt>スンシル</rt></ruby>大学ゲーム開発全学サークル「GAMMARU」"
           ko: "숭실대학교 게임 개발 중앙 동아리 겜마루"
         href: "https://gammaru.dev/"
       - name: "UNIDEV"
@@ -144,7 +144,7 @@ profile:
       - name: "INGAME"
         period: "2026. 08. 25. — Present"
         description:
-          ja: "仁川拠点大学生ゲーム開発連合サークル"
+          ja: "仁川を拠点とする大学生ゲーム開発連合サークル"
           ko: "인천 거점 대학생 게임 개발 연합동아리"
       - name: "GDGoC Soongsil（6 期）"
         period: "2026. 09. 23. — Present"
@@ -248,7 +248,7 @@ archiveAreas:
       ja: "「人の魂を込める。 AIの技術を加える。」"
       ko: "「사람의 혼을 담다. AI의 기술을 더하다.」"
     description:
-      ja: "『Project VX』は、AIを活用して人のアイデアをどこまで具現化できるかを試みる実験的プロジェクトです。これまでの開発記録はLUMI:NOUS（LU）で読めます。"
+      ja: "『Project VX』は、AIを活用して人のアイデアをどこまで具現化できるかを試す実験的プロジェクトです。これまでの開発記録はLUMI:NOUS（LU）で読めます。"
       ko: "『Project VX』는 AI를 활용해 사람의 아이디어를 어디까지 실현할 수 있는지 시험하는 실험 프로젝트입니다. 기존 개발 기록은 LUMI:NOUS(LU)에서 볼 수 있습니다."
     links:
       - label:
@@ -267,7 +267,7 @@ archiveAreas:
       ja: "「誰かの夢を輝かせるために。」"
       ko: "「누군가의 꿈을 빛낼 수 있도록.」"
     description:
-      ja: "LUMI:NOUSは初心者から熟練者まで、アイデアを持つ皆が想像を形にできる  統合ゲーム開発ハブです。<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
+      ja: "LUMI:NOUSは初心者から熟練者まで、アイデアを持つ皆が想像を形にできる統合ゲーム開発ハブです。<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
       ko: "LUMI:NOUS는 초보자부터 숙련자, 아이디어를 가진 모두가 상상을 실현할 수 있는 통합 게임 개발 허브입니다.<br><br>Since 2026. 08. 19.<br>Derived from Project VX & LUMI"
     links:
       - label:
@@ -456,7 +456,7 @@ lifePlan:
     items:
       - ja: "🔄 JLPT N2合格"
         ko: "🔄 JLPT N2 합격"
-      - ja: "✅ ゲームマル２０２６夏コンテスト参加"
+      - ja: "✅ GAMMARU２０２６夏コンテスト参加"
         ko: "✅ 겜마루 2026 여름 콘테스트 참가"
   - period:
       ja: "2027年まで（大学 2年生）"

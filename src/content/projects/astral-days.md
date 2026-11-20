@@ -97,7 +97,7 @@ x = 1：開発完了
 <br>
 「z」はマイナーアップグレードのバージョン（0、1、2…）
 
-### **[大学1年生〜大学3年生＋軍隊2年＝5年]**
+### **[大学1年生〜大学3年生＋兵役2年＝5年]**
 
 | Version | Target Date | Main Task | Status |
 |:---:|:---:|:---|:---:|
@@ -139,14 +139,14 @@ x = 1：開発完了
 
 
 
-> 最新のバージョンのテスト動画 (Ver 0.0.0)
+> 最新バージョンのテスト動画 (Ver 0.0.0)
 
 <br>
 
 [すべてのテスト記録はこちらです。](https://www.youtube.com/playlist?list=PLDVZJy7TZ4670f7bcZFWjDfSob_T0YOwl)
 <br>
 <br>
-[廃棄された旧バージョンの記録はこちらです。](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud)
+[破棄した旧バージョンの記録はこちらです。](https://www.youtube.com/playlist?list=PLLFNir1Wii8_EdRWFJw5p7L8ZsPAT63ud)
 
 
 

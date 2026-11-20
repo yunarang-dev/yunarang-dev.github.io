@@ -72,7 +72,7 @@ export interface PostRedirect {
 export const postRedirects: PostRedirect[] = [
   {
     slug: "AD-01",
-    title: "[AD] 001. 普通だったある日、私に夢が生まれた。（切っ掛け編）",
+    title: "[AD] 001. 平凡なある日、私の中に夢が生まれた。（きっかけ編）",
     date: "2026-01-25T14:20:45+09:00",
     redirectTo: "/posts/AD-001/",
   },
@@ -131,7 +131,7 @@ export const messages = {
     "home.meta.description": "ゲーム、物語、AIを用いた開発の過程を記録する、ゆならんの個人ポートフォリオ兼開発アーカイブ。",
     "blog.eyebrow": "DEVELOPMENT ARCHIVE",
     "blog.title": "私の足跡が、誰かの道しるべに なりますように。",
-    "blog.description": "今まで過ごした道のすべての足跡を残します。",
+    "blog.description": "これまで歩んできた、すべての足跡を残します。",
     "blog.order": "LATEST → OLDEST",
     "blog.count": "RECORDS",
     "blog.filter.label": "FILTER BY CATEGORY",
